@@ -80,6 +80,14 @@ void BeamStand::UpdateBeamBodies(Vector3 vStartPos, Vector3 vEndPos)
 		if (object->GetType() == TYPE::BEAM_BODY)
 		{
 			if (vSelectPos != vEndPos) {
+
+				// プレイヤーとの当たり判定
+				GameObject* obj = _mapData->GetGameObject(vSelectPos);
+				if (obj != nullptr && obj->GetType() == TYPE::PLAYER)
+				{
+					_mode->SetGameOver();
+				}
+
 				object->SetUse(true);
 				object->SetPos(vSelectPos);
 				vSelectPos += _vDir;
@@ -93,6 +101,14 @@ void BeamStand::UpdateBeamBodies(Vector3 vStartPos, Vector3 vEndPos)
 	while (true)
 	{
 		if (vSelectPos == vEndPos) break;
+
+		// プレイヤーとの当たり判定
+		GameObject* obj = _mapData->GetGameObject(vSelectPos);
+		if (obj != nullptr && obj->GetType() == TYPE::PLAYER)
+		{
+			_mode->SetGameOver();
+		}
+
 		CreateBeamBody(vSelectPos);
 		vSelectPos += _vDir;
 	}
