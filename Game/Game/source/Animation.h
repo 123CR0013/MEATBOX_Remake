@@ -21,12 +21,21 @@ public:
 
 	int GetGraphHandle();
 
-
+	float GetZoom() { return _zoom; }
 	void SetZoom(float zoom) { _zoom = zoom; }
+
+	float GetAngle() { return _angle; }
 	void SetAngle(float angle) { _angle = angle; }
+
+	float GetWidth() { return _width; }
 	void SetWidth(float width) { _width = width; }
+
+	float GetHeight() { return _height; }
 	void SetHeight(float height) { _height = height; }
+
+	Vector2 GetSize() { return Vector2(_width, _height); }
 	void SetSize(float width, float height) { _width = width; _height = height; }
+	void SetSize(Vector2 size) { _width = size.x; _height = size.y; }
 
 
 protected:

@@ -158,6 +158,8 @@
     <ClCompile Include="source\Animation.cpp" />
     <ClCompile Include="source\AnimationInfo.cpp" />
     <ClCompile Include="source\ApplicationMain.cpp" />
+    <ClCompile Include="source\BeamBody.cpp" />
+    <ClCompile Include="source\BeamStand.cpp" />
     <ClCompile Include="source\Effect.cpp" />
     <ClCompile Include="source\DrawForMapChip.cpp" />
     <ClCompile Include="source\EffectExplosion.cpp" />
@@ -176,6 +178,8 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="source\Animation.h" />
     <ClInclude Include="source\AnimationInfo.h" />
+    <ClInclude Include="source\BeamBody.h" />
+    <ClInclude Include="source\BeamStand.h" />
     <ClInclude Include="source\Effect.h" />
     <ClInclude Include="source\DrawForMapChip.h" />
     <ClInclude Include="source\EffectExplosion.h" />
