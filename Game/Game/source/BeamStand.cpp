@@ -80,6 +80,7 @@ void BeamStand::UpdateBeamBodies(Vector3 vStartPos, Vector3 vEndPos)
 		if (object->GetType() == TYPE::BEAM_BODY)
 		{
 			if (vSelectPos != vEndPos) {
+				object->SetUse(true);
 				object->SetPos(vSelectPos);
 				vSelectPos += _vDir;
 			}
