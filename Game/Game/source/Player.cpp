@@ -116,7 +116,11 @@ void Player::MoveProcess()
 					}
 					break;
 				case GameObject::TYPE::ENEMY:
+				case GameObject::TYPE::BEAM_BODY:
 					_mode->SetGameOver();
+					break;
+				case GameObject::TYPE::BEAM_STAND:
+					_vPos = vOldPos;
 					break;
 				}
 			}
