@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="source\ApplicationMain.cpp" />
+    <ClCompile Include="source\ModeGame.cpp">
+      <Filter>Mode\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Player.cpp">
+      <Filter>Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="source\MapChip.cpp">
+      <Filter>Object\MapChip</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Map.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DrawForMapChip.cpp">
+      <Filter>Draw</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Animation.cpp">
+      <Filter>Object\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GameObject.cpp">
+      <Filter>Object\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="source\MeatBox.cpp">
+      <Filter>Object\MeatBox</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Enemy.cpp">
+      <Filter>Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="source\EnemyTomato.cpp">
+      <Filter>Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ModeGameOver.cpp">
+      <Filter>Mode\GameOver</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Effect.cpp">
+      <Filter>Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\AnimationInfo.cpp">
+      <Filter>Object\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ObjectBase.cpp">
+      <Filter>Object\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="source\EffectExplosion.cpp">
+      <Filter>Object\Effect</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\ApplicationMain.h" />
+    <ClCompile Include="source\ApplicationMain.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ModeGame.cpp">
+      <Filter>Mode\Game</Filter>
+    </ClCompile>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="source\ModeGame.h">
+      <Filter>Mode\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Player.h">
+      <Filter>Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="source\MapChip.h">
+      <Filter>Object\MapChip</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Map.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DrawForMapChip.h">
+      <Filter>Draw</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Animation.h">
+      <Filter>Object\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GameObject.h">
+      <Filter>Object\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="source\MeatBox.h">
+      <Filter>Object\MeatBox</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Enemy.h">
+      <Filter>Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="source\EnemyTomato.h">
+      <Filter>Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ModeGameOver.h">
+      <Filter>Mode\GameOver</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Effect.h">
+      <Filter>Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AnimationInfo.h">
+      <Filter>Object\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ObjectBase.h">
+      <Filter>Object\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="source\EffectExplosion.h">
+      <Filter>Object\Effect</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\ApplicationMain.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ModeGame.h">
+      <Filter>Mode\Game</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Application">
+      <UniqueIdentifier>{128dbd40-6d54-4924-953d-daf000d6981c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mode">
+      <UniqueIdentifier>{38508131-ad62-49c7-8b2a-8f92f3c0a111}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mode\Game">
+      <UniqueIdentifier>{06ff4480-8a3b-44c2-8033-5175edf103ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{0bcb71b7-2cab-4357-a905-570b8763dc05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Player">
+      <UniqueIdentifier>{cc15245c-3d4e-4187-9df5-70115e84dbad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\MapChip">
+      <UniqueIdentifier>{838a9d7a-d94c-4377-bb21-736c2f436d93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map">
+      <UniqueIdentifier>{309d3387-783b-4b4e-8eef-8ac99e305c57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Draw">
+      <UniqueIdentifier>{45d59976-0e9a-40e3-9861-4e67a252bcc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Animation">
+      <UniqueIdentifier>{5f00b9c2-2d23-4fd3-87cc-6661b2592793}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Base">
+      <UniqueIdentifier>{bb6e6907-f2fd-41f0-b45e-7af4fde97aed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\MeatBox">
+      <UniqueIdentifier>{f797387e-ba45-40a2-8f6a-a1e1f4fc968d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Enemy">
+      <UniqueIdentifier>{09ea2c60-2cc1-49b2-9b1a-c24d1293c35e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mode\GameOver">
+      <UniqueIdentifier>{def53308-1789-40fb-8cdc-ffb1329dacfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Effect">
+      <UniqueIdentifier>{e82e6fc7-671b-46a2-a5b4-be0b6eafc585}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

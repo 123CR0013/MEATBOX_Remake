@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Application">
+      <UniqueIdentifier>{4ca63305-d083-453b-88a9-706f0a1ac180}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ModeServer">
+      <UniqueIdentifier>{f65d1d8e-b785-4c0b-a849-085fd92b4b60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CFile">
+      <UniqueIdentifier>{8fbd5843-f112-4047-a7f8-83460621436b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ResourceServer">
+      <UniqueIdentifier>{2a4e414f-85de-4e8d-ab6b-7609317eaf7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{8a94e70f-3877-4fd8-b805-b29b73346a9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collision">
+      <UniqueIdentifier>{a76efb9a-54e3-40d7-a27e-6c4767a1f6c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FPSController">
+      <UniqueIdentifier>{c2dd7af7-cd3f-481b-8236-5d0f28f233c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XInput">
+      <UniqueIdentifier>{c5d7a173-dfd7-4bdd-b4a8-fdbede503017}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XInput\Input">
+      <UniqueIdentifier>{2e3f6f82-1cb3-4e31-b9f4-e858a2502427}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XInput\Vibration">
+      <UniqueIdentifier>{41245031-8684-410f-ad38-338fc4599a1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Easing">
+      <UniqueIdentifier>{43a5a0a9-79a7-4e43-85ef-c0b5d2b21fba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyDraw">
+      <UniqueIdentifier>{0d551e2d-d4c8-49d4-9ad6-9f1212db7a14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Timer">
+      <UniqueIdentifier>{3538da58-3ae8-4c26-b1e3-dda51eb2db51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{2354125c-c9b5-442c-85a6-30f2e064565d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\MyMath">
+      <UniqueIdentifier>{195bb39a-65a5-40e6-9b40-30b013a0da9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\Matrix4">
+      <UniqueIdentifier>{89513e34-aeed-495c-bf35-802e85666eee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\Quaternion">
+      <UniqueIdentifier>{4bd6fe08-b8c7-4c4a-9f13-5dd66f8fca24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\Transform2">
+      <UniqueIdentifier>{afaaa6f9-db0f-4745-b8ea-e7fa2e851fb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\Vector2">
+      <UniqueIdentifier>{cb6055af-3f2a-477b-8e2c-91f5cb07d544}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\Vector3">
+      <UniqueIdentifier>{c6bd36e3-9501-462d-a511-ecb11ba4080b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScreenEffect">
+      <UniqueIdentifier>{31cf830f-d6b0-47f8-ba15-207a8fbc21f0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\Application\ApplicationBase.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Application\WinMain.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Mode\ModeBase.cpp">
+      <Filter>ModeServer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Mode\ModeServer.cpp">
+      <Filter>ModeServer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\CFile\CFile.cpp">
+      <Filter>CFile</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ResourceServer\ResourceServer.cpp">
+      <Filter>ResourceServer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Sound\SoundItem.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Sound\SoundServer.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Collision\2DCollision.cpp">
+      <Filter>Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Collision\3DCollision.cpp">
+      <Filter>Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Collision\MyStructure.cpp">
+      <Filter>Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FpsController\FpsController.cpp">
+      <Filter>FPSController</Filter>
+    </ClCompile>
+    <ClCompile Include="source\XInput\Input\XInput.cpp">
+      <Filter>XInput\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="source\XInput\Vibration\Vibration.cpp">
+      <Filter>XInput\Vibration</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Easing\Easing.cpp">
+      <Filter>Easing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\MyDraw\mydraw.cpp">
+      <Filter>MyDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Timer\Timer.cpp">
+      <Filter>Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Application\Global.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Math\Matrix4\Matrix4.cpp">
+      <Filter>Math\Matrix4</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Math\Quaternion\Quaternion.cpp">
+      <Filter>Math\Quaternion</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Math\Vector2\Vector2.cpp">
+      <Filter>Math\Vector2</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Math\Vector3\Vector3.cpp">
+      <Filter>Math\Vector3</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Math\MyMath\mymath.cpp">
+      <Filter>Math\MyMath</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ScreenEffect\ScreenEffect.cpp">
+      <Filter>ScreenEffect</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\Application\ApplicationBase.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Application\UtilMacro.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Mode\ModeBase.h">
+      <Filter>ModeServer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Mode\ModeServer.h">
+      <Filter>ModeServer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\CFile\CFile.h">
+      <Filter>CFile</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ResourceServer\ResourceServer.h">
+      <Filter>ResourceServer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Sound\SoundItem.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Sound\SoundServer.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Collision\2DCollision.h">
+      <Filter>Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Collision\3DCollision.h">
+      <Filter>Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Collision\MyStructure.h">
+      <Filter>Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FpsController\FpsController.h">
+      <Filter>FPSController</Filter>
+    </ClInclude>
+    <ClInclude Include="source\XInput\Input\XInput.h">
+      <Filter>XInput\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="source\XInput\Vibration\Vibration.h">
+      <Filter>XInput\Vibration</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Easing\Easing.h">
+      <Filter>Easing</Filter>
+    </ClInclude>
+    <ClInclude Include="source\MyDraw\mydraw.h">
+      <Filter>MyDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Timer\Timer.h">
+      <Filter>Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\appframe.h" />
+    <ClInclude Include="source\Application\Global.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Math\Matrix4\Matrix4.h">
+      <Filter>Math\Matrix4</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Math\Quaternion\Quaternion.h">
+      <Filter>Math\Quaternion</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Math\Transform2\Transform2.h">
+      <Filter>Math\Transform2</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Math\Vector2\Vector2.h">
+      <Filter>Math\Vector2</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Math\Vector3\Vector3.h">
+      <Filter>Math\Vector3</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Math\MyMath\mymath.h">
+      <Filter>Math\MyMath</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ScreenEffect\ScreenEffect.h">
+      <Filter>ScreenEffect</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
