@@ -48,10 +48,10 @@
       <Filter>Object\Effect</Filter>
     </ClCompile>
     <ClCompile Include="source\BeamBody.cpp">
-      <Filter>Beam</Filter>
+      <Filter>Object\Gimmick\Beam</Filter>
     </ClCompile>
     <ClCompile Include="source\BeamStand.cpp">
-      <Filter>Beam</Filter>
+      <Filter>Object\Gimmick\Beam</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -109,10 +109,10 @@
       <Filter>Object\Effect</Filter>
     </ClInclude>
     <ClInclude Include="source\BeamBody.h">
-      <Filter>Beam</Filter>
+      <Filter>Object\Gimmick\Beam</Filter>
     </ClInclude>
     <ClInclude Include="source\BeamStand.h">
-      <Filter>Beam</Filter>
+      <Filter>Object\Gimmick\Beam</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -166,7 +166,10 @@
     <Filter Include="Object\Effect">
       <UniqueIdentifier>{e82e6fc7-671b-46a2-a5b4-be0b6eafc585}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Beam">
+    <Filter Include="Object\Gimmick">
+      <UniqueIdentifier>{d30d543b-4e2f-46d8-b576-1a8dfdedd945}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Gimmick\Beam">
       <UniqueIdentifier>{68026157-5943-4ee8-bcf0-44ece9fabe5c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
