@@ -10,6 +10,9 @@
 #include "MeatBox.h"
 #include "Enemy.h"
 #include "EnemyTomato.h"
+
+#include "BeamStand.h"
+
 #include "Effect.h"
 
 #include "Animation.h"
@@ -214,6 +217,29 @@ void ModeGame::CreateGameObjects(nlohmann::json json)
 			{
 				CreateEnemy(pos);
 			}
+			else if (name == "BeamStand")
+			{
+				int dir = -1;
+
+				nlohmann::json properties = object.at("properties");
+				for(auto& prop : properties)
+				{
+					if (prop.at("name") == "Direction") {
+						dir = prop.at("value");
+						break;
+					}
+				}
+				
+				std::array<Vector3, 5> dirTbl = {
+					Vector3(0, 0, 0),
+					Vector3(0, -1, 0),
+					Vector3(0, 1, 0),
+					Vector3(-1, 0, 0),
+					Vector3(1, 0, 0),
+				};
+
+				CreateBeamStand(pos, dirTbl[dir + 1]);
+			}
 		}
 	}
 }
@@ -328,5 +354,34 @@ void ModeGame::CreateEnemyTomato(std::vector<Vector3> route)
 	enemyTomato->AddChildObject(arrow);
 
 	enemyTomato->Init();
+}
+
+void ModeGame::CreateBeamStand(Vector3 vPos, Vector3 vDir)
+{
+	BeamStand* beamStand = new BeamStand(this);
+	beamStand->SetPos(vPos);
+	beamStand->SetDir(vDir);
+
+	AnimationInfo* animInfo = new AnimationInfo();
+	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Gimmick/Beam/obj1_beam_01.png"));
+	animInfo->_framePerSheet = 1;
+	beamStand->AddAnimInfo(animInfo);
+
+	float angle = 0.0f;
+	if(vDir == Vector3(0, -1, 0)) {
+		angle = PI;
+	}
+	else if (vDir == Vector3(0, 1, 0)) {
+		angle = 0.0f;
+	}
+	else if (vDir == Vector3(-1, 0, 0)) {
+		angle = PI / 2.0f;
+	}
+	else if (vDir == Vector3(1, 0, 0)) {
+		angle = PI * 3.0f / 2.0f;
+	}
+	beamStand->SetAnimAngle(angle);
+
+	_objects.push_back(beamStand);
 }
 

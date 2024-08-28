@@ -68,6 +68,16 @@ bool MeatBox::CheckMove(Vector3 vMove)
 					CreateEffect(Effect::TYPE::EXPLOSION, vTmp, _mode);
 				}
 			}
+			// 移動先のオブジェクトがビーム台の場合
+			else if(obj->GetType() == GameObject::TYPE::BEAM_STAND) {
+				// 移動できない
+				canMove = false;
+			}
+			// 移動先のオブジェクトがビーム本体の場合
+			else if(obj->GetType() == GameObject::TYPE::BEAM_BODY) {
+				// 移動できる
+				canMove = true;
+			}
 		}
 		// 移動先にオブジェクトがない場合
 		else {

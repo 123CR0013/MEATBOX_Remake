@@ -44,18 +44,29 @@ void EnemyTomato::MoveProcess()
 		// 移動先にオブジェクトがある場合は移動できない
 		if (obj != nullptr)
 		{
+			// プレイヤーに当たった場合
 			if (obj->GetType() == TYPE::PLAYER)
 			{
-				// プレイヤーに当たった場合は、ゲームオーバー
+				// ゲームオーバー
 				_mode->SetGameOver();
 			}
-			else {
+			// ビーム本体に当たった場合
+			else if (obj->GetType() == TYPE::BEAM_BODY)
+			{
+				// 移動する
+				_routeIndex += _moveOrder;
+				_vPos = _vNextPos;
+				_mapData->SetGameObject(this, _vPos);
+			}
+			else 
+			{
 				// 移動できない場合は、移動順を逆にする
 				_moveOrder *= -1;
 			}
 		}
-		// 移動先にオブジェクトがない場合は、移動する
+		// 移動先にオブジェクトがない場合
 		else {
+			// 移動する
 			_routeIndex += _moveOrder;
 			_vPos = _vNextPos;
 			_mapData->SetGameObject(this, _vPos);

@@ -29,12 +29,19 @@ public:
 	virtual void Draw();
 
 	bool GetUse() { return _bUse; }
-	void SetUse(bool bUse) { 
+	virtual void SetUse(bool bUse) { 
 		_bUse = bUse;
 		
 		if (_mapData != nullptr && _bSetToMap == true)
 		{
-			_mapData->EraseGameObject(this);
+			if(_bUse == true)
+			{
+				_mapData->SetGameObject(this, _vPos);
+			}
+			else
+			{
+				_mapData->EraseGameObject(this);
+			}
 		}
 	}
 
