@@ -1,6 +1,7 @@
 #include "3DCollision.h"
 #include "2DCollision.h"
 #include "../Math/Mymath/MyMath.h"
+#include"../Math/Vector3/Vector3.h"
 
 #include"dxlib.h"
 
@@ -467,4 +468,35 @@ bool Collision3D::OBBCapsuleCol(OBB obb, VECTOR line_start, VECTOR line_end, flo
 
 bool Collision3D::OBBCapsuleCol(OBB obb, Capsule capsule, VECTOR* hitPos) {
 	return OBBCapsuleCol(obb, capsule.down_pos, capsule.up_pos, capsule.r, hitPos);
+}
+
+bool Collision3D::IsOnTrianglePoint(const Vector3& p, const Vector3& t1, const Vector3& t2, const Vector3& t3) {
+	//点と三角形は同一平面上にあるものとしています。同一平面上に無い場合は正しい結果になりません
+//線上は外とみなします。
+//ABCが三角形かどうかのチェックは省略...
+
+	Vector3 AB = t2 - t1;
+	Vector3 BP = p - t2;
+
+	Vector3 BC = t3 - t2;
+	Vector3 CP = p - t3;
+	Vector3 CA = t1 - t3;
+	Vector3 AP = p - t1;
+
+	Vector3 c1 = Vector3::Cross(AB, BP);
+	Vector3 c2 = Vector3::Cross(BC, CP);
+	Vector3 c3 = Vector3::Cross(CA, AP);
+
+
+	//内積で順方向か逆方向か調べる
+	double dot_12 = Vector3::Dot(c1, c2);
+	double dot_13 = Vector3::Dot(c1, c3);
+
+	if (dot_12 >= 0 && dot_13 >= 0) {
+		//三角形の内側に点がある
+		return true;
+	}
+
+	//三角形の外側に点がある
+	return false;
 }

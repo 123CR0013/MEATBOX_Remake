@@ -1,5 +1,5 @@
 #include "2DCollision.h"
-
+#include"../Math/Vector3/Vector3.h"
 // “–‚½‚è”»’è—pB2‚Â‚Ìbox‚ª“–‚½‚Á‚½‚©‚ğ”»’è
 // “–‚½‚Á‚Ä‚¢‚½‚çtrue, “–‚½‚Á‚Ä‚¢‚È‚©‚Á‚½‚çfalse‚ğ•Ô‚·
 bool Collision2D::IsHitBox(
@@ -82,3 +82,4 @@ bool Collision2D::IsHitCircleAndBox(float box_x, float  box_y, float  box_w, flo
 	}
 	return hitfrag;
 }
+

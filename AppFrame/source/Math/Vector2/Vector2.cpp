@@ -138,3 +138,6 @@ float Vector2::Angle(const Vector2& v1, const Vector2& v2)
 	return 0.0f;
 }
 
+Vector2 Vector2::Lerp(const Vector2& start, const Vector2& end, const float rate) {
+	return start + (end - start) * rate;
+}

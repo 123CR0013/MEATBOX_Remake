@@ -33,7 +33,7 @@ public:
 	// 2‚Â‚ÌƒxƒNƒgƒ‹‚Ì‚È‚·Šp
 	static float Angle(const Vector2& v1, const Vector2& v2);
 
-
+	static Vector2 Lerp(const Vector2& start, const Vector2& end, const float rate);
 public:
 	float x, y;
 };

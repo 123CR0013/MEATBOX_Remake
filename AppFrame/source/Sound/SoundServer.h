@@ -1,8 +1,5 @@
 #pragma once
-
 #include "SoundItem.h"
-
-#include <vector>
 #include <string>
 #include <map>
 
@@ -14,35 +11,44 @@ public:
 
 	void Clear();
 	void Add(SoundItemOneShot* snd);
-	void Add(std::string name, SoundItemOneShot* snd);
 	void Add(std::string name, SoundItemBase* snd);
 	bool Del(std::string name);
-	bool Del(SoundItemBase *snd);
+	bool Del(SoundItemBase* snd);
 	SoundItemBase* Get(std::string name);
+
+	void Play(const std::string& name, int volume = 0);
 
 	std::map<std::string, SoundItemBase*>& GetVector() { return _v; }
 
-	SoundItemBase* Search(std::string name);
-	std::vector<SoundItemBase*> NowPlayingSearch();
-	std::vector<SoundItemBase*> NowPlayingSearchType(SoundItemBase::TYPE type);
-
-	bool DirectPlay(std::string name);
-	bool RandomPlay(std::vector<std::string> name);
-
-	void StopAll();
 	void StopType(SoundItemBase::TYPE type);
-	void BgmFadeOut(int time);
-	void BgmFadeIn(std::string name,int time);
+
+	//0.f~1.f;
+	void ChangeVolume(SoundItemBase::TYPE type, float percent);
+
+	void SetSEVolume(int vol) { _volSE = vol; }
+	void SetBGMVolume(int vol) { _volBGM = vol; }
+	void SetVOICEVolume(int vol) { _volVOICE = vol; }
+
+	int GetSEVolume() { return _volSE; }
+	int GetBGMVolume() { return _volBGM; }
+	int GetVOICEVolume() { return _volVOICE; }
+
+	int GetVolume(SoundItemBase::TYPE type)
+	{
+		switch (type)
+		{
+		case SoundItemBase::TYPE::BGM:
+			return _volBGM;
+		case SoundItemBase::TYPE::SE:
+			return _volSE;
+		case SoundItemBase::TYPE::VOICE:
+			return _volVOICE;
+		default:
+			return -1;
+		}
+	}
 
 	void Update();
-
-	void SetSeVolume(int volume) {_SeVolume = volume;}
-	void SetBgmVolume(int volume);
-	void SetVoiceVolume(int volume) { _VoiceVolume = volume; }
-
-	int GetSeVolume() { return _SeVolume ; }
-	int GetBgmVolume() { return  _BgmVolume ; }
-	int GetVoiceVolume() { return _VoiceVolume ; }
 
 protected:
 	bool	_isUpdate;
@@ -51,8 +57,12 @@ protected:
 	std::map<std::string, SoundItemBase*> _vAdd;
 	std::map<std::string, SoundItemBase*> _vDel;
 
-	int		_cntOneShot;
+	int		_cntOneShot;							//ワンショットのカウント
 
-	int _SeVolume, _BgmVolume, _VoiceVolume;
+	int _volSE;
+	int _volBGM;
+	int _volVOICE;
+
+
 };
 

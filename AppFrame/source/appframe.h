@@ -22,6 +22,9 @@
 //CFile
 #include "CFile/CFile.h"
 
+//ZFile
+#include"ZFile/ZFile.h"
+
 // XInput
 #include "XInput/Input/XInput.h"
 #include "XInput/Vibration/Vibration.h"
@@ -65,3 +68,14 @@
 
 // Global
 #include "Application/Global.h"
+
+//Mode
+#include"Mode/ModeUI.h"
+
+//UI
+#include"UI/Box.h"
+#include"UI/Button.h"
+#include"UI/Empty.h"
+#include"UI/Graph.h"
+#include"UI/UIScreen.h"
+#include"UI/Text.h"

@@ -1,5 +1,6 @@
 // 独自計算ライブラリ
 #include "Easing.h"
+#include"../Math/MyMath/mymath.h"
 
 // イージング
 float Easing::Linear(float cnt, float start, float end, float frames) {
@@ -73,10 +74,10 @@ float Easing::InOutQuint(float cnt, float start, float end, float frames) {
     return (end - start) / 2.0 * (cnt * cnt * cnt * cnt * cnt + 2) + start;
 }
 float Easing::InSine(float cnt, float start, float end, float frames) {
-    return -(end - start) * cos(cnt / frames * (PIOver2)) + end + start;
+    return -(end - start) * cos(cnt / frames * (PIOVER2)) + end + start;
 }
 float Easing::OutSine(float cnt, float start, float end, float frames) {
-    return (end - start) * sin(cnt / frames * PIOver2) + start;
+    return (end - start) * sin(cnt / frames * PIOVER2) + start;
 }
 float Easing::InOutSine(float cnt, float start, float end, float frames) {
     return -(end - start) / 2.0 * (cos(PI * cnt / frames) - 1) + start;
@@ -111,6 +112,44 @@ float Easing::InOutCirc(float cnt, float start, float end, float frames) {
     }
     cnt -= 2;
     return (end - start) / 2.0 * (sqrt(1 - cnt * cnt) + 1) + start;
+}
+
+float Easing::InBack(float cnt, float start, float end, float frames) {
+    const float c = 1.70158f;   //最大下限が変わる
+    return  start + (end - start) * ((c + 1.f) * powf(cnt / frames, 3.f) - c * powf(cnt / frames, 2.f));
+}
+
+float Easing::OutBack(float cnt, float start, float end, float frames) {
+    const float c = 1.70158f;   //最大上限が変わる
+    return  start + (end - start) * (1.f - ((c + 1.f) * powf(1.f - cnt / frames, 3.f) - c * powf(1.f - cnt / frames, 2.f)));
+}
+
+float Easing::OutBounce(float cnt, float start, float end, float frames)
+{
+    float a = 7.5625f;
+    float b = 2.75f;
+
+    float x = cnt / frames;
+
+    if (x < 1.0f / b)
+    {
+        return start + (end - start) * (a * x * x);
+    }
+    else if (x < 2.0f / b)
+    {
+        float c = (x - 1.5f / b);
+        return start + (end - start) * (a * c * c + 0.75f);
+    }
+    else if (x < 2.5 / b)
+    {
+        float c = (x - 2.25f / b);
+        return start + (end - start) * (a * c * c + 0.9375f);
+    }
+    else
+    {
+        float c = (x - 2.625f / b);
+        return start + (end - start) * (a * c * c + 0.984375f);
+    }
 }
 
 float Easing::OutElastic(float cnt, float start, float end, float frames)

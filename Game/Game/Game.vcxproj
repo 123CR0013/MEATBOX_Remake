@@ -166,11 +166,18 @@
     <ClCompile Include="source\Map.cpp" />
     <ClCompile Include="source\MapChip.cpp" />
     <ClCompile Include="source\MeatBox.cpp" />
+    <ClCompile Include="source\MenuScreen.cpp" />
     <ClCompile Include="source\ModeGame.cpp" />
     <ClCompile Include="source\GameObject.cpp" />
     <ClCompile Include="source\ModeGameOver.cpp" />
+    <ClCompile Include="source\ModeSelect.cpp" />
+    <ClCompile Include="source\ModeSoundLayer.cpp" />
     <ClCompile Include="source\ObjectBase.cpp" />
     <ClCompile Include="source\Player.cpp" />
+    <ClCompile Include="source\SettingScreen.cpp" />
+    <ClCompile Include="source\SoundAdjustScreen.cpp" />
+    <ClCompile Include="source\StageSelectButton.cpp" />
+    <ClCompile Include="source\StageSelectScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
@@ -184,11 +191,19 @@
     <ClInclude Include="source\Map.h" />
     <ClInclude Include="source\MapChip.h" />
     <ClInclude Include="source\MeatBox.h" />
+    <ClInclude Include="source\MenuScreen.h" />
     <ClInclude Include="source\ModeGame.h" />
     <ClInclude Include="source\GameObject.h" />
     <ClInclude Include="source\ModeGameOver.h" />
+    <ClInclude Include="source\ModeSelect.h" />
+    <ClInclude Include="source\ModeSoundLayer.h" />
+    <ClInclude Include="source\MoveUI.h" />
     <ClInclude Include="source\ObjectBase.h" />
     <ClInclude Include="source\Player.h" />
+    <ClInclude Include="source\SettingScreen.h" />
+    <ClInclude Include="source\SoundAdjustScreen.h" />
+    <ClInclude Include="source\StageSelectButton.h" />
+    <ClInclude Include="source\StageSelectScreen.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ApplicationMain.h" />

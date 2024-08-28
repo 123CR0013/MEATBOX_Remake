@@ -2,9 +2,6 @@
 #include "dxlib.h"
 #include <vector>
 
-// ‰~ü—¦
-#define	PI				(3.141592653589793)
-
 // RECT—p\‘¢‘Ì
 struct MYRECT {
 	float		x, y, w, h;

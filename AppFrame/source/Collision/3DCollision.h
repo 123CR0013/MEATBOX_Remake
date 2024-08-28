@@ -61,4 +61,6 @@ public:
 	//オーバーロード
 	static bool OBBCapsuleCol(OBB obb, Capsule capsule, VECTOR* hitPos = nullptr);
 
+	static bool IsOnTrianglePoint(const class Vector3& p, const class Vector3& t1, const class Vector3& t2, const class Vector3& t3);
+
 };

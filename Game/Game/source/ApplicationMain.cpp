@@ -1,5 +1,7 @@
 #include "ApplicationMain.h"
 #include "ModeGame.h"
+#include"ModeSoundLayer.h"
+#include"ModeSelect.h"
 
 // 実体
 ApplicationMain				g_oApplicationMain;
@@ -7,6 +9,7 @@ ApplicationMain				g_oApplicationMain;
 bool ApplicationMain::Initialize(HINSTANCE hInstance) {
 	if (!base::Initialize(hInstance)) { return false; }
 	// モードの登録
+	ModeServer::GetInstance()->Add(NEW ModeSoundLayer(), 0, "SoundLayer");
 	ModeServer::GetInstance()->Add(NEW ModeGame(), 1, "ModeGame");
 
 	// FPSを安定させるためのクラスを初期化
@@ -28,6 +31,13 @@ bool ApplicationMain::Input() {
 	global._key = GetJoypadInputState(DX_INPUT_KEY_PAD1);
 	global._trg = (global._key ^ oldKey) & global._key;
 	global._rel = (global._key ^ oldKey) & ~global._key;
+
+	oldKey = global._mouseKey;
+	global._mouseKey = GetMouseInput();
+	global._mouseTrg = (global._mouseKey ^ oldKey) & global._mouseKey;
+	global._mouseRel = (global._mouseKey ^ oldKey) & ~global._mouseKey;
+
+	GetMousePoint(&(global._mouseX), &(global._mouseY));
 
 	return true;
 }

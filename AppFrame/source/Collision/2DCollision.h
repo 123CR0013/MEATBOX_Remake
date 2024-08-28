@@ -26,5 +26,4 @@ public:
 	);
 
 	static bool IsHitCircleAndBox(float box_x, float  box_y, float  box_w, float  box_h, float circle_x, float circle_y, float circle_r);   //‰~‚ÆŽlŠp‚Ì“–‚½‚è”»’è
-
 };

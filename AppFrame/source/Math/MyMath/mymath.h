@@ -5,6 +5,8 @@
 
 // ‰~Žü—¦
 #define	PI				(3.141592653589793f)
+#define TWOPI			(PI * 2.f)
+#define PIOVER2			(PI / 2.f)
 
 namespace MyMath
 {

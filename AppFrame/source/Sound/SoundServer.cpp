@@ -1,11 +1,12 @@
-#include "SoundItem.h"
 #include "SoundServer.h"
 
 SoundServer::SoundServer() {
 	_isUpdate = false;
 	_cntOneShot = 0;
-	_SeVolume = _VoiceVolume = 255;
-	_BgmVolume = 150;
+
+	_volBGM = 255;
+	_volSE = 255;
+	_volVOICE = 255;
 }
 SoundServer::~SoundServer() {
 	Clear();
@@ -15,25 +16,12 @@ void SoundServer::Clear() {
 	for (auto&& e : _v) {
 		delete e.second;
 	}
-	for (auto&& e : _vAdd) {
-		delete e.second;
-	}
-	for (auto&& e : _vDel) {
-		delete e.second;
-	}
 	_v.clear();
-	_vAdd.clear();
-	_vDel.clear();
 }
 
 void SoundServer::Add(SoundItemOneShot* snd) {
 	std::string name = "__ONESHOT_SOUND_" + std::to_string(_cntOneShot);
 	_cntOneShot++;
-	Add(name, snd);
-	snd->Play();		// OneShotは登録した瞬間再生する
-}
-
-void SoundServer::Add(std::string name, SoundItemOneShot* snd) {
 	Add(name, snd);
 	snd->Play();		// OneShotは登録した瞬間再生する
 }
@@ -77,98 +65,40 @@ SoundItemBase* SoundServer::Get(std::string name) {
 	return NULL;
 }
 
-SoundItemBase* SoundServer::Search(std::string name) {
-	if (GetASyncLoadNum() == 0) {
-		auto itr = _v.find(name);
-		if (itr != _v.end()) {
-			return itr->second;
-		}
-#ifdef _DEBUG
-		else {
-			//エラー
-			//ファイルが無い 又は 読み込まれていません
-			std::string errar = "ファイルが無い 又は 読み込まれていません";
-			MessageBox(NULL, errar.c_str(), "エラー", MB_OK);
-		}
-#endif
-	}
-#ifdef _DEBUG
-	else {
-		//エラー
-		//非同期読み込み中です。
-		std::string errar = "非同期読み込み中です。";
-		MessageBox(NULL, errar.c_str(), "エラー", MB_OK);
-	}
-#endif
-	return nullptr;
-};
-
-bool SoundServer::DirectPlay(std::string name) {
-	auto playSound = Search(name);
-	if (playSound) {
-		playSound->Play();
-		return true;
-	}
-	return false;
-};
-
-bool SoundServer::RandomPlay(std::vector<std::string> name) {
-	int random = rand() % name.size();
-	if (DirectPlay(name.at(random))) {
-		return true;
-	}
-	return false;
-};
-
-std::vector<SoundItemBase*> SoundServer::NowPlayingSearch() {
-	std::vector<SoundItemBase*> nowPlaying;
-	for (auto&& e : _v) {
-		if (e.second->IsPlay()) {
-			nowPlaying.push_back(e.second);
-		}
-	}
-	return nowPlaying;
-};
-
-std::vector<SoundItemBase*> SoundServer::NowPlayingSearchType(SoundItemBase::TYPE type) {
-	std::vector<SoundItemBase*> nowPlaying;
-	for (auto&& e : _v) {
-		if (e.second->GetType() == type && e.second->IsPlay()) {
-			nowPlaying.push_back(e.second);
-		}
-	}
-	return nowPlaying;
-};
-
-void SoundServer::StopAll() {
-	auto stopSound = NowPlayingSearch();
-	for (auto&& e : stopSound) {
-		e->Stop();
-	}
-};
-
 void SoundServer::StopType(SoundItemBase::TYPE type) {
-	auto stopSound = NowPlayingSearchType(type);
-	for (auto&& e : stopSound) {
-		if (e->GetFade() != SoundItemBase::FADE_OUT) {
-			e->Stop();
+	for (auto&& e : _v) {
+		if (e.second->GetType() == type) {
+			e.second->Stop();
 		}
 	}
 }
 
-void SoundServer::BgmFadeOut(int time) {
-	auto fadeSound = NowPlayingSearchType(SoundItemBase::TYPE::BGM);
-	for (auto&& e : fadeSound) {
-		e->SetFade(SoundItemBase::FADE_OUT,time);
-	}
-};
+void SoundServer::ChangeVolume(SoundItemBase::TYPE type, float percent)
+{
+	for (auto&& e : _v) {
+		if (e.second->GetType() != type)continue;
 
-void SoundServer::BgmFadeIn(std::string name,int time){
-	auto sound = Search(name);
-	//もしかしたらここでサウンドの音量を0にしないといけないかも 1Fずれるかも
-	sound->SetFade(SoundItemBase::FADE_IN,time); 
-	sound->Play();
-};
+		switch (e.second->GetType())
+		{
+		case SoundItemBase::TYPE::BGM:
+			_volBGM = static_cast<int>(255.f * percent);
+			e.second->SetVolume(_volBGM);
+			break;
+
+		case SoundItemBase::TYPE::SE:
+			_volSE = static_cast<int>(255.f * percent);
+			e.second->SetVolume(_volSE);
+			break;
+		case SoundItemBase::TYPE::VOICE:
+			_volVOICE = static_cast<int>(255.f * percent);
+			e.second->SetVolume(_volVOICE);
+			break;
+		default:
+			break;
+		}
+	}
+}
+
 
 void SoundServer::Update() {
 	// 追加リストのものを追加
@@ -187,11 +117,36 @@ void SoundServer::Update() {
 	_vDel.clear();
 }
 
+void SoundServer::Play(const std::string& name, int volume) {
 
-void SoundServer::SetBgmVolume(int volume) { 
-	_BgmVolume = volume; 
-	auto bgmList = NowPlayingSearchType(SoundItemBase::TYPE::BGM);
-	for(auto&& bgm : bgmList){
-	   bgm->SetVolume();
+	auto snd = Get(name);
+
+	if (snd) {
+
+		if (volume > 0)
+			{
+			snd->SetVolume(volume);
+			snd->Play();
+		}
+		else {
+
+			switch (snd->GetType())
+			{
+			case SoundItemBase::TYPE::BGM:
+				snd->SetVolume(_volBGM);
+				break;
+
+			case SoundItemBase::TYPE::SE:
+				snd->SetVolume(_volSE);
+				break;
+			case SoundItemBase::TYPE::VOICE:
+				snd->SetVolume(_volVOICE);
+				break;
+			default:
+				break;
+			}
+			snd->Play();
+		}
 	}
+
 }

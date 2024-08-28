@@ -64,6 +64,15 @@
     <Filter Include="ScreenEffect">
       <UniqueIdentifier>{31cf830f-d6b0-47f8-ba15-207a8fbc21f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{59e0192b-e5e2-4af6-a984-411ec761f3e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ZFile">
+      <UniqueIdentifier>{719aaa1e-5962-4349-8c8e-4ab1b363ec23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScriptEngine">
+      <UniqueIdentifier>{5a855397-0490-4c3a-a1e3-1dc3210b611a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\ApplicationBase.cpp">
@@ -137,6 +146,45 @@
     </ClCompile>
     <ClCompile Include="source\ScreenEffect\ScreenEffect.cpp">
       <Filter>ScreenEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\UI\Clip.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\UI\InputText.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\UI\Text.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\UI\Track.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\UI\UI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\UI\UIAnimation.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\UI\UIScreen.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Mode\ModeUI.cpp">
+      <Filter>ModeServer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ZFile\ZFile.cpp">
+      <Filter>ZFile</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ScriptEngine\RevPolishCalc.cpp">
+      <Filter>ScriptEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ScriptEngine\ScriptEngine.cpp">
+      <Filter>ScriptEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ScriptEngine\StringUtil.cpp">
+      <Filter>ScriptEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ScriptEngine\variable.cpp">
+      <Filter>ScriptEngine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +263,60 @@
     </ClInclude>
     <ClInclude Include="source\ScreenEffect\ScreenEffect.h">
       <Filter>ScreenEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UI\Box.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UI\Button.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UI\Clip.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UI\Empty.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UI\FlipBook.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UI\Graph.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UI\InputText.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UI\Text.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UI\Track.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UI\UI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UI\UIAnimation.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UI\UIScreen.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Mode\ModeUI.h">
+      <Filter>ModeServer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ZFile\ZFile.h">
+      <Filter>ZFile</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ScriptEngine\RevPolishCalc.h">
+      <Filter>ScriptEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ScriptEngine\ScriptEngine.h">
+      <Filter>ScriptEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ScriptEngine\StringUtil.h">
+      <Filter>ScriptEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ScriptEngine\variable.h">
+      <Filter>ScriptEngine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

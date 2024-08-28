@@ -3,17 +3,23 @@
 Global global;
 
 Global::Global() {
-	_timer = new Timer();
 	_soundServer = new SoundServer();
-	_timer->Start();
+
+	_isGameEnd = false;
 
 	_key = 0;
 	_trg = 0;
 	_rel = 0;
+
+	_mouseX = 0;
+	_mouseY = 0;
+
+	_mouseKey = 0;
+	_mouseTrg = 0;
+	_mouseRel = 0;
 };
 
 Global::~Global() {
-	delete _timer;
 	delete _soundServer;
 };
 
