@@ -12,6 +12,8 @@
 #include "EnemyTomato.h"
 
 #include "BeamStand.h"
+#include "Sticky.h"
+#include "StickyGroup.h"
 
 #include "Effect.h"
 
@@ -240,6 +242,10 @@ void ModeGame::CreateGameObjects(nlohmann::json json)
 
 				CreateBeamStand(pos, dirTbl[dir + 1]);
 			}
+			else if (name == "Sticky")
+			{
+				CreateSticky(pos);
+			}
 		}
 	}
 }
@@ -383,5 +389,23 @@ void ModeGame::CreateBeamStand(Vector3 vPos, Vector3 vDir)
 	beamStand->SetAnimAngle(angle);
 
 	_objects.push_back(beamStand);
+}
+
+void ModeGame::CreateSticky(Vector3 vPos)
+{
+	Sticky* sticky = new Sticky(this);
+	sticky->SetPos(vPos);
+	sticky->SetDrawOffset(Vector3(0, -0.2f, 0));
+
+	AnimationInfo* animInfo = new AnimationInfo();
+	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Gimmick/Sticky/Sticky.png"));
+	animInfo->_framePerSheet = 10;
+	sticky->AddAnimInfo(animInfo);
+
+	StickyGroup* stickyGroup = new StickyGroup(this);
+	stickyGroup->AddSticky(sticky);
+
+	_objects.push_back(sticky);
+	_objects.push_back(stickyGroup);
 }
 

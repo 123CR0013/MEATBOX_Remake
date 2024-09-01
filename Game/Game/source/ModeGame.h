@@ -53,4 +53,6 @@ protected:
 	void CreateEnemyTomato(std::vector<Vector3> route);
 
 	void CreateBeamStand(Vector3 vPos, Vector3 vDir);
+
+	void CreateSticky(Vector3 vPos);
 };
