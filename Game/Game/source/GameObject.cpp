@@ -31,7 +31,7 @@ GameObject::~GameObject()
 void GameObject::Destroy()
 {
 	_mode->RemoveGameObject(this);
-	_bUse = false;
+	SetUse(false);
 }
 
 void GameObject::Init()
