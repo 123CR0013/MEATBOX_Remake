@@ -29,6 +29,7 @@ public:
 	virtual bool CheckMove(Vector3 vMove);
 	virtual void AnimProcess();
 	virtual void Draw();
+	virtual void DrawDebug();
 
 	bool GetUse() { return _bUse; }
 	virtual void SetUse(bool bUse) { 

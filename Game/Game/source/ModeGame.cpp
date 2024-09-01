@@ -30,17 +30,6 @@ bool ModeGame::Initialize() {
 
 	_plStepCnt = 0;
 
-	// 必ずプレイヤーを最初に作成する
-	//CreatePlayer(Vector3(7, 8, 0));
-	//CreatePlayer(Vector3(14, 12, 0));
-	//CreateMeatBox(Vector3(10, 8, 0));
-	//CreateMeatBox(Vector3(14, 9, 0));
-	//CreateEnemy(Vector3(15, 9, 0));
-	//CreateEnemy(Vector3(16, 9, 0));
-	//CreateEnemy(Vector3(21, 8, 0));
-
-	//CreateEnemyTomato(Vector3(20, 7, 0));
-
 	return true;
 }
 
@@ -91,15 +80,21 @@ bool ModeGame::Render() {
 		object->Draw();
 	}
 
-	//DrawFormatString(0, 100, COLOR_WHITE, "StepCnt: %d", _plStepCnt);
-	//DrawDebug();
+	DrawDebug();
 
 	return true;
 }
 
 bool ModeGame::DrawDebug()
 {
+	//DrawFormatString(0, 100, COLOR_WHITE, "StepCnt: %d", _plStepCnt);
+
+
 	_mapData->DrawDebug();
+	for(auto& object : _objects) {
+		object->DrawDebug();
+	}
+
 	return true;
 }
 

@@ -1,6 +1,7 @@
 #include "Map.h"
 #include "MapChip.h"
 
+#include "GameObject.h"
 
 #include <fstream>
 #include <sstream>
@@ -71,10 +72,27 @@ void Map::Draw()
 
 void Map::DrawDebug()
 {
-	for(auto& mapChip : _mapChips)
+	//for(auto& mapChip : _mapChips)
+	//{
+	//	if (mapChip == nullptr) continue;
+	//	mapChip->DrawDebug();
+	//}
+
+	for(auto& object : _objects)
 	{
-		if (mapChip == nullptr) continue;
-		mapChip->DrawDebug();
+		if (object == nullptr) continue;
+		GameObject::TYPE type = object->GetType();
+		std::array < std::string, 8> typeTbl = {
+			"NONE",
+			"PLAYER",
+			"MEATBOX",
+			"ENEMY",
+			"BEAMSTAND",
+			"BEAM_BODY",
+			"STICKY",
+			"STICKYGROUP"
+		};
+		DrawFormatString(object->GetPos().x * CHIP_W, object->GetPos().y * CHIP_H, COLOR_RED, typeTbl[static_cast<int>(type)].c_str());
 	}
 }
 

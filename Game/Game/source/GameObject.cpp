@@ -72,3 +72,7 @@ void GameObject::Draw()
 		object->Draw();
 	}
 }
+
+void GameObject::DrawDebug()
+{
+}

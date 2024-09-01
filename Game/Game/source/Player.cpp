@@ -14,12 +14,14 @@ Player::~Player()
 
 void Player::Process()
 {
+	GameObject::Process();
+
 	MoveProcess();
 }
 
 void Player::MoveProcess()
 {
-	// ˆÚ“®‚µ‚½‚©‚Ç‚¤‚©
+	// ˆÚ“®“ü—Í‚ª‚ ‚Á‚½‚©‚Ç‚¤‚©
 	bool bMoved = false;
 	// ˆÚ“®‘O‚ÌÀ•W
 	Vector3 vOldPos = _vPos;
