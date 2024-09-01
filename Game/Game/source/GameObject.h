@@ -14,7 +14,9 @@ public:
 		MEATBOX,
 		ENEMY,
 		BEAM_STAND,
-		BEAM_BODY
+		BEAM_BODY,
+		STICKY,
+		STICKYGROUP
 	};
 
 	GameObject(ModeBase* mode);

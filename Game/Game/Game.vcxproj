@@ -180,6 +180,8 @@
     <ClCompile Include="source\SoundAdjustScreen.cpp" />
     <ClCompile Include="source\StageSelectButton.cpp" />
     <ClCompile Include="source\StageSelectScreen.cpp" />
+    <ClCompile Include="source\Sticky.cpp" />
+    <ClCompile Include="source\StickyGroup.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
@@ -208,6 +210,8 @@
     <ClInclude Include="source\SoundAdjustScreen.h" />
     <ClInclude Include="source\StageSelectButton.h" />
     <ClInclude Include="source\StageSelectScreen.h" />
+    <ClInclude Include="source\Sticky.h" />
+    <ClInclude Include="source\StickyGroup.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ApplicationMain.h" />

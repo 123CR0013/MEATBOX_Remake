@@ -1,37 +1,64 @@
 #include "MeatBox.h"
+#include "Sticky.h"
+#include "StickyGroup.h"
 #include "Effect.h"
+
 
 MeatBox::MeatBox(ModeBase* mode) : GameObject(mode)
 {
 	_objectType = TYPE::MEATBOX;
+	_pStickyGroup = nullptr;
 }
 
 MeatBox::~MeatBox()
 {
-
+	_pStickyGroup = nullptr;
 }
 
 bool MeatBox::CheckMove(Vector3 vMove)
 {
-	Vector3 vOldPos = _vPos;
-	_vPos += vMove;
+	// 移動できるかどうか
+	bool bCanMove = false;
+
+	// ねばねばオブジェクトがついている場合
+	if(_pStickyGroup != nullptr)
+	{
+		bCanMove = _pStickyGroup->CheckMove(vMove);
+	}
+	// ねばねばオブジェクトがついていない場合
+	else
+	{
+		bCanMove = _CheckMove(vMove);
+		if(bCanMove)
+		{
+			Move(vMove);
+		}
+	}
+
+	return bCanMove;
+}
+
+bool MeatBox::_CheckMove(Vector3 vMove)
+{
+	// 移動先の座標
+	Vector3 vNextPos = _vPos + vMove;
 
 	// 移動できるかどうか
-	bool canMove = false;
+	bool bCanMove = false;
 
 	// 移動先のマップチップを取得
-	MapChip* mapChip = CheckMapChip(_vPos);
+	MapChip* mapChip = CheckMapChip(vNextPos);
 	// 移動先が床の場合
 	if (mapChip != nullptr && mapChip->GetType() == MapChip::TYPE::FLOOR) {
-		GameObject* obj = CheckObject(_vPos);
+		GameObject* obj = CheckObject(vNextPos);
 		// 移動先にオブジェクトがある場合
 		if (obj != nullptr) {
 			// 移動先のオブジェクトが敵の場合
 			if (obj->GetType() == GameObject::TYPE::ENEMY) {
 
 				// さらに1マス先のマップチップとオブジェクトを調べる
-				Vector3 vTmp = _vPos + vMove;
-				MapChip* nextMapChip = CheckMapChip(vTmp);
+				Vector3 vTmpPos = vNextPos + vMove;
+				MapChip* nextMapChip = CheckMapChip(vTmpPos);
 
 				// 敵を押しつぶせる条件
 				// プレイヤーが押したミートボックスと①または②で敵を挟む
@@ -40,68 +67,74 @@ bool MeatBox::CheckMove(Vector3 vMove)
 
 				// ①の条件判定
 				if (nextMapChip != nullptr) {
-					if (CheckMapChip(vTmp)->GetType() == MapChip::TYPE::NONE ||
-						CheckMapChip(vTmp)->GetType() == MapChip::TYPE::WALL)
+					if (CheckMapChip(vTmpPos)->GetType() == MapChip::TYPE::NONE ||
+						CheckMapChip(vTmpPos)->GetType() == MapChip::TYPE::WALL)
 					{
-						canMove = true;
+						bCanMove = true;
 					}
 				}
 				// 何もないマス
 				else {
-					canMove = true;
+					bCanMove = true;
 				}
 
-				if (!canMove) {
+				if (!bCanMove) {
 					// ②の条件判定
-					GameObject* nextObj = CheckObject(vTmp);
+					GameObject* nextObj = CheckObject(vTmpPos);
 					if (nextObj != nullptr && nextObj->GetUse())
 					{
-						if (CheckObject(vTmp)->GetType() == GameObject::TYPE::MEATBOX) {
-							canMove = true;
+						if (CheckObject(vTmpPos)->GetType() == GameObject::TYPE::MEATBOX) {
+							bCanMove = true;
 						}
 					}
 				}
 
 				// 敵を押しつぶせる場合
-				if (canMove) {
-					obj->Destroy();
-					CreateEffect(Effect::TYPE::EXPLOSION, vTmp, _mode);
+				if (bCanMove) {
+					if (_pStickyGroup != nullptr) {
+						// 削除する敵をStickyGroupに登録
+						_pStickyGroup->AddDeleteEnemy(obj);
+					}
+					else {
+						// エフェクトを生成
+						CreateEffect(Effect::TYPE::EXPLOSION, vTmpPos, _mode);
+						// 敵を削除
+						obj->Destroy();
+					}
+				}
+			}
+			// 移動先のオブジェクトがミートボックスの場合
+			else if (obj->GetType() == GameObject::TYPE::MEATBOX) {
+				// 同じStickyGroupに所属している場合は移動できる
+				if (_pStickyGroup != nullptr && _pStickyGroup == static_cast<MeatBox*>(obj)->GetStickyGroup()) {
+					bCanMove = true;
 				}
 			}
 			// 移動先のオブジェクトがビーム台の場合
-			else if(obj->GetType() == GameObject::TYPE::BEAM_STAND) {
+			else if (obj->GetType() == GameObject::TYPE::BEAM_STAND) {
 				// 移動できない
-				canMove = false;
+				bCanMove = false;
 			}
 			// 移動先のオブジェクトがビーム本体の場合
-			else if(obj->GetType() == GameObject::TYPE::BEAM_BODY) {
+			else if (obj->GetType() == GameObject::TYPE::BEAM_BODY) {
 				// 移動できる
-				canMove = true;
+				bCanMove = true;
+			}
+			// 移動先のオブジェクトがねばねば本体の場合
+			else if (obj->GetType() == GameObject::TYPE::STICKY) {
+				// 移動できる
+				bCanMove = true;
+				Sticky* pSticky = static_cast<Sticky*>(obj);
+				pSticky->AddMeatBox(this, Sticky::POSITION::ROOT);
 			}
 		}
 		// 移動先にオブジェクトがない場合
 		else {
-			canMove = true;
+			bCanMove = true;
 		}
 	}
 
-	// 移動できる場合
-	if (canMove) {
-		// エフェクトを生成
-		CreateEffect(Effect::TYPE::IMPACT, _vPos, _mode);
-
-		// マップデータの更新
-		_mapData->SetGameObject(this, _vPos);
-		return true;
-	}
-	// 移動できない場合
-	else {
-		// 元の位置に戻す
-		_vPos = vOldPos;
-		return false;
-	}
-
-	return false;
+	return bCanMove;
 }
 
 MapChip* MeatBox::CheckMapChip(Vector3 vPos)
@@ -112,4 +145,24 @@ MapChip* MeatBox::CheckMapChip(Vector3 vPos)
 GameObject* MeatBox::CheckObject(Vector3 vPos)
 {
 	return _mapData->GetGameObject(vPos);
+}
+
+void MeatBox::Move(Vector3 vMove)
+{
+	// 座標を更新
+	_vPos = _vPos + vMove;
+	// マップデータの更新
+	_mapData->SetGameObject(this, _vPos);
+
+	// エフェクトを生成
+	CreateEffect(Effect::TYPE::IMPACT, _vPos, _mode);
+}
+
+void MeatBox::DrawDebug()
+{
+	// StickyGroup情報の描画
+	if (_pStickyGroup != nullptr)
+	{
+		DrawFormatString(_vPos.x * CHIP_W, _vPos.y * CHIP_H + 50, COLOR_GREEN, "SG:%d", _pStickyGroup->GetID());
+	}
 }

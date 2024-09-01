@@ -74,6 +74,12 @@
     <ClCompile Include="source\BeamStand.cpp">
       <Filter>Object\Gimmick\Beam</Filter>
     </ClCompile>
+    <ClCompile Include="source\Sticky.cpp">
+      <Filter>Object\Gimmick\Sticky</Filter>
+    </ClCompile>
+    <ClCompile Include="source\StickyGroup.cpp">
+      <Filter>Object\Gimmick\Sticky</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ApplicationMain.h" />
@@ -159,6 +165,12 @@
     <ClInclude Include="source\BeamStand.h">
       <Filter>Object\Gimmick\Beam</Filter>
     </ClInclude>
+    <ClInclude Include="source\Sticky.h">
+      <Filter>Object\Gimmick\Sticky</Filter>
+    </ClInclude>
+    <ClInclude Include="source\StickyGroup.h">
+      <Filter>Object\Gimmick\Sticky</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ApplicationMain.h">
@@ -222,6 +234,9 @@
     </Filter>
     <Filter Include="Object\Gimmick\Beam">
       <UniqueIdentifier>{68026157-5943-4ee8-bcf0-44ece9fabe5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Gimmick\Sticky">
+      <UniqueIdentifier>{cd5b3467-1c00-420f-bfd7-064f7bdb0171}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
