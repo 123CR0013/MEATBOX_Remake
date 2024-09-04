@@ -52,9 +52,15 @@ bool ModeGame::Process() {
 	CheckObjectsToAdd();
 
 	_mapData->Process();
+
+	for (auto& object : _objects) {
+		object->ProcessInit();
+	}
 	
 	for(auto& object : _objects) {
-		object->Process();
+		object->ProcessInit();
+		if(!object->IsMove())object->Process();
+		object->ProcessFinish();
 		object->ProcessChildObjects();
 		object->AnimProcess();
 	}
