@@ -31,4 +31,7 @@ protected:
 
 
 	StickyGroup* _pStickyGroup;
+	void SetExistHole(bool bExistHole);
+	void SetExistFloor(bool bExistFloor);
+	void SetGoThroughHole(bool bGoThroughHole);
 };

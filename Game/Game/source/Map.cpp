@@ -189,9 +189,10 @@ void Map::LoadChipCSV()
 
 		LOADCHIP loadChip;
 		loadChip.chipType = static_cast<MapChip::TYPE>(std::stoi(strArray[1]) + 1);
-		std::array<std::string, 2> folderPath = {
+		std::array<std::string, 3> folderPath = {
 			"res/Mapchip/base/", 
-			"res/Mapchip/wall/"
+			"res/Mapchip/wall/",
+			"res/Mapchip/hole/"
 		};
 		loadChip.fileName = folderPath[std::stoi(strArray[1])] + strArray[2] + ".png";
 		loadChip.animNum = std::stoi(strArray[3]);
