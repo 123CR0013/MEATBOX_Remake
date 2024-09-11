@@ -1,15 +1,15 @@
 #pragma once
 #include"appframe.h"
 
-class MoveUI :public Box
+class MoveUI :public Graph
 {
 public:
-	MoveUI(class UIScreen* owner):Box(owner),_frameCount(0.f),_takeFrame(0.f){}
+	MoveUI(class UIScreen* owner):Graph(owner),_frameCount(0.f),_takeFrame(0.f){}
 	virtual ~MoveUI(){}
 
 	void Process()override
 	{
-		Box::Process();
+		Graph::Process();
 		if (_frameCount > 0.f)
 		{
 			_frameCount -= 1.f;

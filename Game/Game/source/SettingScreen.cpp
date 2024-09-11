@@ -16,43 +16,37 @@ SettingScreen::SettingScreen(ModeUI* owner,MoveUI* select, const Vector2& backPo
 	,_SELevel(0)
 	,_backPos(backPos)
 {
+	std::string fileName[] = {"ui_volume_bgm_01","ui_volume_se_01","ui_volume_back_01"};
 
-	char texts[3][255] = { "BGM","SE","–ß‚é" };
+	float poses[] = { 180.f,360.f,720.f };
+
+	auto backGround = NEW Graph(this, 0);
+	backGround->Load("res/UI/Select/SoundAdjust/ui_volume_base_01.png");
+	backGround->SetLocation(180.f + backGround->GetWidth() / 2.f, 60.f + backGround->GetHeight() / 2.f);
 
 	for (size_t i = 0; i < _buttons.size(); ++i)
 	{
-		_buttons[i] = NEW Box(this,0);
-		_buttons[i]->SetColor(255, 125, 125);
-		_buttons[i]->SetWidth(200.f);
-		_buttons[i]->SetHeight(50.f);
-		_buttons[i]->SetLocation(150.f, 200.f + 100.f * (float)i);
-
-
-		Text* text = NEW Text(this);
-		text->SetColor(255, 0, 0);
-		text->SetTextSize(30.f);
-		text->SetWidth(200.f);
-		text->SetHeight(15.f);
-		text->SetText(texts[i]);
-		text->RegistParent(_buttons[i]);
+		_buttons[i] = NEW Graph(this,0);
+		_buttons[i]->Load("res/UI/Select/SoundAdjust/" + fileName[i] + ".png");
+		_buttons[i]->SetLocation(300.f + _buttons[i]->GetWidth() / 2.f, poses[i] + _buttons[i]->GetHeight() / 2.f);
 	}
 
 	for (size_t i = 0; i < _BGMLevelUIs.size(); ++i)
 	{
-		_BGMLevelUIs[i] = NEW Box(this, 0);
-		_BGMLevelUIs[i]->SetColor(125, 125, 125);
-		_BGMLevelUIs[i]->SetWidth(50.f);
-		_BGMLevelUIs[i]->SetHeight(50.f);
-		_BGMLevelUIs[i]->SetLocation(300.f + 75.f * (float)i, 200.f);
+		_BGMLevelUIs[i] = NEW Graph(this, 0);
+		_BGMLevelUIs[i]->Load("res/UI/Select/SoundAdjust/ui_volume_control_01.png");
+		_BGMLevelUIs[i]->SetWidth(50.f + 12.f * i);
+		_BGMLevelUIs[i]->SetHeight(50.f + 12.f * i);
+		_BGMLevelUIs[i]->SetLocation(900.f + (132.f + 12.f) * (float)i, 228.f - 6.f * (float)i);
 	}
 
 	for (size_t i = 0; i < _SELevelUIs.size(); ++i)
 	{
-		_SELevelUIs[i] = NEW Box(this, 0);
-		_SELevelUIs[i]->SetColor(125, 125, 125);
-		_SELevelUIs[i]->SetWidth(50.f);
-		_SELevelUIs[i]->SetHeight(50.f);
-		_SELevelUIs[i]->SetLocation(300.f + 75.f * (float)i, 300.f);
+		_SELevelUIs[i] = NEW Graph(this, 0);
+		_SELevelUIs[i]->Load("res/UI/Select/SoundAdjust/ui_volume_control_01.png");
+		_SELevelUIs[i]->SetWidth(50.f + 12.f * i);
+		_SELevelUIs[i]->SetHeight(50.f + 12.f * i);
+		_SELevelUIs[i]->SetLocation(900.f + (132.f + 12.f) * (float)i, 448.f - 6.f * (float)i);
 	}
 
 	CreateRotateAnim("Lean", PI / 12.f, 5);

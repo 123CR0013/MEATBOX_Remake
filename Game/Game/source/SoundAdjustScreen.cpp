@@ -1,7 +1,7 @@
 #include"SoundAdjustScreen.h"
 #include"MoveUI.h"
 
-SoundAdjustScreen::SoundAdjustScreen(ModeUI* owner, MoveUI* select, std::array<class Box*, 5>* BGMLevelUIs, const Vector2& backPos,SoundItemBase::TYPE type)
+SoundAdjustScreen::SoundAdjustScreen(ModeUI* owner, MoveUI* select, std::array<class Graph*, 5>* BGMLevelUIs, const Vector2& backPos,SoundItemBase::TYPE type)
 	:UIScreen(owner)
 	,_select(select)
 	,_LevelUIs(BGMLevelUIs)

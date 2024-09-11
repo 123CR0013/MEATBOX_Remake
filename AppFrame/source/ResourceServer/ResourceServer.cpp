@@ -69,7 +69,9 @@ int		ResourceServer::LoadGraph(const TCHAR* FileName)
 
 int ResourceServer::LoadGraph(const std::string FileName)
 {   
-    return  LoadGraph(FileName.c_str());
+    int handle = LoadGraph(FileName.c_str());
+    if (handle == -1) { MessageBoxA(NULL, (FileName + ":Not Open").c_str(), NULL, MB_OK); }
+    return  handle;
 }
 
 int		ResourceServer::LoadDivGraph(const TCHAR* FileName, int AllNum,
