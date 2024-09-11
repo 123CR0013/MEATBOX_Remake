@@ -42,10 +42,9 @@ void Map::CreateMap(nlohmann::json json)
 			mapChip->SetChipType(loadChip.chipType);
 			
 			AnimationInfo* animInfo = new AnimationInfo();
-			ResourceServer::LoadDivGraph(loadChip.fileName, loadChip.animNum, loadChip.animNum, 1, 64, 64, animInfo->_graphHandle);
+			ResourceServer::LoadDivGraph(loadChip.fileName, loadChip.animNum, loadChip.animNum, 1, 100, 100, animInfo->_graphHandle);
 			animInfo->_framePerSheet = 10;
 			mapChip->AddAnimInfo(animInfo);
-
 
 			_mapChips[y * MAP_W + x] = mapChip;
 		}
@@ -204,7 +203,7 @@ void Map::LoadChipCSV()
 std::array<int, MAP_W * MAP_H> Map::LoadMapData(nlohmann::json json)
 {
 	std::array<int, MAP_W* MAP_H> mapData;
-	mapData.fill(-1);
+	mapData.fill(0);
 
 	nlohmann::json data = json.at("data");
 	int i = 0;
