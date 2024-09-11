@@ -10,6 +10,8 @@ StickyGroup::StickyGroup(ModeBase* mode) : GameObject(mode)
 	_objectType = TYPE::STICKYGROUP;
 	_bSetToMap = false;
 
+	_bGoThroughHole = false;
+
 	id = tmpId;
 	tmpId++;
 }
@@ -23,19 +25,28 @@ StickyGroup::~StickyGroup()
 
 bool StickyGroup::CheckMove(Vector3 vMove)
 {
+	// 以下の3つのフラグはミートボックスの_CheckMove関数内で更新される
+
+	// グループ内のミートボックスの移動先に穴があるか
+	_bExistHole = false;
+	// グループ内のミートボックスの移動先に床があるか
+	_bExistFloor = false;
+	// 穴を通り抜けられるか
+	// ミートボックスの_CheckMove関数内で一度でもfalseになったら、このフラグはfalseのまま
+	_bGoThroughHole = true;
+
 	// このグループ内のミートボックスがすべて移動できるかどうかを調べる
 	bool bCanMove = true;
 	for(auto pMB : _pMeatBox)
 	{
-		if (pMB->_CheckMove(vMove) == false)
-		{
-			bCanMove = false;
-			break;
-		}
+		bCanMove = pMB->_CheckMove(vMove) && bCanMove;
 	}
 
-	// すべてのミートボックスが移動できる場合
-	if (bCanMove)
+	// 以下のどちらかの場合に移動できる
+	// ①すべてのミートボックスが移動できる場合
+	// ②グループ内のミートボックスの一部が移動可能であり、穴を超えられる場合
+	bool bResult = bCanMove || (_bExistHole && _bExistFloor && _bGoThroughHole);
+	if (bResult)
 	{
 		// ミートボックスを移動
 		for(auto pMB : _pMeatBox)
@@ -53,7 +64,7 @@ bool StickyGroup::CheckMove(Vector3 vMove)
 
 	_pDeleteEnemyList.clear();
 
-	return bCanMove;
+	return bResult;
 }
 
 // 他のStickyGroupと結合する

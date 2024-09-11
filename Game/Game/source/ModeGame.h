@@ -6,9 +6,9 @@ class Map;
 class GameObject;
 
 // ÉÇÅ[Éh
-class ModeGame : public ModeBase
+class ModeGame : public ModeUI
 {
-	typedef ModeBase base;
+	typedef ModeUI base;
 public:
 	virtual bool Initialize();
 	virtual bool Terminate();

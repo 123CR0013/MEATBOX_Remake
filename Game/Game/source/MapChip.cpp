@@ -24,7 +24,7 @@ void MapChip::AnimProcess()
 
 void MapChip::Draw()
 {
-	DrawForMapChip::MyDrawModiGraph(MGetIdent(), _vPos + _vDrawOffset, 1.0f, 0.0f, 64, 64, _anim->GetGraphHandle(), 0);
+	_anim->Draw();
 }
 
 void MapChip::DrawDebug()
