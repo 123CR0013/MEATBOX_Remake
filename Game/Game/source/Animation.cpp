@@ -96,10 +96,22 @@ void Animation::SetAnimIndex(int index)
 
 int Animation::GetGraphHandle()
 {
-	if(_animIndexMax < _animIndex)
+	try
+	{
+		AnimationInfo* anim = _animInfo.at(_animIndex);
+
+		if (_animIndexMax < _animIndex ||
+			anim->_framePerSheet == 0 || 
+			anim->_tblNum == 0)
+		{
+			return -1;
+		}
+
+		return anim->_graphHandle.at(anim->_drawTbl.at(_animCnt / anim->_framePerSheet) % anim->_tblNum);
+	}
+	catch (const std::exception&)
 	{
 		return -1;
 	}
-	AnimationInfo* anim = _animInfo[_animIndex];
-	return anim->_graphHandle[anim->_drawTbl[(_animCnt / anim->_framePerSheet) % anim->_tblNum]];
+	
 }
