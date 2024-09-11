@@ -12,7 +12,7 @@
 UI::UI(UIScreen* owner,unsigned int order)
 	:_owner(owner)
 	,_alpha(1.f)
-	,_isTurn(true)
+	,_isTurn(false)
 	,_width(60.f)
 	,_height(20.f)
 	,_isOnMouse(false)
@@ -107,6 +107,16 @@ std::array<Vector2, 4> UI::GetVertexes(bool isTurn) {
 		for (int i = 0; i < 4; i++) {
 			_pos[i] = posTurn[i];
 		}
+	}
+
+	//画面サイズに合わせる
+	{
+		auto inst = ApplicationBase::GetInstance();
+
+		float scaleW = inst->DispSizeW() / 1920.f;
+		float scaleH = inst->DispSizeH() / 1080.f;
+
+		m = m * Matrix4::CreateScale(scaleW, scaleH, 0.f);
 	}
 
 	// 4つの頂点座標全てに行列を掛けて変換する

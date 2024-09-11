@@ -10,12 +10,12 @@ StageSelectButton::StageSelectButton(UIScreen* owner,size_t stageNum)
 
 	_width = 700.f;
 	_height = 700.f;
-	_transform.mLocation = Vector2(dispSizeW / 2.f + dispSizeW * static_cast<float>(_stageNum), 300.f);
+	_transform.mLocation = Vector2(1920.f / 2.f + 1920.f * static_cast<float>(_stageNum), 1080.f / 2.f);
 
 	_backGround = NEW Box(GetOwner());
 	_backGround->RegistParent(this);
-	_backGround->SetWidth(700.f);
-	_backGround->SetHeight(700.f);
+	_backGround->SetWidth(1920.f);
+	_backGround->SetHeight(1080.f);
 	_backGround->SetColor(255, 255, 255);
 
 	for (size_t i = 0; i < _buttons.size(); ++i)
@@ -76,6 +76,6 @@ StageSelectButton::~StageSelectButton()
 		data += _stageDatas[i] + ",";
 	}
 
-	std::string fileName = "res/StageData/" + std::to_string(_stageNum + 1) + ".csv";
-	CFile csv(fileName,data);
+	std::string fileName = "data/StageData/" + std::to_string(_stageNum + 1) + ".amg";
+	ZFile save(fileName,data);
 }

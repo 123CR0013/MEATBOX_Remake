@@ -13,33 +13,27 @@ MenuScreen::MenuScreen(ModeUI* owner)
 	,_buttonNum(0)
 {
 
-	char texts[3][255] = { "‘±‚¯‚é","Ý’è","‚â‚ß‚é" };
+	std::string names[] = {"ui_menu_resume_01","ui_menu_volume_01","ui_menu_quit_01"};
+
+	auto backGround = NEW Graph(this,0);
+	backGround->Load("res/UI/Select/Menu/ui_menu_base_01.png");
+	backGround->SetLocation(60.f + backGround->GetWidth() / 2.f, 60.f + backGround->GetHeight() / 2.f);
+
+	float poses[] = {180.f,360.f,720.f};
 
 	for (size_t i =0;i< _buttons.size();++i)
 	{
-		_buttons[i] = NEW Box(this,0);
-		_buttons[i]->SetColor(255, 255, 255);
-		_buttons[i]->SetWidth(200.f);
-		_buttons[i]->SetHeight(50.f);
-		_buttons[i]->SetLocation(150.f, 200.f + 100.f* (float)i);
-
-
-		Text* text = NEW Text(this);
-		text->SetColor(255, 0, 0);
-		text->SetTextSize(30.f);
-		text->SetWidth(200.f);
-		text->SetHeight(15.f);
-		text->SetText(texts[i]);
-		text->RegistParent(_buttons[i]);
+		_buttons[i] = NEW Graph(this,1);
+		_buttons[i]->Load("res/UI/Select/Menu/" + names[i] + ".png");
+		_buttons[i]->SetLocation(240.f + _buttons[i]->GetWidth() / 2.f,  poses[i] + _buttons[i]->GetHeight() / 2.f);
 	}
 
-	CreateRotateAnim("Lean", PI / 12.f, 5);
+	CreateRotateAnim("Lean", PI / 18.f, 5);
 
 	_buttons.front()->PlayAnimation("Lean");
 
 	_select = NEW MoveUI(this);
-	_select->SetColor(0, 255, 0);
-	_select->SetWidth(50.f);
+	_select->Load("res/UI/Select/ui_selecticon_01.png");
 	_select->SetLocation(_buttons.front()->GetLocation());
 	_select->SetTakeFrame(TAKE_FRAME);
 }

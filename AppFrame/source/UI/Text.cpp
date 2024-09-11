@@ -17,31 +17,9 @@ void Text::Draw()
 	}
 
 	auto _pos = GetVertexes();
-	/*文字1マス分の縦線の描画*/
-	//for (float i = 0; i < 2; ++i)
-	//{
-	//	float rate = (float)i;
-
-	//	auto s = Vector2::Lerp(_pos[0], _pos[1], rate);
-	//	auto e = Vector2::Lerp(_pos[3], _pos[2], rate);
-
-	//	DrawLineAA(s.x, s.y, e.x, e.y, GetColor(0, 255, 255));
-	//}
-
-	///*文字1マス分の横線の描画*/
-	//for (float i = 0; i < 2; ++i)
-	//{
-	//	float rate = (float)i;
-
-	//	auto s = Vector2::Lerp(_pos[0], _pos[3], rate);
-	//	auto e = Vector2::Lerp(_pos[1], _pos[2], rate);
-
-	//	DrawLineAA(s.x, s.y, e.x, e.y, GetColor(255, 255, 255));
-	//}
 
 	size_t columSize = static_cast<size_t>(_width / _textSize);
 
-	//改行数 = 行数
 	size_t lineSize = 0;
 	{	size_t pos = text.find("\n");
 	while (pos != std::string::npos)
@@ -69,11 +47,11 @@ void Text::Draw()
 		//表示するバイト数
 		size_t size = StringUtility::Check(text[pos]);
 
-		Vector2 lineRightTop = Vector2::Lerp(_pos[0], drawAreaLeftBottom, (float)lineNum / (float)lineSize);
-		Vector2 lineRightBottom = Vector2::Lerp(_pos[0], drawAreaLeftBottom, ((float)(lineNum + 1) / (float)lineSize));
+		Vector2 lineRightTop = Vector2::Lerp(_pos[1], drawAreaRightBottom, (float)lineNum / (float)lineSize);
+		Vector2 lineRightBottom = Vector2::Lerp(_pos[1], drawAreaRightBottom, ((float)(lineNum + 1) / (float)lineSize));
 
-		Vector2 lineLeftTop = Vector2::Lerp(_pos[1], drawAreaRightBottom, (float)lineNum / (float)lineSize);
-		Vector2 lineLeftBottom = Vector2::Lerp(_pos[1], drawAreaRightBottom, ((float)(lineNum + 1) / (float)lineSize));
+		Vector2 lineLeftTop = Vector2::Lerp(_pos[0], drawAreaLeftBottom, (float)lineNum / (float)lineSize);
+		Vector2 lineLeftBottom = Vector2::Lerp(_pos[0], drawAreaLeftBottom, ((float)(lineNum + 1) / (float)lineSize));
 
 		Vector2 leftTop = Vector2::Lerp(lineLeftTop, lineRightTop, (float)columNum / (float)columSize);
 		Vector2 leftBottom = Vector2::Lerp(lineLeftBottom, lineRightBottom, (float)(columNum) / (float)columSize);

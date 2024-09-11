@@ -11,10 +11,9 @@ public:
 
 private:
 	unsigned int _buttonNum;
-	std::array<class Box*, 3>_buttons;
-
-	std::array<class Box*, 5>_BGMLevelUIs;
-	std::array<class Box*, 5>_SELevelUIs;
+	std::array<class Graph*, 3>_buttons;
+	std::array<class Graph*, 5>_BGMLevelUIs;
+	std::array<class Graph*, 5>_SELevelUIs;
 
 	unsigned int _BGMLevel;
 	unsigned int _SELevel;
