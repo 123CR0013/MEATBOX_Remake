@@ -249,24 +249,31 @@ void ModeGame::CreatePlayer(Vector3 vPos)
 {
 	Player* player = new Player(this);
 	player->SetPos(vPos);
-	player->SetDrawOffset(Vector3(0, -0.2f, 0));
+	player->SetDrawOffset(Vector3(0, -0.4f, 0));
 	std::vector<int> plDrawTbl = { 0, 1, 2, 2, 2, 1 };
 
 	AnimationInfo* animInfo = new AnimationInfo();
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Player/chararight_a.png"));
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Player/chararight_b.png"));
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Player/chararight_c.png"));
+	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Player/ch_girl_default.png"));
 	animInfo->_framePerSheet = 10;
-	animInfo->_drawTbl = plDrawTbl;
+	//animInfo->_drawTbl = plDrawTbl;
 	player->AddAnimInfo(animInfo);
+	player->SetAnimSize(160, 160);
 
-	AnimationInfo* animInfo2 = new AnimationInfo();
-	animInfo2->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Player/charaleft_a.png"));
-	animInfo2->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Player/charaleft_b.png"));
-	animInfo2->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Player/charaleft_c.png"));
-	animInfo2->_framePerSheet = 10;
-	animInfo2->_drawTbl = plDrawTbl;
-	player->AddAnimInfo(animInfo2);
+	//AnimationInfo* animInfo = new AnimationInfo();
+	//animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Player/chararight_a.png"));
+	//animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Player/chararight_b.png"));
+	//animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Player/chararight_c.png"));
+	//animInfo->_framePerSheet = 10;
+	//animInfo->_drawTbl = plDrawTbl;
+	//player->AddAnimInfo(animInfo);
+
+	//AnimationInfo* animInfo2 = new AnimationInfo();
+	//animInfo2->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Player/charaleft_a.png"));
+	//animInfo2->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Player/charaleft_b.png"));
+	//animInfo2->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Player/charaleft_c.png"));
+	//animInfo2->_framePerSheet = 10;
+	//animInfo2->_drawTbl = plDrawTbl;
+	//player->AddAnimInfo(animInfo2);
 
 	_objects.push_back(player);
 }
@@ -279,12 +286,18 @@ void ModeGame::CreateMeatBox(Vector3 vPos)
 	std::vector<int> mbDrawTbl = { 0, 1, 2, 2, 2, 1, 0 };
 
 	AnimationInfo* animInfo = new AnimationInfo();
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/MeatBox/Meat_a.png"));
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/MeatBox/Meat_b.png"));
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/MeatBox/Meat_c.png"));
+	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/MeatBox/ch_meatbox_default.png"));
 	animInfo->_framePerSheet = 10;
-	animInfo->_drawTbl = mbDrawTbl;
+	//animInfo->_drawTbl = mbDrawTbl;
 	meatBox->AddAnimInfo(animInfo);
+
+	//AnimationInfo* animInfo = new AnimationInfo();
+	//animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/MeatBox/Meat_a.png"));
+	//animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/MeatBox/Meat_b.png"));
+	//animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/MeatBox/Meat_c.png"));
+	//animInfo->_framePerSheet = 10;
+	//animInfo->_drawTbl = mbDrawTbl;
+	//meatBox->AddAnimInfo(animInfo);
 
 	_objects.push_back(meatBox);
 }
