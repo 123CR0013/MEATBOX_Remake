@@ -2,6 +2,7 @@
 #include "ObjectBase.h"
 #include "DrawForMapChip.h"
 
+#include "Map.h"
 
 Animation::Animation(ObjectBase* object)
 {
@@ -16,8 +17,8 @@ Animation::Animation(ObjectBase* object)
 	_zoom = 1.0f;
 	_angle = 0.0f;
 	// デフォルトの描画サイズはマップチップサイズと同じ
-	_width = 64;
-	_height = 64;
+	_width = CHIP_W;
+	_height = CHIP_H;
 }
 
 Animation::~Animation()

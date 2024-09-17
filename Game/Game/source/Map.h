@@ -10,12 +10,12 @@
 #include <nlohmann/json.hpp>
 
 // チップのサイズ
-#define	CHIP_W		(64)
-#define	CHIP_H		(64)
+#define	CHIP_W		(100)
+#define	CHIP_H		(100)
 
 // マップのサイズ（1辺のチップ数）
-#define	MAP_W		(30)
-#define	MAP_H		(17)
+#define	MAP_W		(20)
+#define	MAP_H		(11)
 
 class GameObject;
 
