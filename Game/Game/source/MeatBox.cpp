@@ -98,7 +98,7 @@ bool MeatBox::_CheckMove(Vector3 vMove)
 						}
 						else {
 							// エフェクトを生成
-							CreateEffect(Effect::TYPE::EXPLOSION, vTmpPos, _mode);
+							CreateEffect(Effect::TYPE::EXPLOSION, vNextPos, _mode);
 							// 敵を削除
 							obj->Destroy();
 						}
