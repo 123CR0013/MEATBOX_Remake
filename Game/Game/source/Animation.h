@@ -37,6 +37,8 @@ public:
 	void SetSize(float width, float height) { _width = width; _height = height; }
 	void SetSize(Vector2 size) { _width = size.x; _height = size.y; }
 
+	void SetDrawWithScreenPos(bool bDrawWithScreenPos) { _bDrawWithScreenPos = bDrawWithScreenPos; }
+
 
 protected:
 	ObjectBase* _parentObj;
@@ -57,6 +59,9 @@ protected:
 	float _zoom;
 	float _angle;
 	float _width, _height;
+
+	// _parentObjのvPosをスクリーン座標として扱うか
+	bool _bDrawWithScreenPos = false;
 };
 
 

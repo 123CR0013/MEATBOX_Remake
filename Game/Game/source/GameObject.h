@@ -71,6 +71,8 @@ public:
 	void SetAnimHeight(float height) { _anim->SetHeight(height); }
 	void SetAnimSize(float width, float height) { _anim->SetSize(width, height); }
 
+	void SetDrawWithScreenPos(bool bDrawWithScreenPos) { _anim->SetDrawWithScreenPos(bDrawWithScreenPos); }
+
 	void AddChildObject(GameObject* object) { _childObjects.push_back(object); }
 
 protected:

@@ -1,4 +1,5 @@
 #include "Animation.h"
+#include "appframe.h"
 #include "ObjectBase.h"
 #include "DrawForMapChip.h"
 
@@ -47,7 +48,14 @@ void Animation::Process()
 
 void Animation::Draw()
 {
-	DrawForMapChip::MyDrawModiGraph(MGetIdent(), _parentObj->GetPos() + _parentObj->GetDrawOffset(), _zoom, _angle, _width, _height, GetGraphHandle(), 0);
+	if (_bDrawWithScreenPos) 
+	{
+		MyDraw::MyDrawModiGraph(MGetIdent(), _parentObj->GetPos() + _parentObj->GetDrawOffset(), _zoom, _angle, _width, _height, GetGraphHandle(), 0);
+	}
+	else 
+	{
+		DrawForMapChip::MyDrawModiGraph(MGetIdent(), _parentObj->GetPos() + _parentObj->GetDrawOffset(), _zoom, _angle, _width, _height, GetGraphHandle(), 0);
+	}
 }
 
 void Animation::AddAnimInfo(AnimationInfo* animInfo)
