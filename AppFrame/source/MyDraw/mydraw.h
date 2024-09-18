@@ -1,6 +1,7 @@
 #pragma once
 #include "DxLib.h"		// VECTORやMATRIXを定義として使うため、.hに入れておく
 #include "../Collision/MyStructure.h"
+#include "../Math/Vector3/Vector3.h"
 
 namespace MyDraw {
 
@@ -11,6 +12,7 @@ namespace MyDraw {
 	void MyDrawTurnModiGraph(MATRIX mView, VECTOR position, float zoom, float angle, int width, int height, int cgHandle);
 
 	void MyDrawModiGraph(MATRIX mView, VECTOR position, float zoom, float angle, int width, int height, int cgHandle, int turn);
+	void MyDrawModiGraph(MATRIX mView, Vector3 position, float zoom, float angle, int width, int height, int cgHandle, int turn);
 
 
 	// 4点を指定して四角を描く

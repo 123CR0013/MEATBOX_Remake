@@ -64,9 +64,11 @@ void MyDraw::MyDrawModiGraph(MATRIX mView, VECTOR position, float zoom, float an
 	_MyDrawModiGraph(mView, position, zoom, angle, width, height, cgHandle, turn);
 }
 
-
-
-
+void MyDraw::MyDrawModiGraph(MATRIX mView, Vector3 position, float zoom, float angle, int width, int height, int cgHandle, int turn)
+{
+	VECTOR pos = VGet(position.x, position.y, position.z);
+	_MyDrawModiGraph(mView, pos, zoom, angle, width, height, cgHandle, turn);
+}
 
 // 4“_‚ðŽw’è‚µ‚ÄŽlŠp‚ð•`‚­
 void MyDraw::MyDraw4PointBox(MATRIX mView, VECTOR pos[4], unsigned int Color, int FillFlag) {
