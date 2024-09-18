@@ -68,12 +68,7 @@ void CreateEffect_Move(Vector3 vPos, ModeBase* mode)
 	effect->SetPos(vPos);
 
 	AnimationInfo* animInfo = new AnimationInfo();
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Move/dust_a.png"));
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Move/dust_b.png"));
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Move/dust_c.png"));
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Move/dust_d.png"));
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Move/dust_e.png"));
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Move/dust_f.png"));
+	ResourceServer::LoadDivGraph("res/Effect/Move/ef_smoke_sheet.png", 4, 4, 1, 100, 100, animInfo->_graphHandle);
 	animInfo->_framePerSheet = 4;
 	effect->AddAnimInfo(animInfo);
 
@@ -84,15 +79,11 @@ void CreateEffect_Impact(Vector3 vPos, ModeBase* mode)
 {
 	Effect* effect = new Effect(mode);
 	effect->SetPos(vPos);
+	effect->SetDrawOffset(Vector3(0.0f, -0.2f, 0.0f));
+	effect->SetAnimSize(160, 160);
 
 	AnimationInfo* animInfo = new AnimationInfo();
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Impact/Impact_a.png"));
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Impact/Impact_b.png"));
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Impact/Impact_c.png"));
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Impact/Impact_d.png"));
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Impact/Impact_e.png"));
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Impact/Impact_f.png"));
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Impact/Impact_g.png"));
+	ResourceServer::LoadDivGraph("res/Effect/Impact/ef_kick_sheet.png", 7, 7, 1, 160, 160, animInfo->_graphHandle);
 	animInfo->_framePerSheet = 1;
 	effect->AddAnimInfo(animInfo);
 
