@@ -73,6 +73,15 @@
     <Filter Include="ScriptEngine">
       <UniqueIdentifier>{5a855397-0490-4c3a-a1e3-1dc3210b611a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CSVFile">
+      <UniqueIdentifier>{6c67e057-b513-4c5b-aa59-8a826ac55fa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MySTL">
+      <UniqueIdentifier>{87b1e38a-11f3-4e42-ac44-1f109ddb4d3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\Matrix3">
+      <UniqueIdentifier>{d52770d4-88c4-40c0-807d-f76264b2f0c9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\ApplicationBase.cpp">
@@ -185,6 +194,15 @@
     </ClCompile>
     <ClCompile Include="source\ScriptEngine\variable.cpp">
       <Filter>ScriptEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\CSVFile\CSVFile.cpp">
+      <Filter>CSVFile</Filter>
+    </ClCompile>
+    <ClCompile Include="source\CSVFile\TextData.cpp">
+      <Filter>CSVFile</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Math\Matrix3\Matrix3.cpp">
+      <Filter>Math\Matrix3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -317,6 +335,24 @@
     </ClInclude>
     <ClInclude Include="source\ScriptEngine\variable.h">
       <Filter>ScriptEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\CSVFile\CSVFile.h">
+      <Filter>CSVFile</Filter>
+    </ClInclude>
+    <ClInclude Include="source\CSVFile\TextData.h">
+      <Filter>CSVFile</Filter>
+    </ClInclude>
+    <ClInclude Include="source\MySTL\MyIterator.h">
+      <Filter>MySTL</Filter>
+    </ClInclude>
+    <ClInclude Include="source\MySTL\MyShallowArray.h">
+      <Filter>MySTL</Filter>
+    </ClInclude>
+    <ClInclude Include="source\MySTL\MyShallowVector.h">
+      <Filter>MySTL</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Math\Matrix3\Matrix3.h">
+      <Filter>Math\Matrix3</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

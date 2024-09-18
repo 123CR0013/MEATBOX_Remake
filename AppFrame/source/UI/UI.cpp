@@ -84,25 +84,25 @@ bool UI::IsFinishAnimation()
 }
 
 std::array<Vector2, 4> UI::GetVertexes(bool isTurn) {
-	auto m = _parent ? _transform.CreateMatrix4() * _parent->GetWorldMatrix() : _transform.CreateMatrix4();
+	auto m = _parent ? _transform.CreateMatrix3() * _parent->GetWorldMatrix() : _transform.CreateMatrix3();
 
 	// 描画する画像の4つの頂点座標
-	Vector3 _pos[4] = {
+	Vector2 _pos[4] = {
 		// 通常用（左上から右回り）
-		Vector3(-_width / 2.f, -_height / 2.f, 0.f),	// 左上
-		Vector3(_width / 2.f, -_height / 2.f ,0.f),	// 右上
-		Vector3(_width / 2.f,  _height / 2.f ,0.f),	// 右下
-		Vector3(-_width / 2.f,  _height / 2.f ,0.f),	// 左下
+		{-_width / 2.f, -_height / 2.f},	// 左上
+		{_width / 2.f, -_height / 2.f },// 右上
+		{_width / 2.f,  _height / 2.f },// 右下
+		{-_width / 2.f,  _height / 2.f}	// 左下
 	};
 
 	if (_isTurn) {
 		// 反転用
-		Vector3 posTurn[4] = {
+		Vector2 posTurn[4] = {
 			// 反転用（右上から左回り）
-			Vector3(_width / 2.f, -_height / 2.f ,0.f),	// 右上
-			Vector3(-_width / 2.f, -_height / 2.f, 0.f),	// 左上
-			Vector3(-_width / 2.f,  _height / 2.f ,0.f),	// 左下
-			Vector3(_width / 2.f,  _height / 2.f ,0.f),	// 右下
+			{_width / 2.f, -_height / 2.f },	// 右上
+			{-_width / 2.f, -_height / 2.f},	// 左上
+			{-_width / 2.f,  _height / 2.f},	// 左下
+			{_width / 2.f,  _height / 2.f }	// 右下
 		};
 		for (int i = 0; i < 4; i++) {
 			_pos[i] = posTurn[i];
@@ -116,19 +116,19 @@ std::array<Vector2, 4> UI::GetVertexes(bool isTurn) {
 		float scaleW = inst->DispSizeW() / 1920.f;
 		float scaleH = inst->DispSizeH() / 1080.f;
 
-		m = m * Matrix4::CreateScale(scaleW, scaleH, 0.f);
+		m = m * Matrix3::CreateScale(scaleW, scaleH);
 	}
 
 	// 4つの頂点座標全てに行列を掛けて変換する
 	for (int i = 0; i < 4; i++) {
-		_pos[i] = Vector3::Transform(_pos[i], m);
+		_pos[i] = Vector2::Transform(_pos[i], m);
 	}
 
 	return std::array<Vector2, 4>{
-		Vector2(_pos[0].x, _pos[0].y),	//左上
-		Vector2(_pos[1].x, _pos[1].y),	//右上
-		Vector2(_pos[2].x, _pos[2].y),	//右下
-		Vector2(_pos[3].x, _pos[3].y)	//左下
+		_pos[0],	//左上
+		_pos[1],	//右上
+		_pos[2],	//右下
+		_pos[3]	//左下
 	};
 }
 
@@ -184,12 +184,13 @@ bool UI::IsRightClickRel() {
 
 void UI::RegistParent(UI* parent)
 {
-	if (this == parent)return;
+	if (this == parent || !parent)return;
 	_parent = parent;
 	_order = parent->GetOrder() + 1;
 	_owner->Sort();
 
-	_children.emplace_back(parent);
+	if (std::find(parent->GetChildren().begin(), parent->GetChildren().end(), this) != parent->GetChildren().end()) { return; }
+	parent->GetChildren().emplace_back(this);
 }
 
 void UI::RemoveParent()

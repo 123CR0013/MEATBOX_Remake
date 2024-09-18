@@ -53,9 +53,26 @@ public:
 	float GetWidth()const { return _width; }
 	float GetHeight()const { return _height; }
 	unsigned int GetOrder()const { return _order; }
+	UI* GetParent()const { return _parent; }
 
-	Matrix4 GetWorldMatrix() {
-		return _parent ? _transform.CreateMatrix4() * _parent->GetWorldMatrix() : _transform.CreateMatrix4();
+	Matrix3 GetWorldMatrix() 
+	{
+		return _parent ? _transform.CreateMatrix3() * _parent->GetWorldMatrix() : _transform.CreateMatrix3();
+	}
+
+	Vector2 GetWorldLocation()
+	{
+		return _parent ? Vector2::Transform(_transform.mLocation, _parent->GetWorldMatrix()) : _transform.mLocation;
+	}
+
+	float GetWorldRotate()
+	{
+		return _parent ? _transform.mRotate + _parent->GetWorldRotate() : _transform.mRotate;
+	}
+
+	Vector2 GetWorldScale()
+	{
+		return _parent ? Vector2::Transform(_transform.mScale , _parent->GetWorldMatrix()) : _transform.mScale;
 	}
 
 	bool OnMouseTrg()const;
