@@ -1,6 +1,8 @@
 #include "Effect.h"
 #include "EffectExplosion.h"
 #include "ModeGame.h"
+#include "Map.h"
+#include "ApplicationMain.h"
 
 Effect::Effect(ModeBase* mode) : GameObject(mode)
 {
@@ -125,37 +127,43 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode)
 		effect->SetAnimSize(w, h);
 
 		AnimationInfo* animInfo = new AnimationInfo();
-		animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Explosion/Meat/nikuhen1.png"));
-		animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Explosion/Meat/nikuhen2.png"));
-		animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Explosion/Meat/nikuhen3.png"));
-		animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Explosion/Meat/nikuhen4.png"));
-		animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Explosion/Meat/nikuhen5.png"));
-		animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Explosion/Meat/nikuhen6.png"));
+		ResourceServer::LoadDivGraph("res/Effect/Explosion/Meat/ef_meat_sheet.png", 6, 6, 1, w, h, animInfo->_graphHandle);
 		animInfo->_framePerSheet = 8;
 		effect->AddAnimInfo(animInfo);
 
 		mode->AddGameObject(effect);
 	}
 
-	// –Ú
+	// –Ú1
 	{
-		EffectExplosion* effect = new EffectExplosion(mode);
+		Effect* effect = new Effect(mode);
 		effect->SetPos(vPos);
 		effect->SetAnimSize(w, h);
 
 		AnimationInfo* animInfo = new AnimationInfo();
-		animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Explosion/Eye/me1.png"));
-		animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Explosion/Eye/me2.png"));
+		ResourceServer::LoadDivGraph("res/Effect/Explosion/Eye/ef_eye_sheet_01.png", 2, 2, 1, w, h, animInfo->_graphHandle);
 		animInfo->_framePerSheet = 8;
 		effect->AddAnimInfo(animInfo);
 
-		AnimationInfo* animInfo2 = new AnimationInfo();
-		animInfo2->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Explosion/Eye/me3.png"));
-		animInfo2->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Explosion/Eye/me4.png"));
-		animInfo2->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Explosion/Eye/me5.png"));
-		animInfo2->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Explosion/Eye/me6.png"));
-		animInfo2->_framePerSheet = 8;
-		effect->AddAnimInfo(animInfo2);
+		mode->AddGameObject(effect);
+	}
+	// –Ú2
+	{
+		Effect* effect = new Effect(mode);
+		effect->SetPos(Vector3(g_oApplicationMain.DispSizeW() / 2.0f, g_oApplicationMain.DispSizeH() / 2.0f, 0.0f));
+		effect->SetPos(Vector3(g_oApplicationMain.DispSizeW() / 2.0f, g_oApplicationMain.DispSizeH() - (h / 2.0f), 0.0f));
+		effect->SetDrawWithScreenPos(true);
+		effect->SetAnimSize(w, h);
+
+		AnimationInfo* animInfo = new AnimationInfo();
+		std::vector<int> graphHandle;
+		animInfo->_graphHandle.push_back(-1);
+		animInfo->_graphHandle.push_back(-1);
+		ResourceServer::LoadDivGraph("res/Effect/Explosion/Eye/ef_eye_sheet_02.png", 4, 4, 1, w, h, graphHandle);
+		animInfo->_graphHandle.insert(animInfo->_graphHandle.end(), graphHandle.begin(), graphHandle.end());
+
+		animInfo->_framePerSheet = 8;
+		effect->AddAnimInfo(animInfo);
 
 		mode->AddGameObject(effect);
 	}
@@ -167,15 +175,7 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode)
 		effect->SetAnimSize(w, h);
 
 		AnimationInfo* animInfo = new AnimationInfo();
-		animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Explosion/Blood/chi1.png"));
-		animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Explosion/Blood/chi2.png"));
-		animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Explosion/Blood/chi3.png"));
-		animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Explosion/Blood/chi4.png"));
-		animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Explosion/Blood/chi5.png"));
-		animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Explosion/Blood/chi6.png"));
-		animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Explosion/Blood/chi7.png"));
-		animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Explosion/Blood/chi8.png"));
-		animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Explosion/Blood/chi9.png"));
+		ResourceServer::LoadDivGraph("res/Effect/Explosion/Blood/ef_blood_sheet.png", 7, 7, 1, w, h, animInfo->_graphHandle);
 		animInfo->_framePerSheet = 8;
 		effect->AddAnimInfo(animInfo);
 
