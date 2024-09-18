@@ -16,3 +16,5 @@ public:
 protected:
 	FpsController* _fpsController;
 }; 
+
+extern ApplicationMain g_oApplicationMain;
