@@ -1,6 +1,6 @@
 #pragma once
-#include"../Vector2/Vector2.h"
 #include"../Matrix4/Matrix4.h"
+#include"../Matrix3/Matrix3.h"
 
 class Transform2 {
 public:
@@ -35,5 +35,10 @@ public:
 
 	Matrix4 CreateMatrix4() {	
 		return Matrix4::CreateRotationZ(mRotate) * Matrix4::CreateScale(mScale.x, mScale.y, 1.f) * Matrix4::CreateTranslation(Vector3(mLocation.x, mLocation.y, 0.f));
+	}
+
+	Matrix3 CreateMatrix3()
+	{
+		return Matrix3::CreateRotation(mRotate) * Matrix3::CreateScale(mScale.x, mScale.y) * Matrix3::CreateTranslation(mLocation);
 	}
 };

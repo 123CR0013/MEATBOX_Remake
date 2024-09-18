@@ -25,6 +25,9 @@
 //ZFile
 #include"ZFile/ZFile.h"
 
+//CSVFile
+#include"CSVFile/CSVFile.h"
+
 // XInput
 #include "XInput/Input/XInput.h"
 #include "XInput/Vibration/Vibration.h"

@@ -8,7 +8,7 @@
 // EffekseerForDXLib.hをインクルードします。
 #include "EffekseerForDXLib.h"
 
-#define FULLSCREEN
+//#define FULLSCREEN
 
 class ApplicationBase
 {

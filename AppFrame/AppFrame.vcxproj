@@ -166,8 +166,11 @@
     <ClCompile Include="source\Collision\2DCollision.cpp" />
     <ClCompile Include="source\Collision\3DCollision.cpp" />
     <ClCompile Include="source\Collision\MyStructure.cpp" />
+    <ClCompile Include="source\CSVFile\CSVFile.cpp" />
+    <ClCompile Include="source\CSVFile\TextData.cpp" />
     <ClCompile Include="source\Easing\Easing.cpp" />
     <ClCompile Include="source\FpsController\FpsController.cpp" />
+    <ClCompile Include="source\Math\Matrix3\Matrix3.cpp" />
     <ClCompile Include="source\Math\Matrix4\Matrix4.cpp" />
     <ClCompile Include="source\Math\MyMath\mymath.cpp" />
     <ClCompile Include="source\Math\Quaternion\Quaternion.cpp" />
@@ -206,8 +209,11 @@
     <ClInclude Include="source\Collision\2DCollision.h" />
     <ClInclude Include="source\Collision\3DCollision.h" />
     <ClInclude Include="source\Collision\MyStructure.h" />
+    <ClInclude Include="source\CSVFile\CSVFile.h" />
+    <ClInclude Include="source\CSVFile\TextData.h" />
     <ClInclude Include="source\Easing\Easing.h" />
     <ClInclude Include="source\FpsController\FpsController.h" />
+    <ClInclude Include="source\Math\Matrix3\Matrix3.h" />
     <ClInclude Include="source\Math\Matrix4\Matrix4.h" />
     <ClInclude Include="source\Math\MyMath\mymath.h" />
     <ClInclude Include="source\Math\Quaternion\Quaternion.h" />
@@ -218,6 +224,9 @@
     <ClInclude Include="source\Mode\ModeServer.h" />
     <ClInclude Include="source\Mode\ModeUI.h" />
     <ClInclude Include="source\MyDraw\mydraw.h" />
+    <ClInclude Include="source\MySTL\MyIterator.h" />
+    <ClInclude Include="source\MySTL\MyShallowArray.h" />
+    <ClInclude Include="source\MySTL\MyShallowVector.h" />
     <ClInclude Include="source\ResourceServer\ResourceServer.h" />
     <ClInclude Include="source\ScreenEffect\ScreenEffect.h" />
     <ClInclude Include="source\ScriptEngine\RevPolishCalc.h" />

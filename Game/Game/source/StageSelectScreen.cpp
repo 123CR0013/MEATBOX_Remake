@@ -43,14 +43,14 @@ void StageSelectScreen::Update() {
 		{
 			if (_selectButtons[_stageTypeNum]->GetButtons()[i]->IsRightClickTrg())
 			{
-				if (_selectButtons[_stageTypeNum]->GetStageDatas()[i] == "FALSE")
+				if (!_selectButtons[_stageTypeNum]->GetStageDatas()[i])
 				{
-					_selectButtons[_stageTypeNum]->GetStageDatas()[i] = "TRUE";
+					_selectButtons[_stageTypeNum]->GetStageDatas()[i] = true;
 					_selectButtons[_stageTypeNum]->GetButtons()[i]->SetColor(0, 255, 255);
 				}
 				else if(i != _stageNum)
 				{
-					_selectButtons[_stageTypeNum]->GetStageDatas()[i] = "FALSE";
+					_selectButtons[_stageTypeNum]->GetStageDatas()[i] = false;
 					_selectButtons[_stageTypeNum]->GetButtons()[i]->SetColor(255, 255, 0);
 				}
 			}
@@ -62,7 +62,7 @@ void StageSelectScreen::Update() {
 			_stageNum = _stageNum == 0 ? 0 : _stageNum - 1;
 
 			//そのステージがプレイできるか
-			if (_selectButtons[_stageTypeNum]->GetStageDatas()[_stageNum] != "TRUE")_stageNum++;
+			if (!_selectButtons[_stageTypeNum]->GetStageDatas()[_stageNum])_stageNum++;
 
 			_selectButtons[_stageTypeNum]->GetButtons()[_stageNum]->PlayAnimation("Select");
 		}
@@ -74,7 +74,7 @@ void StageSelectScreen::Update() {
 			_stageNum = _stageNum == size - 1 ? size - 1 : _stageNum + 1;
 
 			//そのステージがプレイできるか
-			if (_selectButtons[_stageTypeNum]->GetStageDatas()[_stageNum] != "TRUE")_stageNum--;
+			if (!_selectButtons[_stageTypeNum]->GetStageDatas()[_stageNum])_stageNum--;
 			
 			_selectButtons[_stageTypeNum]->GetButtons()[_stageNum]->PlayAnimation("Select");
 		}

@@ -4,13 +4,14 @@
 class SettingScreen :public UIScreen
 {
 public:
-	SettingScreen(class ModeUI* owner,class MoveUI* select,const Vector2& backPos);
+	SettingScreen(class ModeUI* owner);
 	virtual ~SettingScreen();
 
 	void Update()override;
 
 private:
 	unsigned int _buttonNum;
+	class Graph* _backGround;
 	std::array<class Graph*, 3>_buttons;
 	std::array<class Graph*, 5>_BGMLevelUIs;
 	std::array<class Graph*, 5>_SELevelUIs;
@@ -19,5 +20,6 @@ private:
 	unsigned int _SELevel;
 
 	class MoveUI* _select;
-	const Vector2 _backPos;
+
+	bool _isFinish;
 };

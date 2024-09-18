@@ -176,6 +176,7 @@
     <ClCompile Include="source\ModeSoundLayer.cpp" />
     <ClCompile Include="source\ObjectBase.cpp" />
     <ClCompile Include="source\Player.cpp" />
+    <ClCompile Include="source\ResultScreen.cpp" />
     <ClCompile Include="source\SettingScreen.cpp" />
     <ClCompile Include="source\SoundAdjustScreen.cpp" />
     <ClCompile Include="source\StageSelectButton.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="source\MoveUI.h" />
     <ClInclude Include="source\ObjectBase.h" />
     <ClInclude Include="source\Player.h" />
+    <ClInclude Include="source\ResultScreen.h" />
     <ClInclude Include="source\SettingScreen.h" />
     <ClInclude Include="source\SoundAdjustScreen.h" />
     <ClInclude Include="source\StageSelectButton.h" />
