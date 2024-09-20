@@ -75,9 +75,28 @@ bool ModeGame::Render() {
 	base::Render();
 
 	_mapData->Draw();
-	
-	for(auto& object : _objects) {
-		object->Draw();
+
+	// •`‰æ‡‚É•À‚Ñ‘Ö‚¦
+	std::multimap<int, GameObject*> drawObjects;
+	for (auto& object : _objects) {
+		int drawOrder = object->GetDrawOrder();
+		switch (drawOrder)
+		{
+		default:
+		{
+			int y = (int)(object->GetPos().y);
+			drawObjects.insert(std::make_pair(y, object));
+			break;
+		}
+		case DRAW_ORDER_UNDERLAP_OBJECT:
+		case DRAW_ORDER_OVERLAP_OBJECT:
+			drawObjects.insert(std::make_pair(drawOrder, object));
+			break;
+		}
+	}
+
+	for (auto& object : drawObjects) {
+		object.second->Draw();
 	}
 
 	DrawDebug();

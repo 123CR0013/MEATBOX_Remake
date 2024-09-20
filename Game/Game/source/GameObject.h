@@ -4,6 +4,11 @@
 #include "Map.h"
 #include "MapChip.h"
 
+// オブジェクトの下に描画
+#define DRAW_ORDER_UNDERLAP_OBJECT -1
+// オブジェクトの上に描画
+#define DRAW_ORDER_OVERLAP_OBJECT 10000
+
 class GameObject : public ObjectBase
 {
 public:
@@ -71,6 +76,9 @@ public:
 	void SetAnimHeight(float height) { _anim->SetHeight(height); }
 	void SetAnimSize(float width, float height) { _anim->SetSize(width, height); }
 
+	int GetDrawOrder() { return _drawOrder; }
+	void SetDrawOrder(int drawOrder) { _drawOrder = drawOrder; }
+
 	void SetDrawWithScreenPos(bool bDrawWithScreenPos) { _anim->SetDrawWithScreenPos(bDrawWithScreenPos); }
 
 	void AddChildObject(GameObject* object) { _childObjects.push_back(object); }
@@ -85,6 +93,12 @@ protected:
 
 	// アニメーション
 	Animation* _anim;
+
+	// 描画順
+	// -1: オブジェクトの下に描画（エフェクト）
+	// 0 : y座標が小さいものから描画（オブジェクト）
+	// 10000: オブジェクトの上に描画（エフェクト）
+	int _drawOrder;
 
 	std::vector<GameObject*> _childObjects;
 };

@@ -66,6 +66,7 @@ void CreateEffect_Move(Vector3 vPos, ModeBase* mode)
 {
 	Effect* effect = new Effect(mode);
 	effect->SetPos(vPos);
+	effect->SetDrawOrder(DRAW_ORDER_UNDERLAP_OBJECT);
 
 	AnimationInfo* animInfo = new AnimationInfo();
 	ResourceServer::LoadDivGraph("res/Effect/Move/ef_smoke_sheet.png", 4, 4, 1, 100, 100, animInfo->_graphHandle);
@@ -81,6 +82,7 @@ void CreateEffect_Impact(Vector3 vPos, ModeBase* mode)
 	effect->SetPos(vPos);
 	effect->SetDrawOffset(Vector3(0.0f, -0.2f, 0.0f));
 	effect->SetAnimSize(220, 220);
+	effect->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
 
 	AnimationInfo* animInfo = new AnimationInfo();
 	ResourceServer::LoadDivGraph("res/Effect/Impact/ef_kick_sheet.png", 7, 7, 1, 160, 160, animInfo->_graphHandle);
@@ -95,6 +97,7 @@ void CreateEffect_Question(Vector3 vPos, ModeBase* mode)
 	Effect* effect = new Effect(mode);
 	effect->SetPos(vPos);
 	effect->SetDrawOffset(Vector3(-0.5f, -0.5f, 0));
+	effect->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
 
 	AnimationInfo* animInfo = new AnimationInfo();
 	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Question/hatena.png"));
@@ -116,6 +119,7 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode)
 		Effect* effect = new Effect(mode);
 		effect->SetPos(vPos);
 		effect->SetAnimSize(w, h);
+		effect->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
 
 		AnimationInfo* animInfo = new AnimationInfo();
 		ResourceServer::LoadDivGraph("res/Effect/Explosion/Meat/ef_meat_sheet.png", 6, 6, 1, w, h, animInfo->_graphHandle);
@@ -130,6 +134,7 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode)
 		Effect* effect = new Effect(mode);
 		effect->SetPos(vPos);
 		effect->SetAnimSize(w, h);
+		effect->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
 
 		AnimationInfo* animInfo = new AnimationInfo();
 		ResourceServer::LoadDivGraph("res/Effect/Explosion/Eye/ef_eye_sheet_01.png", 2, 2, 1, w, h, animInfo->_graphHandle);
@@ -145,6 +150,7 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode)
 		effect->SetPos(Vector3(g_oApplicationMain.DispSizeW() / 2.0f, g_oApplicationMain.DispSizeH() - (h / 2.0f), 0.0f));
 		effect->SetDrawWithScreenPos(true);
 		effect->SetAnimSize(w, h);
+		effect->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
 
 		AnimationInfo* animInfo = new AnimationInfo();
 		std::vector<int> graphHandle;
@@ -164,6 +170,7 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode)
 		Effect* effect = new Effect(mode);
 		effect->SetPos(vPos);
 		effect->SetAnimSize(w, h);
+		effect->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
 
 		AnimationInfo* animInfo = new AnimationInfo();
 		ResourceServer::LoadDivGraph("res/Effect/Explosion/Blood/ef_blood_sheet.png", 7, 7, 1, w, h, animInfo->_graphHandle);
