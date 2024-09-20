@@ -80,11 +80,11 @@ void CreateEffect_Impact(Vector3 vPos, ModeBase* mode)
 	Effect* effect = new Effect(mode);
 	effect->SetPos(vPos);
 	effect->SetDrawOffset(Vector3(0.0f, -0.2f, 0.0f));
-	effect->SetAnimSize(160, 160);
+	effect->SetAnimSize(220, 220);
 
 	AnimationInfo* animInfo = new AnimationInfo();
 	ResourceServer::LoadDivGraph("res/Effect/Impact/ef_kick_sheet.png", 7, 7, 1, 160, 160, animInfo->_graphHandle);
-	animInfo->_framePerSheet = 1;
+	animInfo->_framePerSheet = 2;
 	effect->AddAnimInfo(animInfo);
 
 	mode->AddGameObject(effect);
