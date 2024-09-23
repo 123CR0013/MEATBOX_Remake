@@ -35,6 +35,7 @@ public: // ModeGame—p
 	virtual void AddPlayerStepCnt() {}
 	virtual int GetPlayerStepCnt() { return 0; }
 	virtual void SetGameOver() {}
+	virtual void LoadAnimData(class GameObject* gameObject, std::string name) {}
 
 private:
 	friend	ModeServer;

@@ -156,6 +156,57 @@ void ModeGame::CheckObjectsToRemove()
 	_objectsToRemove.clear();
 }
 
+void ModeGame::LoadAnimData(GameObject* gameObject, std::string name)
+{
+	if (!_bExistAnimData) 
+	{
+		std::ifstream ifs("data/Animation/AnimationData.json");
+		if (ifs)
+		{
+			ifs >> _animDataJson;
+			_bExistAnimData = true;
+		}
+		else
+		{
+			MessageBox(NULL, "アニメーションデータの読み込みに失敗しました", NULL, MB_OK);
+		}
+	}
+
+	if (_bExistAnimData) 
+	{
+		for (auto& character : _animDataJson)
+		{
+			std::string charaName = character.at("Name");
+			if (charaName != name) continue;
+
+			nlohmann::json anims = character.at("Animation");
+			for (auto& anim : anims)
+			{
+				AnimationInfo* animInfo = new AnimationInfo();
+
+				std::string fileName = anim.at("FileName");
+				ResourceServer::LoadDivGraph("res/" + fileName, anim.at("Num"), anim.at("Num"), 1, anim.at("Width"), anim.at("Height"), animInfo->_graphHandle);
+				animInfo->_framePerSheet = anim.at("Frame");
+
+				nlohmann::json drawTbl = anim.at("DrawTable");
+				std::vector<int> drawTable;
+				for (auto& tbl : drawTbl)
+				{
+					drawTable.push_back(tbl);
+				}
+				if (drawTable.size() != 0 && drawTable.at(0) != -1) 
+				{
+					animInfo->_drawTbl = drawTable;
+				}
+
+				gameObject->AddAnimInfo(animInfo);
+			}
+
+			break;
+		}
+	}
+}
+
 void ModeGame::CreateMap()
 {
 	std::ifstream ifs("data/Map/stagetest.json");
@@ -269,30 +320,9 @@ void ModeGame::CreatePlayer(Vector3 vPos)
 	Player* player = new Player(this);
 	player->SetPos(vPos);
 	player->SetDrawOffset(Vector3(0, -0.4f, 0));
-	std::vector<int> plDrawTbl = { 0, 1, 2, 2, 2, 1 };
-
-	AnimationInfo* animInfo = new AnimationInfo();
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Player/ch_girl_default.png"));
-	animInfo->_framePerSheet = 10;
-	//animInfo->_drawTbl = plDrawTbl;
-	player->AddAnimInfo(animInfo);
 	player->SetAnimSize(160, 160);
 
-	//AnimationInfo* animInfo = new AnimationInfo();
-	//animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Player/chararight_a.png"));
-	//animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Player/chararight_b.png"));
-	//animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Player/chararight_c.png"));
-	//animInfo->_framePerSheet = 10;
-	//animInfo->_drawTbl = plDrawTbl;
-	//player->AddAnimInfo(animInfo);
-
-	//AnimationInfo* animInfo2 = new AnimationInfo();
-	//animInfo2->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Player/charaleft_a.png"));
-	//animInfo2->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Player/charaleft_b.png"));
-	//animInfo2->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Player/charaleft_c.png"));
-	//animInfo2->_framePerSheet = 10;
-	//animInfo2->_drawTbl = plDrawTbl;
-	//player->AddAnimInfo(animInfo2);
+	LoadAnimData(player, "Player");
 
 	_objects.push_back(player);
 }
@@ -302,21 +332,8 @@ void ModeGame::CreateMeatBox(Vector3 vPos)
 	MeatBox* meatBox = new MeatBox(this);
 	meatBox->SetPos(vPos);
 	meatBox->SetDrawOffset(Vector3(0, -0.2f, 0));
-	std::vector<int> mbDrawTbl = { 0, 1, 2, 2, 2, 1, 0 };
 
-	AnimationInfo* animInfo = new AnimationInfo();
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/MeatBox/ch_meatbox_default.png"));
-	animInfo->_framePerSheet = 10;
-	//animInfo->_drawTbl = mbDrawTbl;
-	meatBox->AddAnimInfo(animInfo);
-
-	//AnimationInfo* animInfo = new AnimationInfo();
-	//animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/MeatBox/Meat_a.png"));
-	//animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/MeatBox/Meat_b.png"));
-	//animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/MeatBox/Meat_c.png"));
-	//animInfo->_framePerSheet = 10;
-	//animInfo->_drawTbl = mbDrawTbl;
-	//meatBox->AddAnimInfo(animInfo);
+	LoadAnimData(meatBox, "Meatbox");
 
 	_objects.push_back(meatBox);
 }
@@ -326,15 +343,8 @@ void ModeGame::CreateEnemy(Vector3 vPos)
 	Enemy* enemy = new Enemy(this);
 	enemy->SetPos(vPos);
 	enemy->SetDrawOffset(Vector3(0, -0.2f, 0));
-	std::vector<int> enDrawTbl = { 0, 1, 2, 1 };
 
-	AnimationInfo* animInfo = new AnimationInfo();
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Enemy/Namako/namako_a.png"));
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Enemy/Namako/namako_b.png"));
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Enemy/Namako/namako_c.png"));
-	animInfo->_framePerSheet = 10;
-	animInfo->_drawTbl = enDrawTbl;
-	enemy->AddAnimInfo(animInfo);
+	LoadAnimData(enemy, "Namako");
 
 	_objects.push_back(enemy);
 }
@@ -343,19 +353,10 @@ void ModeGame::CreateEnemyTomato(std::vector<Vector3> route)
 {
 	EnemyTomato* enemyTomato = new EnemyTomato(this);
 	enemyTomato->SetPos(route[0]);
+	enemyTomato->SetMoveRoute(route);
 	enemyTomato->SetDrawOffset(Vector3(0, -0.2f, 0));
 
-	enemyTomato->SetMoveRoute(route);
-
-	std::vector<int> enDrawTbl = { 0, 1, 2, 1 };
-
-	AnimationInfo* animInfo = new AnimationInfo();
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Enemy/Tomato/tomato_a.png"));
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Enemy/Tomato/tomato_b.png"));
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Character/Enemy/Tomato/tomato_c.png"));
-	animInfo->_framePerSheet = 10;
-	animInfo->_drawTbl = enDrawTbl;
-	enemyTomato->AddAnimInfo(animInfo);
+	LoadAnimData(enemyTomato, "Tomato");
 
 	_objects.push_back(enemyTomato);
 
@@ -395,10 +396,7 @@ void ModeGame::CreateBeamStand(Vector3 vPos, Vector3 vDir)
 	beamStand->SetPos(vPos);
 	beamStand->SetDir(vDir);
 
-	AnimationInfo* animInfo = new AnimationInfo();
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Gimmick/Beam/obj1_beam_01.png"));
-	animInfo->_framePerSheet = 1;
-	beamStand->AddAnimInfo(animInfo);
+	LoadAnimData(beamStand, "BeamStand");
 
 	float angle = 0.0f;
 	if(vDir == Vector3(0, -1, 0)) {
@@ -424,10 +422,7 @@ void ModeGame::CreateSticky(Vector3 vPos)
 	sticky->SetPos(vPos);
 	sticky->SetDrawOffset(Vector3(0, -0.2f, 0));
 
-	AnimationInfo* animInfo = new AnimationInfo();
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Gimmick/Sticky/Sticky.png"));
-	animInfo->_framePerSheet = 10;
-	sticky->AddAnimInfo(animInfo);
+	LoadAnimData(sticky, "Sticky");
 
 	StickyGroup* stickyGroup = new StickyGroup(this);
 	stickyGroup->AddSticky(sticky);

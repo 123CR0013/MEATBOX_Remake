@@ -43,6 +43,9 @@ protected:
 
 	int _plStepCnt;
 
+	void LoadAnimData(GameObject* gameObject, std::string name);
+	bool _bExistAnimData = false;
+	nlohmann::json _animDataJson;
 
 	void CreateMap();
 	void CreateGameObjects(nlohmann::json json);

@@ -49,10 +49,7 @@ void BeamStand::CreateBeamBody(Vector3 vPos)
 	BeamBody* beamBody = new BeamBody(_mode);
 	beamBody->SetPos(vPos);
 
-	AnimationInfo* animInfo = new AnimationInfo();
-	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Gimmick/Beam/obj1_beam_02.png"));
-	animInfo->_framePerSheet = 1;
-	beamBody->AddAnimInfo(animInfo);
+	_mode->LoadAnimData(beamBody, "BeamBody");
 
 	beamBody->SetAnimAngle(_anim->GetAngle());
 
