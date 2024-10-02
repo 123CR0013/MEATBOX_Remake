@@ -10,7 +10,7 @@ bool ApplicationMain::Initialize(HINSTANCE hInstance) {
 	if (!base::Initialize(hInstance)) { return false; }
 	// ƒ‚[ƒh‚Ì“o˜^
 	ModeServer::GetInstance()->Add(NEW ModeSoundLayer(), 0, "SoundLayer");
-	ModeServer::GetInstance()->Add(NEW ModeSelect(), 1, "ModeGame");
+	ModeServer::GetInstance()->Add(NEW ModeSelect(), 1, "ModeSelect");
 
 	// FPS‚ðˆÀ’è‚³‚¹‚é‚½‚ß‚ÌƒNƒ‰ƒX‚ð‰Šú‰»
 	_fpsController = NEW FpsController();
@@ -54,8 +54,6 @@ bool ApplicationMain::Render() {
 #ifdef _DEBUG
 	_fpsController->DrawFps(10, 10);
 #endif // _DEBUG
-
-	ModeServer::GetInstance();
 
 	return true;
 }
