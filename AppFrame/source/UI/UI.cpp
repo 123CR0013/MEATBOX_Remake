@@ -185,6 +185,7 @@ bool UI::IsRightClickRel() {
 void UI::RegistParent(UI* parent)
 {
 	if (this == parent || !parent)return;
+	RemoveParent();
 	_parent = parent;
 	_order = parent->GetOrder() + 1;
 	_owner->Sort();

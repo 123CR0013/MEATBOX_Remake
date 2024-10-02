@@ -178,6 +178,7 @@
     <ClCompile Include="source\Math\Vector3\Vector3.cpp" />
     <ClCompile Include="source\Mode\ModeBase.cpp" />
     <ClCompile Include="source\Mode\ModeServer.cpp" />
+    <ClCompile Include="source\Mode\ModeTimeTable.cpp" />
     <ClCompile Include="source\Mode\ModeUI.cpp" />
     <ClCompile Include="source\MyDraw\mydraw.cpp" />
     <ClCompile Include="source\ResourceServer\ResourceServer.cpp" />
@@ -223,6 +224,7 @@
     <ClInclude Include="source\Mode\ModeBase.h" />
     <ClInclude Include="source\Mode\ModeServer.h" />
     <ClInclude Include="source\Mode\ModeUI.h" />
+    <ClInclude Include="source\Mode\ModeTimeTable.h" />
     <ClInclude Include="source\MyDraw\mydraw.h" />
     <ClInclude Include="source\MySTL\MyIterator.h" />
     <ClInclude Include="source\MySTL\MyShallowArray.h" />
