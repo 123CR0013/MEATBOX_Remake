@@ -1,31 +1,43 @@
 #include"SoundAdjustScreen.h"
 #include"MoveUI.h"
 
-SoundAdjustScreen::SoundAdjustScreen(ModeUI* owner, MoveUI* select, std::array<class Graph*, 5>* BGMLevelUIs, const Vector2& backPos,SoundItemBase::TYPE type)
+constexpr float TAKE_FRAME = 5.f;
+
+SoundAdjustScreen::SoundAdjustScreen(ModeUI* owner, MoveUI* carsol, std::array<class Graph*, 5>* BGMLevelUIs,SoundItemBase::TYPE type)
 	:UIScreen(owner)
-	,_select(select)
+	,_carsol(carsol)
 	,_LevelUIs(BGMLevelUIs)
-	,_backPos(backPos)
+	,_backPos(carsol->GetLocation())
 	,_type(type)
 {
+
+	if (carsol->GetParent())
+	{
+		_inWorldMatParent = Matrix3::CreateTranslation(carsol->GetParent()->GetLocation()).Invert();
+	}
+	else
+	{
+		_inWorldMatParent = Matrix3::Identity;
+	}
+
 	_level = global._soundServer->GetVolume(type) / (255 / _LevelUIs->size());
 
 	_level = (unsigned int)MyMath::Clamp(0.f, (float)(_LevelUIs->size() - 1), (float)_level);
 
-	_select->SetFrom(_select->GetLocation());
-	_select->SetTo((*_LevelUIs)[_level]->GetLocation());
-	_select->SetFrameCount(20.f);
+	_carsol->SetFrom(_carsol->GetLocation());
+	_carsol->SetTo((*_LevelUIs)[_level]->GetWorldLocation() * _inWorldMatParent);
+	_carsol->SetFrameCount(0.f);
 
-	RegistUI(_select);
+	RegistUI(_carsol);
 }
 
 SoundAdjustScreen::~SoundAdjustScreen()
 {
-	RemoveUI(_select);
+	RemoveUI(_carsol);
 
 	std::string outData = std::to_string(global._soundServer->GetSEVolume()) + "," + std::to_string(global._soundServer->GetBGMVolume()) + "," + std::to_string(global._soundServer->GetVOICEVolume());
 	
-	CFile volumeFile("GameParam/Volume.txt",outData);
+	CFile volumeFile("data/Volume.txt",outData);
 }
 
 void SoundAdjustScreen::Update()
@@ -36,13 +48,12 @@ void SoundAdjustScreen::Update()
 	{
 		if (_level > 0)
 		{
-			//(*mLevelUIs)[mLevel]->ReverseAnimation();
 			_level =  _level - 1;
-			_select->SetFrom(_select->GetLocation());
-			_select->SetTo((*_LevelUIs)[_level]->GetLocation());
-			_select->SetFrameCount(20.f);
+			_carsol->SetFrom(_carsol->GetLocation());
+			_carsol->SetTo((*_LevelUIs)[_level]->GetWorldLocation() * _inWorldMatParent);
+			_carsol->SetFrameCount(0.f);
 
-			global._soundServer->ChangeVolume(_type, (float)(_level + 1) / (float)_LevelUIs->size());
+			global._soundServer->ChangeVolume(_type, (float)(_level) / (float)_LevelUIs->size());
 
 			if (_type == SoundItemBase::TYPE::SE) { 
 				global._soundServer->Play("SE_06");
@@ -54,11 +65,11 @@ void SoundAdjustScreen::Update()
 		if (_level < (*_LevelUIs).size() - 1) {
 			_level = _level + 1;
 
-			_select->SetFrom(_select->GetLocation());
-			_select->SetTo((*_LevelUIs)[_level]->GetLocation());
-			_select->SetFrameCount(20.f);
+			_carsol->SetFrom(_carsol->GetLocation());
+			_carsol->SetTo((*_LevelUIs)[_level]->GetWorldLocation() * _inWorldMatParent);
+			_carsol->SetFrameCount(0.f);
 
-			global._soundServer->ChangeVolume(_type, (float)(_level + 1)/ (float)_LevelUIs->size());
+			global._soundServer->ChangeVolume(_type, (float)(_level)/ (float)_LevelUIs->size());
 
 			if (_type == SoundItemBase::TYPE::SE) { 
 				global._soundServer->Play("SE_06");
@@ -69,9 +80,9 @@ void SoundAdjustScreen::Update()
 	//Zƒ{ƒ^ƒ“‚Å–ß‚é
 	if (global._trg & PAD_INPUT_1)
 	{
-		_select->SetFrom(_select->GetLocation());
-		_select->SetTo(_backPos);
-		_select->SetFrameCount(20.f);
+		_carsol->SetFrom(_carsol->GetLocation());
+		_carsol->SetTo(_backPos);
+		_carsol->SetFrameCount(0.f);
 		DeleteUIScreen(this);
 	}
 

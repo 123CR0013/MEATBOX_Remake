@@ -74,6 +74,7 @@
 
 //Mode
 #include"Mode/ModeUI.h"
+#include"Mode/ModeTimeTable.h"
 
 //UI
 #include"UI/Box.h"

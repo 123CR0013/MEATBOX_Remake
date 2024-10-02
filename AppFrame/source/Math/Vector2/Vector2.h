@@ -24,6 +24,7 @@ public:
 	friend const Vector2 operator/(const Vector2& left, const Vector2& right);
 	friend const Vector2 operator/(const Vector2& left, const float right);
 	friend const Vector2 operator/(const float left, const Vector2& right);
+	friend const Vector2 operator*(const Vector2& left, const class Matrix3& right);
 
 	bool operator==(const Vector2& right);
 	bool operator!=(const Vector2& right);

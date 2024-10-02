@@ -195,14 +195,17 @@
     <ClCompile Include="source\ScriptEngine\variable.cpp">
       <Filter>ScriptEngine</Filter>
     </ClCompile>
-    <ClCompile Include="source\CSVFile\CSVFile.cpp">
-      <Filter>CSVFile</Filter>
-    </ClCompile>
     <ClCompile Include="source\CSVFile\TextData.cpp">
       <Filter>CSVFile</Filter>
     </ClCompile>
     <ClCompile Include="source\Math\Matrix3\Matrix3.cpp">
       <Filter>Math\Matrix3</Filter>
+    </ClCompile>
+    <ClCompile Include="source\CSVFile\CSVFile.cpp">
+      <Filter>CSVFile</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Mode\ModeTimeTable.cpp">
+      <Filter>ModeServer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -336,9 +339,6 @@
     <ClInclude Include="source\ScriptEngine\variable.h">
       <Filter>ScriptEngine</Filter>
     </ClInclude>
-    <ClInclude Include="source\CSVFile\CSVFile.h">
-      <Filter>CSVFile</Filter>
-    </ClInclude>
     <ClInclude Include="source\CSVFile\TextData.h">
       <Filter>CSVFile</Filter>
     </ClInclude>
@@ -353,6 +353,12 @@
     </ClInclude>
     <ClInclude Include="source\Math\Matrix3\Matrix3.h">
       <Filter>Math\Matrix3</Filter>
+    </ClInclude>
+    <ClInclude Include="source\CSVFile\CSVFile.h">
+      <Filter>CSVFile</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Mode\ModeTimeTable.h">
+      <Filter>ModeServer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

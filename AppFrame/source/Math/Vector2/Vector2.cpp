@@ -42,6 +42,11 @@ const Vector2 operator/(const float left, const Vector2& right)
 	return Vector2(right) /= left;
 }
 
+const Vector2 operator*(const Vector2& left, const Matrix3& right)
+{
+	return Vector2::Transform(left, right);
+}
+
 Vector2 Vector2::operator+=(const Vector2& right) 
 {
 	x = x + right.x;

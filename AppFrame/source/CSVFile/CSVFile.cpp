@@ -72,18 +72,26 @@ void CSVFile::Parse(std::string data, Type type,Cell &output)
 				if (subEndPos == std::string::npos)break;
 			}
 
-			subEndPos = data.substr(subStartPos).find("\n");
+			size_t breakMrkSize = 2;
+			subEndPos = data.substr(subStartPos).find("\r");
+			if (subEndPos != std::string::npos)subEndPos = data.substr(subStartPos).find("\n"); breakMrkSize = 1;
+
 			if (subEndPos != std::string::npos) {
 				output[i].emplace_back(data.substr(subStartPos, subEndPos));
-				subStartPos += subEndPos + 1;
+				subStartPos += subEndPos + breakMrkSize;
 				subEndPos = data.substr(subStartPos).find(",");
 			}
-			else { output[i].emplace_back(data.substr(subStartPos)); break; }
+			else { output[i].emplace_back(data.substr(subStartPos));}
 
 			if (output[i].empty())continue;
 
-			//末尾が空のデータなら、削除する
-			while (output[i].back().GetType() == TextData::Type::Empty)
+			//末尾が空のデータ、改行コード、カンマなら、削除する
+			while (output[i].back().GetType() == TextData::Type::Empty
+				|| output[i].back().GetStr() == "\r"
+				|| output[i].back().GetStr() == "\n"
+				|| output[i].back().GetStr() == "\r\n"
+				|| output[i].back().GetStr() == ","
+				)
 			{
 				output[i].pop_back();
 			}
@@ -137,8 +145,13 @@ void CSVFile::Parse(std::string data, Type type,Cell &output)
 
 			if (output[i].empty())continue;
 
-			//末尾が空のデータなら、削除する
-			while (output[i].back().GetType() == TextData::Type::Empty)
+			//末尾が空のデータ、改行コード、カンマなら、削除する
+			while (output[i].back().GetType() == TextData::Type::Empty
+				|| output[i].back().GetStr() == "\r"
+				|| output[i].back().GetStr() == "\n"
+				|| output[i].back().GetStr() == "\r\n"
+				|| output[i].back().GetStr() == ","
+				)
 			{
 				output[i].pop_back();
 			}
