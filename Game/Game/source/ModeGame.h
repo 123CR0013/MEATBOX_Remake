@@ -28,6 +28,7 @@ public:
 
 protected:
 	Map* _mapData;
+	GameObject* _player;
 	std::vector<GameObject*> _objects;
 
 	// 追加予約オブジェクトの確認
@@ -60,4 +61,6 @@ protected:
 	void CreateSticky(Vector3 vPos);
 
 	bool _bResult = false;
+
+	void SortGameObjectInDrawOrder(std::multimap<int, GameObject*>& result, GameObject* gameObject);
 };

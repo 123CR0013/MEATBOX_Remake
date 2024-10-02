@@ -57,9 +57,15 @@ bool ModeGame::Process() {
 
 	_mapData->Process();
 
+	_player->ProcessInit();
 	for (auto& object : _objects) {
 		object->ProcessInit();
 	}
+
+	if (!_player->IsMove())_player->Process();
+	_player->ProcessFinish();
+	_player->ProcessChildObjects();
+	_player->AnimProcess();
 	
 	for(auto& object : _objects) {
 		object->ProcessInit();
@@ -103,21 +109,9 @@ bool ModeGame::Render() {
 
 	// ï`âÊèáÇ…ï¿Ç—ë÷Ç¶
 	std::multimap<int, GameObject*> drawObjects;
+	SortGameObjectInDrawOrder(drawObjects, _player);
 	for (auto& object : _objects) {
-		int drawOrder = object->GetDrawOrder();
-		switch (drawOrder)
-		{
-		default:
-		{
-			int y = (int)(object->GetPos().y);
-			drawObjects.insert(std::make_pair(y, object));
-			break;
-		}
-		case DRAW_ORDER_UNDERLAP_OBJECT:
-		case DRAW_ORDER_OVERLAP_OBJECT:
-			drawObjects.insert(std::make_pair(drawOrder, object));
-			break;
-		}
+		SortGameObjectInDrawOrder(drawObjects, object);
 	}
 
 	for (auto& object : drawObjects) {
@@ -349,7 +343,8 @@ void ModeGame::CreatePlayer(Vector3 vPos)
 
 	LoadAnimData(player, "Player");
 
-	_objects.push_back(player);
+	//_objects.push_back(player);
+	_player = player;
 }
 
 void ModeGame::CreateMeatBox(Vector3 vPos)
@@ -454,5 +449,23 @@ void ModeGame::CreateSticky(Vector3 vPos)
 
 	_objects.push_back(sticky);
 	_objects.push_back(stickyGroup);
+}
+
+void ModeGame::SortGameObjectInDrawOrder(std::multimap<int, GameObject*>& result, GameObject* gameObject)
+{
+	int drawOrder = gameObject->GetDrawOrder();
+	switch (drawOrder)
+	{
+	default:
+	{
+		int y = (int)(gameObject->GetPos().y);
+		result.insert(std::make_pair(y, gameObject));
+		break;
+	}
+	case DRAW_ORDER_UNDERLAP_OBJECT:
+	case DRAW_ORDER_OVERLAP_OBJECT:
+		result.insert(std::make_pair(drawOrder, gameObject));
+		break;
+	}
 }
 
