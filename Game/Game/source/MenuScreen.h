@@ -14,7 +14,7 @@ private:
 	class Graph* _backGround;
 	std::array<class Graph*,3>_buttons;
 
-	class MoveUI* _carsol;
+	class MoveUI* _select;
 
 	bool _isFinish;
 };

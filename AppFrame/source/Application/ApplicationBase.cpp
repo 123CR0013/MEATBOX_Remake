@@ -1,5 +1,4 @@
 #include "ApplicationBase.h"
-#include"../Mode/ModeTimeTable.h"
 
 ApplicationBase	*ApplicationBase::_lpInstance = NULL;
 
@@ -63,9 +62,6 @@ bool ApplicationBase::Initialize(HINSTANCE hInstance) {
 
 	// モードサーバの初期化
 	_serverMode = new ModeServer();
-
-
-	ModeServer::GetInstance()->Add(new ModeTimeTable(), INT_MAX, ModeTimeTable::Name().c_str());
 
 	return true;
 }

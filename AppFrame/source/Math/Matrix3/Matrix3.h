@@ -84,12 +84,6 @@ public:
 		return *this;
 	}
 
-	Matrix3 Invert(Matrix3 in);
-
-	Matrix3 Invert();
-
-	void Inverted();
-
 	// Create a scale matrix with x and y scales
 	static Matrix3 CreateScale(float xScale, float yScale)
 	{
@@ -126,21 +120,16 @@ public:
 		return Matrix3(temp);
 	}
 
-	static Matrix3 CreateTranslation(float x, float y)
+	// Create a translation matrix (on the xy-plane)
+	static Matrix3 CreateTranslation(const Vector2& trans)
 	{
 		float temp[3][3] =
 		{
 			{ 1.0f, 0.0f, 0.0f },
 			{ 0.0f, 1.0f, 0.0f },
-			{ x, y, 1.0f },
+			{ trans.x, trans.y, 1.0f },
 		};
 		return Matrix3(temp);
-	}
-
-	// Create a translation matrix (on the xy-plane)
-	static Matrix3 CreateTranslation(const Vector2& trans)
-	{
-		return CreateTranslation(trans.x, trans.y);
 	}
 
 	static const Matrix3 Identity;

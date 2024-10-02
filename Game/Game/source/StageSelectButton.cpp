@@ -33,7 +33,7 @@ StageSelectButton::StageSelectButton(UIScreen* owner,size_t stageNum)
 
 	if (ifs.Success())
 	{
-		CSVFile::Cell data;
+		Cell data;
 		CSVFile::Parse(ifs.DataStr(), CSVFile::Type::LINE, data);
 
 		for (size_t i=0; i< data["Button"].size();++i)
@@ -74,7 +74,7 @@ StageSelectButton::~StageSelectButton()
 
 	if (ifs.Success())
 	{
-		CSVFile::Cell data;
+		Cell data;
 		CSVFile::Parse(ifs.DataStr(), CSVFile::Type::LINE, data);
 
 		for(size_t i=0;i<_stageDatas.size();++i)

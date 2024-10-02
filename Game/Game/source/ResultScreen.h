@@ -12,7 +12,5 @@ public:
 
 private:
 	int _score;
-	Text* _scoreText;
-	int _eleNum;
-	int _frameCount;
+
 };

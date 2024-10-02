@@ -1,6 +1,5 @@
 #pragma once
 #include"UI.h"
-#include<functional>
 
 class Button :public UI {
 public:
@@ -33,11 +32,6 @@ public:
 	void SetColor(unsigned int r, unsigned int g, unsigned int b) {
 		_color = GetColor(r, g, b);
 	}
-
-	void SetExe(std::function<void()>exe) { _exe = exe; }
-	void Push() { _exe(); }
 private:
 	unsigned int _color;
-
-	std::function<void()>_exe;
 };
