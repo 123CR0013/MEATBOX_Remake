@@ -1,6 +1,8 @@
 #pragma once	// .hの先頭に記述。#includeでこのファイルを何度読み込みしても、1度しか読み込まない
 #include <math.h>
 #include<vector>
+#include<map>
+#include<string>
 #include<functional>
 
 // 様々なイージング
@@ -90,4 +92,31 @@ namespace Easing
 	constexpr unsigned char OUT_BACK = 23;
 	constexpr unsigned char OUT_BOUNCE = 24;
 	constexpr unsigned char OUT_ELASTIC = 25;
+
+	static std::map<std::string, unsigned char>EleNumMap =
+	{
+		{"LINEAR" , LINEAR},
+		{"IN_QUAD" , IN_QUAD},
+		{"OUT_QUAD" , OUT_QUAD},
+		{"INOUT_QUAD" , INOUT_QUAD},
+		{"IN_CUBIC" , IN_CUBIC},
+		{"OUT_CUBIC" , OUT_CUBIC},
+		{"INOUT_CUBIC" , INOUT_CUBIC},
+		{"IN_QUART" , IN_QUART},
+		{"OUT_QUART" , OUT_QUART},
+		{"INOUT_QUART" , INOUT_QUART},
+		{"IN_QUINT" , IN_QUINT},
+		{"OUT_QUINT" , OUT_QUINT},
+		{"INOUT_QUINT" , INOUT_QUINT},
+		{"IN_SINE" , IN_SINE},
+		{"OUT_SINE" , OUT_SINE},
+		{"INOUT_SINE" , INOUT_SINE},
+		{"IN_EXPO" , IN_EXPO},
+		{"OUT_EXPO" , OUT_EXPO},
+		{"INOUT_EXPO" , INOUT_EXPO},
+		{"IN_BACK" , IN_BACK},
+		{"OUT_BACK" , OUT_BACK},
+		{"OUT_BOUNCE" , OUT_BOUNCE},
+		{"OUT_BOUNCE" , OUT_ELASTIC}
+	};
 };

@@ -30,10 +30,6 @@ TextData::Type TextData::Analize()
 	{
 		return Type::Empty;
 	}
-	else if(_data == "\n"||_data == "\r"||_data =="\r\n")
-	{
-		return Type::Empty;
-	}
 
 	//Bool
 	if (_data == "TRUE" || _data == "FALSE")
