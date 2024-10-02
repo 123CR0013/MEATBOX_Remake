@@ -28,6 +28,9 @@ public:
 		int XSize, int YSize) 
 	{
 		_handles.resize(AllNum);
+		_width = XSize;
+		_height = YSize;
+
 		return ResourceServer::LoadDivGraph(
 			FileName,AllNum,
 			XNum,YNum,

@@ -67,8 +67,8 @@
     </ClCompile>
     <ClCompile Include="source\StageSelectScreen.cpp">
       <Filter>Mode\Select</Filter>
-	</ClCompile>
-	<ClCompile Include="source\BeamBody.cpp">
+    </ClCompile>
+    <ClCompile Include="source\BeamBody.cpp">
       <Filter>Object\Gimmick\Beam</Filter>
     </ClCompile>
     <ClCompile Include="source\BeamStand.cpp">
@@ -79,6 +79,9 @@
     </ClCompile>
     <ClCompile Include="source\StickyGroup.cpp">
       <Filter>Object\Gimmick\Sticky</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ResultScreen.cpp">
+      <Filter>Mode\Result</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -158,8 +161,8 @@
     </ClInclude>
     <ClInclude Include="source\MoveUI.h">
       <Filter>Mode\Select</Filter>
-	</ClInclude>
-	<ClInclude Include="source\BeamBody.h">
+    </ClInclude>
+    <ClInclude Include="source\BeamBody.h">
       <Filter>Object\Gimmick\Beam</Filter>
     </ClInclude>
     <ClInclude Include="source\BeamStand.h">
@@ -170,6 +173,9 @@
     </ClInclude>
     <ClInclude Include="source\StickyGroup.h">
       <Filter>Object\Gimmick\Sticky</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ResultScreen.h">
+      <Filter>Mode\Result</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -228,8 +234,8 @@
     </Filter>
     <Filter Include="Mode\Select">
       <UniqueIdentifier>{b5de0f5a-a120-4f05-92ec-d0c82d2e7fa3}</UniqueIdentifier>
-	</Filter>
-	<Filter Include="Object\Gimmick">
+    </Filter>
+    <Filter Include="Object\Gimmick">
       <UniqueIdentifier>{d30d543b-4e2f-46d8-b576-1a8dfdedd945}</UniqueIdentifier>
     </Filter>
     <Filter Include="Object\Gimmick\Beam">
@@ -237,6 +243,9 @@
     </Filter>
     <Filter Include="Object\Gimmick\Sticky">
       <UniqueIdentifier>{cd5b3467-1c00-420f-bfd7-064f7bdb0171}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mode\Result">
+      <UniqueIdentifier>{194acdeb-bd7d-4659-91ee-dc4d00da98fd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -9,7 +9,7 @@ public:
 		:UI(owner,order)
 		,_handle(-1)
 	{
-
+		
 	}
 
 	virtual ~Graph(){}
@@ -26,8 +26,13 @@ public:
 		);
 	}
 
-	bool Load(const char* fileName) {
-		return ResourceServer::LoadGraph(fileName);
+	bool Load(const std::string& fileName) {
+		_handle = ResourceServer::LoadGraph(fileName);
+		int width,height;
+		GetGraphSize(_handle, &width, &height);
+		_width = static_cast<float>(width);
+		_height = static_cast<float>(height);
+		return _handle != -1;
 	}
 private:
 	int _handle;

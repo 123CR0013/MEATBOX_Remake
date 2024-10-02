@@ -29,7 +29,9 @@ public:
 	void Destroy();
 
 	virtual void Init();
+	virtual void ProcessInit();
 	virtual void Process();
+	virtual void ProcessFinish();
 	virtual void ProcessChildObjects();
 	virtual bool CheckMove(Vector3 vMove);
 	virtual void AnimProcess();
@@ -83,6 +85,8 @@ public:
 
 	void AddChildObject(GameObject* object) { _childObjects.push_back(object); }
 
+	bool IsMove()const { return _isMove; }	
+
 protected:
 	bool _bUse;
 
@@ -101,4 +105,10 @@ protected:
 	int _drawOrder;
 
 	std::vector<GameObject*> _childObjects;
+
+	Vector3 _vOldPos;	//移動前の座標
+	Vector3 _vDestiPos;	//移動先の座標
+	bool _isMove;		//移動している最中かのフラグ
+	UINT _frameCount;
+
 };

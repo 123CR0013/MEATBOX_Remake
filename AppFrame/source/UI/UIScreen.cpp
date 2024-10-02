@@ -43,7 +43,6 @@ void UIScreen::Draw() {
 		ui->Draw();
 	}
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
 }
 
 void UIScreen::RegistUI(UI* ptr) {

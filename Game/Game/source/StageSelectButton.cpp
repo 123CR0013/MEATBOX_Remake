@@ -10,12 +10,12 @@ StageSelectButton::StageSelectButton(UIScreen* owner,size_t stageNum)
 
 	_width = 700.f;
 	_height = 700.f;
-	_transform.mLocation = Vector2(dispSizeW / 2.f + dispSizeW * static_cast<float>(_stageNum), 300.f);
+	_transform.mLocation = Vector2(1920.f / 2.f + 1920.f * static_cast<float>(_stageNum), 1080.f / 2.f);
 
 	_backGround = NEW Box(GetOwner());
 	_backGround->RegistParent(this);
-	_backGround->SetWidth(700.f);
-	_backGround->SetHeight(700.f);
+	_backGround->SetWidth(1920.f);
+	_backGround->SetHeight(1080.f);
 	_backGround->SetColor(255, 255, 255);
 
 	for (size_t i = 0; i < _buttons.size(); ++i)
@@ -29,19 +29,18 @@ StageSelectButton::StageSelectButton(UIScreen* owner,size_t stageNum)
 
 	std::string fileName = "data/StageData/" + std::to_string(_stageNum + 1) + ".amg";
 
-	ZFile csv(fileName);
+	ZFile ifs(fileName);
 
-	if (csv.Success())
+	if (ifs.Success())
 	{
-		size_t pos = 0;
+		CSVFile::Cell data;
+		CSVFile::Parse(ifs.DataStr(), CSVFile::Type::LINE, data);
 
-		for (size_t i = 0; i < BUTTON_NUM; ++i)
+		for (size_t i=0; i< data["Button"].size();++i)
 		{
-			size_t to = csv.DataStr().substr(pos).find(",");
-			_stageDatas[i] = csv.DataStr().substr(pos, to);
-			pos += to + 1;
+			_stageDatas[i] = data["Button"][i].GetBool();
 
-			if (_stageDatas[i] == "TRUE")
+			if (_stageDatas[i])
 			{
 				_buttons[i]->SetColor(0, 255, 255);
 			}
@@ -53,7 +52,7 @@ StageSelectButton::StageSelectButton(UIScreen* owner,size_t stageNum)
 	}
 	else
 	{
-		std::string data = "“WŠJŽ¸”s:" + csv.Filename();
+		std::string data = "“WŠJŽ¸”s:" + ifs.Filename();
 		MessageBoxA(NULL, data.c_str(), NULL, MB_OK);
 	}
 	
@@ -69,13 +68,21 @@ StageSelectButton::StageSelectButton(UIScreen* owner,size_t stageNum)
 
 StageSelectButton::~StageSelectButton()
 {
-	std::string data;
+	std::string fileName = "data/StageData/" + std::to_string(_stageNum + 1) + ".amg";
 
-	for (size_t i = 0; i < BUTTON_NUM; ++i)
+	ZFile ifs(fileName);
+
+	if (ifs.Success())
 	{
-		data += _stageDatas[i] + ",";
-	}
+		CSVFile::Cell data;
+		CSVFile::Parse(ifs.DataStr(), CSVFile::Type::LINE, data);
 
-	std::string fileName = "res/StageData/" + std::to_string(_stageNum + 1) + ".csv";
-	CFile csv(fileName,data);
+		for(size_t i=0;i<_stageDatas.size();++i)
+		{
+			data["Button"][i] = _stageDatas[i];
+		}
+
+		std::string fileName = "data/StageData/" + std::to_string(_stageNum + 1) + ".amg";
+		ZFile save(fileName, CSVFile::Format(data,CSVFile::Type::LINE));
+	}
 }

@@ -195,6 +195,9 @@ void MeatBox::SetGoThroughHole(bool bGoThroughHole)
 
 void MeatBox::Move(Vector3 vMove)
 {
+	// 移動前の座標を保存
+	_vOldPos = _vPos;
+
 	// 座標を更新
 	_vPos = _vPos + vMove;
 	// マップデータの更新
@@ -202,6 +205,17 @@ void MeatBox::Move(Vector3 vMove)
 
 	// エフェクトを生成
 	CreateEffect(Effect::TYPE::IMPACT, _vPos, _mode);
+
+	//移動フラグ
+	_isMove = true;
+
+	//移動する座標を更新
+	_vDestiPos = _vPos;
+
+	//描画する位置を移動前の座標に戻す
+	_vPos = _vOldPos;
+
+	_frameCount = 0;
 }
 
 void MeatBox::DrawDebug()

@@ -11,7 +11,10 @@ public:
 
 private:
 	unsigned int _buttonNum;
-	std::array<class Box*,3>_buttons;
+	class Graph* _backGround;
+	std::array<class Graph*,3>_buttons;
 
-	class MoveUI* _select;
+	class MoveUI* _carsol;
+
+	bool _isFinish;
 };

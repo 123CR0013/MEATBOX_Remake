@@ -30,6 +30,8 @@ public:
 	void SetTransform(const Transform2& transform) { _transform = transform; }
 	void SetLocation(float x, float y) { _transform.mLocation = { x,y }; }
 	void SetLocation(const Vector2& location) { _transform.mLocation = location; }
+	void SetLeftLocation(float x, float y) { _transform.mLocation = { x + _width / 2.f ,y + _height / 2.f }; }
+	void SetLeftLocation(const Vector2& location) { SetLeftLocation(location.x, location.y); }
 	void SetRotate(float rotate) { _transform.mRotate = rotate; }
 	void SetScale(const Vector2& scale) { _transform.mScale = scale; }
 	void SetScale(float x, float y) { _transform.mScale = { x,y }; }
@@ -52,10 +54,28 @@ public:
 	float GetAlpha()const { return _alpha; }
 	float GetWidth()const { return _width; }
 	float GetHeight()const { return _height; }
+	Vector2 GetSize()const { return Vector2(_width, _height); }
 	unsigned int GetOrder()const { return _order; }
+	UI* GetParent()const { return _parent; }
 
-	Matrix4 GetWorldMatrix() {
-		return _parent ? _transform.CreateMatrix4() * _parent->GetWorldMatrix() : _transform.CreateMatrix4();
+	Matrix3 GetWorldMatrix() 
+	{
+		return _parent ? _transform.CreateMatrix3() * _parent->GetWorldMatrix() : _transform.CreateMatrix3();
+	}
+
+	Vector2 GetWorldLocation()
+	{
+		return _parent ? _transform.mLocation * _parent->GetWorldMatrix() : _transform.mLocation;
+	}
+
+	float GetWorldRotate()
+	{
+		return _parent ? _transform.mRotate + _parent->GetWorldRotate() : _transform.mRotate;
+	}
+
+	Vector2 GetWorldScale()
+	{
+		return _parent ? _transform.mScale * _parent->GetWorldMatrix() : _transform.mScale;
 	}
 
 	bool OnMouseTrg()const;
