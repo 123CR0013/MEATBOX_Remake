@@ -2,6 +2,7 @@
 #include "ApplicationMain.h"
 #include "ModeGame.h"
 #include "ModeGameOver.h"
+#include "ResultScreen.h"
 #include "map.h"
 
 #include "Map.h"
@@ -29,6 +30,9 @@ bool ModeGame::Initialize() {
 	CreateMap();
 
 	_plStepCnt = 0;
+
+
+	_bResult = false;
 
 	return true;
 }
@@ -67,6 +71,21 @@ bool ModeGame::Process() {
 
 	if (_plStepCnt >= 2) {
 		_plStepCnt = 0;
+	}
+
+	// クリア判定（敵が残っていなかったらクリア）
+	bool bEnemyExist = false;
+	for (auto& object : _objects) {
+		if (object->GetType() == GameObject::TYPE::ENEMY) {
+			bEnemyExist = true;
+			break;
+		}
+	}
+
+	// クリア画面を表示
+	if (!bEnemyExist && !_bResult) {
+		_bResult = true;
+		AddUIScreen(NEW ResultScreen(this));
 	}
 
 	if (global._trg & PAD_INPUT_1) {

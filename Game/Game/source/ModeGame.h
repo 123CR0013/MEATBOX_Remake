@@ -58,4 +58,6 @@ protected:
 	void CreateBeamStand(Vector3 vPos, Vector3 vDir);
 
 	void CreateSticky(Vector3 vPos);
+
+	bool _bResult = false;
 };
