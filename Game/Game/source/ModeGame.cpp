@@ -383,26 +383,17 @@ void ModeGame::CreateEnemyTomato(std::vector<Vector3> route)
 
 	Effect* arrow = new Effect(this);
 	arrow->SetLoop(true);
-	std::string path = "res/Effect/Arrow/";
-	std::array<std::string, 4> arrowColor = {
-		"Yellow/Yellow_",
-		"Red/Red_"
-	};
-
-	std::array<std::string, 4> arrowDir = {
-		"Up",
-		"Down",
-		"Left",
-		"Right"
+	std::string path = "res/Effect/MoveArea/";
+	std::array<std::string, 4> fileName = {
+		"effect_movearea_01",
+		"effect_movearea_02",
 	};
 
 	for (int i = 0; i < 2; i++) {
-		for (int j = 0; j < 4; j++) {
-			AnimationInfo* animInfo = new AnimationInfo();
-			animInfo->_graphHandle.push_back(ResourceServer::LoadGraph(path + arrowColor[i] + arrowDir[j] + ".png"));
-			animInfo->_framePerSheet = 10;
-			arrow->AddAnimInfo(animInfo);
-		}
+		AnimationInfo* animInfo = new AnimationInfo();
+		animInfo->_graphHandle.push_back(ResourceServer::LoadGraph(path + fileName[i] + ".png"));
+		animInfo->_framePerSheet = 10;
+		arrow->AddAnimInfo(animInfo);
 	}
 
 	enemyTomato->AddChildObject(arrow);
