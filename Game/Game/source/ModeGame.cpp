@@ -23,6 +23,16 @@
 #include <fstream>
 #include <sstream>
 
+ModeGame::ModeGame(int worldID, int stageID)
+{
+	_worldID = worldID;
+	_stageID = stageID;
+	_mapData = nullptr;
+	_player = nullptr;
+	_plStepCnt = 0;
+	_bResult = false;
+}
+
 bool ModeGame::Initialize() {
 	if (!base::Initialize()) { return false; }
 

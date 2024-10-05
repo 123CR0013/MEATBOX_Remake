@@ -10,6 +10,7 @@ class ModeGame : public ModeUI
 {
 	typedef ModeUI base;
 public:
+	ModeGame(int worldID, int stageID);
 	virtual bool Initialize();
 	virtual bool Terminate();
 	virtual bool Process();
@@ -27,6 +28,8 @@ public:
 	void SetGameOver() override;
 
 protected:
+	int _worldID, _stageID;
+
 	Map* _mapData;
 	GameObject* _player;
 	std::vector<GameObject*> _objects;
