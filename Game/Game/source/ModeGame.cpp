@@ -468,5 +468,10 @@ void ModeGame::SortGameObjectInDrawOrder(std::multimap<int, GameObject*>& result
 		result.insert(std::make_pair(drawOrder, gameObject));
 		break;
 	}
+
+	for (auto& child : gameObject->GetChildObjects())
+	{
+		SortGameObjectInDrawOrder(result, child);
+	}
 }
 

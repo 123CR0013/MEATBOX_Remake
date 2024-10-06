@@ -84,6 +84,7 @@ public:
 	void SetDrawWithScreenPos(bool bDrawWithScreenPos) { _anim->SetDrawWithScreenPos(bDrawWithScreenPos); }
 
 	void AddChildObject(GameObject* object) { _childObjects.push_back(object); }
+	std::vector<GameObject*> GetChildObjects() { return _childObjects; }
 
 	bool IsMove()const { return _isMove; }	
 

@@ -108,10 +108,10 @@ void GameObject::Draw()
 	if (!_bUse) return;
 	_anim->Draw();
 
-	for(auto& object : _childObjects)
-	{
-		object->Draw();
-	}
+	//for(auto& object : _childObjects)
+	//{
+	//	object->Draw();
+	//}
 }
 
 void GameObject::DrawDebug()
