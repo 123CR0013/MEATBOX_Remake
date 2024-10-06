@@ -393,6 +393,7 @@ void ModeGame::CreateEnemyTomato(std::vector<Vector3> route)
 
 	Effect* arrow = new Effect(this);
 	arrow->SetLoop(true);
+	arrow->SetDrawOrder(DRAW_ORDER_UNDERLAP_OBJECT);
 	std::string path = "res/Effect/MoveArea/";
 	std::array<std::string, 4> fileName = {
 		"effect_movearea_01",
