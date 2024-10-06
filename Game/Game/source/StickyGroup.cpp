@@ -55,9 +55,15 @@ bool StickyGroup::CheckMove(Vector3 vMove)
 		}
 
 		// 押しつぶせる敵を削除
+		int num = 0;
 		for (auto pEnemy : _pDeleteEnemyList)
 		{
-			CreateEffect(Effect::TYPE::EXPLOSION, pEnemy->GetPos(), _mode);
+			// 5フレームごとに破裂エフェクトを再生
+			Vector3 vEnPos = pEnemy->GetPos();
+			std::function<void()> func = [=]() {CreateEffect_Explosion(vEnPos, _mode, num); };
+			ModeTimeTable::Add(func, 5 * num);
+			num++;
+
 			pEnemy->Destroy();
 		}
 	}

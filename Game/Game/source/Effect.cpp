@@ -109,15 +109,53 @@ void CreateEffect_Question(Vector3 vPos, ModeBase* mode)
 	mode->AddGameObject(effect);
 }
 
-void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode)
+void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode, int num)
 {
 	float w = 960;
 	float h = 540;
 
+
+	Vector3 vNewPos = vPos;
+#if 0
+	{
+		// マップチップ座標でXY軸それぞれで -0.5f ～ -0.1f, 0.1f ~ 0.5f の範囲でランダムにずらす
+		// 肉片、血の位置をずらす
+
+		float randMin = 0.1f;
+		float randMax = 0.8f;
+
+		float randOffsetX = rand() % (int)(randMax * 100) / 100.0f;
+		float signX = rand() % 2 == 0 ? 1.0f : -1.0f;
+		randOffsetX = MyMath::Clamp(randMin, randMax, randOffsetX) * signX;
+
+		float randOffsetY = rand() % (int)(randMax * 100) / 100.0f;
+		float signY = rand() % 2 == 0 ? 1.0f : -1.0f;
+		randOffsetY = MyMath::Clamp(randMin, randMax, randOffsetY) * signY;
+
+		vNewPos.x += randOffsetX;
+		vNewPos.y += randOffsetY;
+	}
+#else
+	{
+		// マップチップ座標で中心からランダムにずらす
+
+		float randMin = 0.1f;
+		float randMax = 0.8f;
+
+		float randOffset = rand() % (int)(randMax * 100) / 100.0f;
+		randOffset = MyMath::Clamp(randMin, randMax, randOffset);
+		float randRad = rand() % 360;
+
+		Matrix4 m = Matrix4::CreateRotationZ(MyMath::DegToRad(randRad)) * Matrix4::CreateScale(randOffset);
+		vNewPos += Vector3::Transform(Vector3(1.0f, 0.0f, 0.0f),m);
+	}
+#endif
+
+
 	// 肉片
 	{
 		Effect* effect = new Effect(mode);
-		effect->SetPos(vPos);
+		effect->SetPos(vNewPos);
 		effect->SetAnimSize(w, h);
 		effect->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
 
@@ -129,46 +167,53 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode)
 		mode->AddGameObject(effect);
 	}
 
-	// 目1
-	{
-		Effect* effect = new Effect(mode);
-		effect->SetPos(vPos);
-		effect->SetAnimSize(w, h);
-		effect->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
+	if (0 <= num && num <= 2) {
+		std::array<Vector3, 3> vScreenPos = {
+			Vector3(g_oApplicationMain.DispSizeW() / 2.0f, g_oApplicationMain.DispSizeH() - (h / 2.0f), 0.0f),
+			Vector3(445, 324, 0),
+			Vector3(1505, 540, 0),
+		};
 
-		AnimationInfo* animInfo = new AnimationInfo();
-		ResourceServer::LoadDivGraph("res/Effect/Explosion/Eye/ef_eye_sheet_01.png", 2, 2, 1, w, h, animInfo->_graphHandle);
-		animInfo->_framePerSheet = 8;
-		effect->AddAnimInfo(animInfo);
+		// 目1
+		{
+			Effect* effect = new Effect(mode);
+			effect->SetPos(vPos);
+			effect->SetAnimSize(w, h);
+			effect->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
 
-		mode->AddGameObject(effect);
-	}
-	// 目2
-	{
-		Effect* effect = new Effect(mode);
-		effect->SetPos(Vector3(g_oApplicationMain.DispSizeW() / 2.0f, g_oApplicationMain.DispSizeH() / 2.0f, 0.0f));
-		effect->SetPos(Vector3(g_oApplicationMain.DispSizeW() / 2.0f, g_oApplicationMain.DispSizeH() - (h / 2.0f), 0.0f));
-		effect->SetDrawWithScreenPos(true);
-		effect->SetAnimSize(w, h);
-		effect->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
+			AnimationInfo* animInfo = new AnimationInfo();
+			ResourceServer::LoadDivGraph("res/Effect/Explosion/Eye/ef_eye_sheet_01.png", 2, 2, 1, w, h, animInfo->_graphHandle);
+			animInfo->_framePerSheet = 8;
+			effect->AddAnimInfo(animInfo);
 
-		AnimationInfo* animInfo = new AnimationInfo();
-		std::vector<int> graphHandle;
-		animInfo->_graphHandle.push_back(-1);
-		animInfo->_graphHandle.push_back(-1);
-		ResourceServer::LoadDivGraph("res/Effect/Explosion/Eye/ef_eye_sheet_02.png", 4, 4, 1, w, h, graphHandle);
-		animInfo->_graphHandle.insert(animInfo->_graphHandle.end(), graphHandle.begin(), graphHandle.end());
+			mode->AddGameObject(effect);
+		}
+		// 目2
+		{
+			Effect* effect = new Effect(mode);
+			effect->SetPos(vScreenPos.at(num));
+			effect->SetDrawWithScreenPos(true);
+			effect->SetAnimSize(w, h);
+			effect->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
 
-		animInfo->_framePerSheet = 8;
-		effect->AddAnimInfo(animInfo);
+			AnimationInfo* animInfo = new AnimationInfo();
+			std::vector<int> graphHandle;
+			animInfo->_graphHandle.push_back(-1);
+			animInfo->_graphHandle.push_back(-1);
+			ResourceServer::LoadDivGraph("res/Effect/Explosion/Eye/ef_eye_sheet_02.png", 4, 4, 1, w, h, graphHandle);
+			animInfo->_graphHandle.insert(animInfo->_graphHandle.end(), graphHandle.begin(), graphHandle.end());
 
-		mode->AddGameObject(effect);
+			animInfo->_framePerSheet = 8;
+			effect->AddAnimInfo(animInfo);
+
+			mode->AddGameObject(effect);
+		}
 	}
 
 	// 血
 	{
 		Effect* effect = new Effect(mode);
-		effect->SetPos(vPos);
+		effect->SetPos(vNewPos);
 		effect->SetAnimSize(w, h);
 		effect->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
 
