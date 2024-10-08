@@ -121,6 +121,9 @@ void Player::MoveProcess()
 					break;
 				case GameObject::TYPE::BEAM_STAND:
 					break;
+				case GameObject::TYPE::STICKY:
+					bSuccess = true;
+					break;
 				}
 			}
 			// 移動先にオブジェクトがない場合
