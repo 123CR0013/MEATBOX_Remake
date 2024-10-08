@@ -17,6 +17,11 @@ void Player::Process()
 	GameObject::Process();
 
 	MoveProcess();
+
+	if (_anim->IsEnd())
+	{
+		_anim->SetAnimIndex(_anim->GetAnimIndex() == 2 ? 0 : 1);
+	}
 }
 
 void Player::MoveProcess()
@@ -113,6 +118,7 @@ void Player::MoveProcess()
 					if (obj->CheckMove(vMove)) 
 					{
 						bSuccess = true;
+						_anim->SetAnimIndex(_anim->GetAnimIndex() == 0 ? 2 : 3);
 					}
 					break;
 				case GameObject::TYPE::ENEMY:
