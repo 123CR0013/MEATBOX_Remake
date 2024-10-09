@@ -240,7 +240,8 @@ void ModeGame::LoadAnimData(GameObject* gameObject, std::string name)
 
 void ModeGame::CreateMap()
 {
-	std::ifstream ifs("data/Map/stagetest.json");
+	std::string path = "data/Map/stage_" + std::to_string(_worldID) + "_" + std::to_string(_stageID) + ".json";
+	std::ifstream ifs(path);
 	if (ifs)
 	{
 		nlohmann::json json;
