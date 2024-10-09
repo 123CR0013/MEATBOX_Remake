@@ -204,7 +204,7 @@ void MeatBox::Move(Vector3 vMove)
 	_mapData->SetGameObject(this, _vPos);
 
 	// エフェクトを生成
-	CreateEffect(Effect::TYPE::IMPACT, _vPos, _mode);
+	CreateEffect(Effect::TYPE::IMPACT, _vOldPos + (vMove / 2.0f), _mode);
 
 	//移動フラグ
 	_isMove = true;

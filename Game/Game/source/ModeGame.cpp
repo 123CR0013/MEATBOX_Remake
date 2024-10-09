@@ -348,7 +348,7 @@ void ModeGame::CreatePlayer(Vector3 vPos)
 {
 	Player* player = new Player(this);
 	player->SetPos(vPos);
-	player->SetDrawOffset(Vector3(0, -0.4f, 0));
+	player->SetDrawOffset(Vector3(0, -0.5f, 0));
 	player->SetAnimSize(160, 160);
 
 	LoadAnimData(player, "Player");
