@@ -5,6 +5,15 @@
 class Map;
 class GameObject;
 
+// リザルト画面に渡すデータ
+struct ResultData
+{
+	// 残り歩数
+	int stepCnt;
+	// 最大同時キル
+	int killCnt;
+};
+
 // モード
 class ModeGame : public ModeUI
 {
@@ -64,6 +73,7 @@ protected:
 	void CreateSticky(Vector3 vPos);
 
 	bool _bResult = false;
+	ResultData _resultData;
 
 	void SortGameObjectInDrawOrder(std::multimap<int, GameObject*>& result, GameObject* gameObject);
 };

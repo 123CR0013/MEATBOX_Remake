@@ -31,6 +31,8 @@ ModeGame::ModeGame(int worldID, int stageID)
 	_player = nullptr;
 	_plStepCnt = 0;
 	_bResult = false;
+	_resultData.stepCnt = 0;
+	_resultData.killCnt = 0;
 }
 
 bool ModeGame::Initialize() {
