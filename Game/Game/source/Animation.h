@@ -1,6 +1,7 @@
 #pragma once
 #include "appframe.h"
 #include "AnimationInfo.h"
+#include <map>
 
 class ObjectBase;
 
@@ -13,9 +14,10 @@ public:
 	void Process();
 	void Draw();
 
-	void AddAnimInfo(AnimationInfo* animInfo);
+	void AddAnimInfo(AnimationInfo* animInfo, int index);
 	void SetAnimIndex(int index);
-	int GetAnimIndex() { return _animIndex; }
+	int GetAnimIndex() { return _groupIndex; }
+	void ChangeRandomIndex();
 
 	bool IsEnd() { return _bAnimEnd; }
 
@@ -44,11 +46,15 @@ protected:
 	ObjectBase* _parentObj;
 
 	// アニメーション情報
-	std::vector<AnimationInfo*> _animInfo;
+	std::map<int, std::vector<AnimationInfo*>> _animInfo;
+	// グループ内のアニメーション数（ランダム再生用）
+	std::map<int, int> _animNum;
 	// アニメーションインデックス
-	int _animIndex;
+	int _groupIndex;
 	// アニメーションインデックスの最大値
-	int _animIndexMax;
+	int _groupIndexMax;
+	// ランダム再生用のインデックス
+	int _randomIndex;
 	// アニメーションカウンタ
 	int _animCnt;
 

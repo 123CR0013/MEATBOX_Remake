@@ -29,7 +29,7 @@ public:
 	void SetDrawOffset(Vector3 vDrawOffset) { _vDrawOffset = vDrawOffset; }
 	Vector3 GetDrawOffset() const { return _vDrawOffset; }
 
-	void AddAnimInfo(AnimationInfo* animInfo) { _anim->AddAnimInfo(animInfo); }
+	void AddAnimInfo(AnimationInfo* animInfo) { _anim->AddAnimInfo(animInfo, 0); }
 
 protected:
 	TYPE _chipType;

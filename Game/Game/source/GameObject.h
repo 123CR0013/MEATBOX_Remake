@@ -69,7 +69,7 @@ public:
 	Vector3 GetDrawOffset() const { return _vDrawOffset; }
 	void SetDrawOffset(Vector3 vDrawOffset) { _vDrawOffset = vDrawOffset; }
 
-	void AddAnimInfo(AnimationInfo* animInfo) { _anim->AddAnimInfo(animInfo); }
+	void AddAnimInfo(AnimationInfo* animInfo, int index) { _anim->AddAnimInfo(animInfo, index); }
 	void SetAnimIndex(int index) { _anim->SetAnimIndex(index); }
 
 	void SetAnimZoom(float zoom) { _anim->SetZoom(zoom); }

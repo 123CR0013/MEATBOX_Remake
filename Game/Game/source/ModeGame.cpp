@@ -230,7 +230,7 @@ void ModeGame::LoadAnimData(GameObject* gameObject, std::string name)
 					animInfo->_drawTbl = drawTable;
 				}
 
-				gameObject->AddAnimInfo(animInfo);
+				gameObject->AddAnimInfo(animInfo, anim.at("Group"));
 			}
 
 			break;
@@ -407,7 +407,7 @@ void ModeGame::CreateEnemyTomato(std::vector<Vector3> route)
 		AnimationInfo* animInfo = new AnimationInfo();
 		animInfo->_graphHandle.push_back(ResourceServer::LoadGraph(path + fileName[i] + ".png"));
 		animInfo->_framePerSheet = 10;
-		arrow->AddAnimInfo(animInfo);
+		arrow->AddAnimInfo(animInfo, i);
 	}
 
 	enemyTomato->AddChildObject(arrow);

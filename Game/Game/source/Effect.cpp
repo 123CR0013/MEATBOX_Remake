@@ -71,7 +71,7 @@ void CreateEffect_Move(Vector3 vPos, ModeBase* mode)
 	AnimationInfo* animInfo = new AnimationInfo();
 	ResourceServer::LoadDivGraph("res/Effect/Move/ef_smoke_sheet.png", 4, 4, 1, 100, 100, animInfo->_graphHandle);
 	animInfo->_framePerSheet = 4;
-	effect->AddAnimInfo(animInfo);
+	effect->AddAnimInfo(animInfo, 0);
 
 	mode->AddGameObject(effect);
 }
@@ -87,7 +87,7 @@ void CreateEffect_Impact(Vector3 vPos, ModeBase* mode)
 	AnimationInfo* animInfo = new AnimationInfo();
 	ResourceServer::LoadDivGraph("res/Effect/Impact/ef_kick_sheet.png", 7, 7, 1, 160, 160, animInfo->_graphHandle);
 	animInfo->_framePerSheet = 2;
-	effect->AddAnimInfo(animInfo);
+	effect->AddAnimInfo(animInfo, 0);
 
 	mode->AddGameObject(effect);
 }
@@ -102,7 +102,7 @@ void CreateEffect_Question(Vector3 vPos, ModeBase* mode)
 	AnimationInfo* animInfo = new AnimationInfo();
 	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Question/hatena.png"));
 	animInfo->_framePerSheet = 24;
-	effect->AddAnimInfo(animInfo);
+	effect->AddAnimInfo(animInfo, 0);
 
 	effect->SetAnimZoom(0.5f);
 
@@ -162,7 +162,7 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode, int num)
 		AnimationInfo* animInfo = new AnimationInfo();
 		ResourceServer::LoadDivGraph("res/Effect/Explosion/Meat/ef_meat_sheet.png", 6, 6, 1, w, h, animInfo->_graphHandle);
 		animInfo->_framePerSheet = 8;
-		effect->AddAnimInfo(animInfo);
+		effect->AddAnimInfo(animInfo, 0);
 
 		mode->AddGameObject(effect);
 	}
@@ -184,7 +184,7 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode, int num)
 			AnimationInfo* animInfo = new AnimationInfo();
 			ResourceServer::LoadDivGraph("res/Effect/Explosion/Eye/ef_eye_sheet_01.png", 2, 2, 1, w, h, animInfo->_graphHandle);
 			animInfo->_framePerSheet = 8;
-			effect->AddAnimInfo(animInfo);
+			effect->AddAnimInfo(animInfo, 0);
 
 			mode->AddGameObject(effect);
 		}
@@ -204,7 +204,7 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode, int num)
 			animInfo->_graphHandle.insert(animInfo->_graphHandle.end(), graphHandle.begin(), graphHandle.end());
 
 			animInfo->_framePerSheet = 8;
-			effect->AddAnimInfo(animInfo);
+			effect->AddAnimInfo(animInfo, 0);
 
 			mode->AddGameObject(effect);
 		}
@@ -220,7 +220,7 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode, int num)
 		AnimationInfo* animInfo = new AnimationInfo();
 		ResourceServer::LoadDivGraph("res/Effect/Explosion/Blood/ef_blood_sheet.png", 7, 7, 1, w, h, animInfo->_graphHandle);
 		animInfo->_framePerSheet = 8;
-		effect->AddAnimInfo(animInfo);
+		effect->AddAnimInfo(animInfo, 0);
 
 		mode->AddGameObject(effect);
 	}
