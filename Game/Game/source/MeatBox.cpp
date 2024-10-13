@@ -149,9 +149,13 @@ bool MeatBox::_CheckMove(Vector3 vMove)
 			SetGoThroughHole(false);
 		}
 	}
+	// 移動先にマップチップがない場合
 	else {
 		bCanMove = false;
-		_pStickyGroup->SetGoThroughHole(false);
+		if (_pStickyGroup != nullptr) 
+		{
+			_pStickyGroup->SetGoThroughHole(false);
+		}
 	}
 
 
