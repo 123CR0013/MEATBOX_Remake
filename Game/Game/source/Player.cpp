@@ -20,7 +20,10 @@ void Player::Process()
 
 	if (_anim->IsEnd())
 	{
-		_anim->SetAnimIndex(_anim->GetAnimIndex() == 2 ? 0 : 1);
+		int animIndex = _anim->GetAnimIndex();
+		if (animIndex == 2 || animIndex == 3) {
+			_anim->SetAnimIndex(_anim->GetAnimIndex() == 2 ? 0 : 1);
+		}
 	}
 }
 
