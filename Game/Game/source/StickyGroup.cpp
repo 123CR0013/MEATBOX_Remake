@@ -10,6 +10,8 @@ StickyGroup::StickyGroup(ModeBase* mode) : GameObject(mode)
 	_objectType = TYPE::STICKYGROUP;
 	_bSetToMap = false;
 
+	_bExistHole = false;
+	_bExistFloor = false;
 	_bGoThroughHole = false;
 
 	id = tmpId;
@@ -108,20 +110,30 @@ void StickyGroup::AddSticky(Sticky* pSticky)
 	pSticky->SetStickyGroup(this);
 }
 
-void StickyGroup::AddMeatBox(MeatBox* pMeatBox)
+bool StickyGroup::AddMeatBox(MeatBox* pMeatBox)
 {
-	if (pMeatBox == nullptr) return;
+	if (pMeatBox == nullptr) return false;
+
+	// すでに追加されている場合は追加しない
+	for (auto pMB : _pMeatBox)
+	{
+		if (pMB == pMeatBox) return false;
+	}
 
 	StickyGroup* tmpSG = pMeatBox->GetStickyGroup();
 	if (tmpSG != nullptr) {
 		// ミートボックスが別のStickyGroupに所属している場合、結合する
 		if (tmpSG != this) {
 			Merge(tmpSG);
+			return true;
 		}
 	}
 	// ミートボックスがまだStickyGroupに所属していない場合
 	else {
 		_pMeatBox.push_back(pMeatBox);
 		pMeatBox->SetStickyGroup(this);
+		return true;
 	}
+
+	return false;
 }

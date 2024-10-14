@@ -55,6 +55,10 @@ bool Sticky::AddMeatBox(MeatBox* pMeatBox, Sticky::POSITION pos)
 {
 	if(_bMBExist[(int)pos] == false && pMeatBox != nullptr)
 	{
+		// StickyGroupにミートボックスを追加
+		bool bSuccess = _pStickyGroup->AddMeatBox(pMeatBox);
+		if (bSuccess == false) return false;
+
 		_bMBExist[(int)pos] = true;
 
 		if(pos == POSITION::ROOT)
@@ -62,9 +66,6 @@ bool Sticky::AddMeatBox(MeatBox* pMeatBox, Sticky::POSITION pos)
 			_pRootMB = pMeatBox;
 			_mapData->EraseGameObject(this);
 		}
-
-		// StickyGroupにミートボックスを追加
-		_pStickyGroup->AddMeatBox(pMeatBox);
 
 		return true;
 	}
