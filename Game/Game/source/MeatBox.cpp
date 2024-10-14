@@ -54,8 +54,11 @@ bool MeatBox::_CheckMove(Vector3 vMove)
 			GameObject* obj = CheckObject(vNextPos);
 			// 移動先にオブジェクトがある場合
 			if (obj != nullptr) {
+				if (obj->GetType() == GameObject::TYPE::PLAYER){
+					bCanMove = true;
+				}
 				// 移動先のオブジェクトが敵の場合
-				if (obj->GetType() == GameObject::TYPE::ENEMY) {
+				else if (obj->GetType() == GameObject::TYPE::ENEMY) {
 
 					// さらに1マス先のマップチップとオブジェクトを調べる
 					Vector3 vTmpPos = vNextPos + vMove;
