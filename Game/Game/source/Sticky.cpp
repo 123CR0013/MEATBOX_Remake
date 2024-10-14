@@ -23,12 +23,16 @@ void Sticky::Process()
 	GameObject::Process();
 
 	// ねばねば本体がミートボックスにくっついている場合、ねばねば本体の座標をミートボックスの座標に合わせる
-	if(_bMBExist[0] == true)
+	if (_bMBExist[0] == true)
 	{
-		_vPos = _pRootMB->GetPos();
+		// MBが移動中でない場合
+		if (_pRootMB->IsMove() == false)
+		{
+			_vPos = _pRootMB->GetPos();
 
-		// 周囲4マスにミートボックスがあるかを調べる
-		CheckMeatBoxExistAround();
+			// 周囲4マスにミートボックスがあるかを調べる
+			CheckMeatBoxExistAround();
+		}
 	}
 	else {
 		// ねばねば本体がミートボックスにくっついていない場合、ねばねば本体の座標をマップに登録する
