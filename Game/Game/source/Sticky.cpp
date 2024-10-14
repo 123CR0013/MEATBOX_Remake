@@ -37,9 +37,16 @@ void Sticky::Process()
 	else {
 		// ねばねば本体がミートボックスにくっついていない場合、ねばねば本体の座標をマップに登録する
 		// プレイヤーが上に乗ったときにねばねば本体が消えないようにするため
-		if (_mapData->GetGameObject(_vPos) == nullptr)
+		GameObject* obj = _mapData->GetGameObject(_vPos);
+		if (obj == nullptr)
 		{
 			_mapData->SetGameObject(this, _vPos);
+		}
+		// 上にミートボックスがある場合
+		// BeamBodyの下にねばねばマスがあり、そのマスにミートボックスが押された場合にくっつく様にするため
+		else if (obj->GetType() == TYPE::MEATBOX)
+		{
+			AddMeatBox(static_cast<MeatBox*>(obj), POSITION::ROOT);
 		}
 	}
 }
