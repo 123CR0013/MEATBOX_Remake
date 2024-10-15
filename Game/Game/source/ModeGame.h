@@ -72,7 +72,7 @@ protected:
 
 	void CreateSticky(Vector3 vPos);
 
-	bool _bResult = false;
+	bool _bResult;
 	ResultData _resultData;
 
 	void SortGameObjectInDrawOrder(std::multimap<int, GameObject*>& result, GameObject* gameObject);

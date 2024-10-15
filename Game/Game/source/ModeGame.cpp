@@ -38,6 +38,13 @@ ModeGame::ModeGame(int worldID, int stageID)
 bool ModeGame::Initialize() {
 	if (!base::Initialize()) { return false; }
 
+	_mapData = nullptr;
+	_player = nullptr;
+	_plStepCnt = 0;
+	_bResult = false;
+	_resultData.stepCnt = 0;
+	_resultData.killCnt = 0;
+
 	_mapData = new Map(this);
 	CreateMap();
 
@@ -53,10 +60,20 @@ bool ModeGame::Terminate() {
 	base::Terminate();
 
 	delete _mapData;
+	delete _player;
 	for(auto& object : _objects) {
 		delete object;
 	}
 	_objects.clear();
+
+	for (auto& object : _objectsToAdd) {
+		delete object;
+	}
+	_objectsToAdd.clear();
+
+	for (auto& object : _objectsToRemove) {
+		delete object;
+	}
 
 	return true;
 }
