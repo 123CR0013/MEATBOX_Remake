@@ -71,9 +71,7 @@ bool ModeGame::Terminate() {
 	}
 	_objectsToAdd.clear();
 
-	for (auto& object : _objectsToRemove) {
-		delete object;
-	}
+	_objectsToRemove.clear();
 
 	return true;
 }
