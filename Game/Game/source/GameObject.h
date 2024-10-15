@@ -21,7 +21,8 @@ public:
 		BEAM_STAND,
 		BEAM_BODY,
 		STICKY,
-		STICKYGROUP
+		STICKYGROUP,
+		EFFECT,
 	};
 
 	GameObject(ModeBase* mode);

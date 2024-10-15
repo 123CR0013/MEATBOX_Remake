@@ -6,6 +6,7 @@
 
 Effect::Effect(ModeBase* mode) : GameObject(mode)
 {
+	_objectType = GameObject::TYPE::EFFECT;
 	_bSetToMap = false;
 	_bLoop = false;
 }
