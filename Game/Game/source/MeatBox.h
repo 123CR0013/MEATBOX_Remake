@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 class StickyGroup;
+class Sticky;
 
 class MeatBox : public GameObject
 {
@@ -34,4 +35,8 @@ protected:
 	void SetExistHole(bool bExistHole);
 	void SetExistFloor(bool bExistFloor);
 	void SetGoThroughHole(bool bGoThroughHole);
+
+	// Stickyへの追加予約用（AddMeatBox()）
+	// _CheckMove()内で予約し、Move()内で追加する
+	Sticky* _pSticky;
 };

@@ -46,6 +46,9 @@ bool MeatBox::_CheckMove(Vector3 vMove)
 	// 移動できるかどうか
 	bool bCanMove = false;
 
+	// Stickyへの追加予約用（AddMeatBox()）
+	_pSticky = nullptr;
+
 	// 移動先のマップチップを取得
 	MapChip* mapChip = CheckMapChip(vNextPos);
 	if (mapChip != nullptr) {
@@ -128,8 +131,9 @@ bool MeatBox::_CheckMove(Vector3 vMove)
 				else if (obj->GetType() == GameObject::TYPE::STICKY) {
 					// 移動できる
 					bCanMove = true;
-					Sticky* pSticky = static_cast<Sticky*>(obj);
-					pSticky->AddMeatBox(this, Sticky::POSITION::ROOT);
+					
+					// Stickyへの追加予約
+					_pSticky = static_cast<Sticky*>(obj);
 				}
 			}
 			// 移動先にオブジェクトがない場合
@@ -223,6 +227,13 @@ void MeatBox::Move(Vector3 vMove)
 	_vPos = _vOldPos;
 
 	_frameCount = 0;
+
+	// _CheckMove()内で予約したStickyへの追加を行う
+	if (_pSticky != nullptr)
+	{
+		_pSticky->AddMeatBox(this, Sticky::POSITION::ROOT);
+	}
+	_pSticky = nullptr;
 }
 
 void MeatBox::DrawDebug()
