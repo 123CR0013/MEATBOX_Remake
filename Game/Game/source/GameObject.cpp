@@ -101,6 +101,10 @@ void GameObject::AnimProcess()
 {
 	if (!_bUse) return;
 	_anim->Process();
+	for (auto& object : _childObjects)
+	{
+		object->AnimProcess();
+	}
 }
 
 void GameObject::Draw()
