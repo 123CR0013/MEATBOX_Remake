@@ -4,6 +4,7 @@
 
 class Map;
 class GameObject;
+class Animation;
 
 // リザルト画面に渡すデータ
 struct ResultData
@@ -56,7 +57,7 @@ protected:
 
 	int _plStepCnt;
 
-	void LoadAnimData(GameObject* gameObject, std::string name);
+	void LoadAnimData(Animation* animationClass, std::string name);
 	bool _bExistAnimData = false;
 	nlohmann::json _animDataJson;
 

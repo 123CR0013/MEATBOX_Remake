@@ -202,8 +202,10 @@ void ModeGame::CheckObjectsToRemove()
 	_objectsToRemove.clear();
 }
 
-void ModeGame::LoadAnimData(GameObject* gameObject, std::string name)
+void ModeGame::LoadAnimData(Animation* animationClass, std::string name)
 {
+	if (animationClass == nullptr) return;
+
 	if (!_bExistAnimData) 
 	{
 		std::ifstream ifs("data/Animation/AnimationData.json");
@@ -245,7 +247,7 @@ void ModeGame::LoadAnimData(GameObject* gameObject, std::string name)
 					animInfo->_drawTbl = drawTable;
 				}
 
-				gameObject->AddAnimInfo(animInfo, anim.at("Group"));
+				animationClass->AddAnimInfo(animInfo, anim.at("Group"));				
 			}
 
 			break;
@@ -369,7 +371,8 @@ void ModeGame::CreatePlayer(Vector3 vPos)
 	player->SetDrawOffset(Vector3(0, -0.5f, 0));
 	player->SetAnimSize(160, 160);
 
-	LoadAnimData(player, "Player");
+	Animation* anim = player->GetAnimation();
+	LoadAnimData(anim, "Player");
 
 	//_objects.push_back(player);
 	_player = player;
@@ -381,7 +384,8 @@ void ModeGame::CreateMeatBox(Vector3 vPos)
 	meatBox->SetPos(vPos);
 	meatBox->SetDrawOffset(Vector3(0, -0.2f, 0));
 
-	LoadAnimData(meatBox, "Meatbox");
+	Animation* anim = meatBox->GetAnimation();
+	LoadAnimData(anim, "Meatbox");
 
 	_objects.push_back(meatBox);
 }
@@ -392,7 +396,8 @@ void ModeGame::CreateEnemy(Vector3 vPos)
 	enemy->SetPos(vPos);
 	enemy->SetDrawOffset(Vector3(0, -0.2f, 0));
 
-	LoadAnimData(enemy, "Namako");
+	Animation* anim = enemy->GetAnimation();
+	LoadAnimData(anim, "Namako");
 
 	_objects.push_back(enemy);
 }
@@ -404,7 +409,8 @@ void ModeGame::CreateEnemyTomato(std::vector<Vector3> route)
 	enemyTomato->SetMoveRoute(route);
 	enemyTomato->SetDrawOffset(Vector3(0, -0.2f, 0));
 
-	LoadAnimData(enemyTomato, "Tomato");
+	Animation* anim = enemyTomato->GetAnimation();
+	LoadAnimData(anim, "Tomato");
 
 	_objects.push_back(enemyTomato);
 
@@ -436,7 +442,8 @@ void ModeGame::CreateBeamStand(Vector3 vPos, Vector3 vDir)
 	beamStand->SetPos(vPos);
 	beamStand->SetDir(vDir);
 
-	LoadAnimData(beamStand, "BeamStand");
+	Animation* anim = beamStand->GetAnimation();
+	LoadAnimData(anim, "BeamStand");
 
 	float angle = 0.0f;
 	if(vDir == Vector3(0, -1, 0)) {
@@ -462,7 +469,8 @@ void ModeGame::CreateSticky(Vector3 vPos)
 	sticky->SetPos(vPos);
 	sticky->SetDrawOffset(Vector3(0, -0.2f, 0));
 
-	LoadAnimData(sticky, "Sticky");
+	Animation* anim = sticky->GetAnimation();
+	LoadAnimData(anim, "Sticky");
 
 	StickyGroup* stickyGroup = new StickyGroup(this);
 	stickyGroup->AddSticky(sticky);
