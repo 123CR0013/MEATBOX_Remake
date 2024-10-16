@@ -105,5 +105,6 @@ void EnemyTomato::SetMoveAreaEffect()
 	_childObjects[0]->SetPos(_vNextPos);
 	// MoveAreaEffect‚ÌF‚ðÝ’è
 	int index = _mode->GetPlayerStepCnt() != 1 ? 0 : 1;
-	_childObjects[0]->SetAnimIndex(index);
+	Animation* anim = _childObjects[0]->GetAnimation();
+	anim->SetAnimIndex(index);
 }

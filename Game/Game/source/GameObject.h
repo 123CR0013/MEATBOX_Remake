@@ -72,19 +72,8 @@ public:
 
 	Animation* GetAnimation() { return _anim; }
 
-	void AddAnimInfo(AnimationInfo* animInfo, int index) { _anim->AddAnimInfo(animInfo, index); }
-	void SetAnimIndex(int index) { _anim->SetAnimIndex(index); }
-
-	void SetAnimZoom(float zoom) { _anim->SetZoom(zoom); }
-	void SetAnimAngle(float angle) { _anim->SetAngle(angle); }
-	void SetAnimWidth(float width) { _anim->SetWidth(width); }
-	void SetAnimHeight(float height) { _anim->SetHeight(height); }
-	void SetAnimSize(float width, float height) { _anim->SetSize(width, height); }
-
 	int GetDrawOrder() { return _drawOrder; }
 	void SetDrawOrder(int drawOrder) { _drawOrder = drawOrder; }
-
-	void SetDrawWithScreenPos(bool bDrawWithScreenPos) { _anim->SetDrawWithScreenPos(bDrawWithScreenPos); }
 
 	void AddChildObject(GameObject* object) { _childObjects.push_back(object); }
 	std::vector<GameObject*> GetChildObjects() { return _childObjects; }

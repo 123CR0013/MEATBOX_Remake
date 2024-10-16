@@ -369,9 +369,9 @@ void ModeGame::CreatePlayer(Vector3 vPos)
 	Player* player = new Player(this);
 	player->SetPos(vPos);
 	player->SetDrawOffset(Vector3(0, -0.5f, 0));
-	player->SetAnimSize(160, 160);
 
 	Animation* anim = player->GetAnimation();
+	anim->SetSize(160, 160);
 	LoadAnimData(anim, "Player");
 
 	//_objects.push_back(player);
@@ -424,11 +424,12 @@ void ModeGame::CreateEnemyTomato(std::vector<Vector3> route)
 		"effect_movearea_02",
 	};
 
+	Animation* arrowAnim = arrow->GetAnimation();
 	for (int i = 0; i < 2; i++) {
 		AnimationInfo* animInfo = new AnimationInfo();
 		animInfo->_graphHandle.push_back(ResourceServer::LoadGraph(path + fileName[i] + ".png"));
 		animInfo->_framePerSheet = 10;
-		arrow->AddAnimInfo(animInfo, i);
+		arrowAnim->AddAnimInfo(animInfo, i);
 	}
 
 	enemyTomato->AddChildObject(arrow);
@@ -458,7 +459,7 @@ void ModeGame::CreateBeamStand(Vector3 vPos, Vector3 vDir)
 	else if (vDir == Vector3(1, 0, 0)) {
 		angle = PI * 3.0f / 2.0f;
 	}
-	beamStand->SetAnimAngle(angle);
+	anim->SetAngle(angle);
 
 	_objects.push_back(beamStand);
 }

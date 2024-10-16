@@ -51,8 +51,6 @@ void BeamStand::CreateBeamBody(Vector3 vPos)
 
 	_mode->LoadAnimData(beamBody, "BeamBody");
 
-	beamBody->SetAnimAngle(_anim->GetAngle());
-
 	_childObjects.push_back(beamBody);
 }
 
