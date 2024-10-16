@@ -19,6 +19,12 @@ public:
 	int GetAnimIndex() { return _groupIndex; }
 	void ChangeRandomIndex();
 
+	int GetAnimCnt() { return _animCnt; }
+	void SetAnimCnt(int cnt);
+	// アニメーションカウンタを指定
+	// 何枚目の画像を表示するかを指定する（0~）
+	void SetAnimCntForNumOfAnim(int cnt);
+
 	bool IsEnd() { return _bAnimEnd; }
 
 	int GetGraphHandle();

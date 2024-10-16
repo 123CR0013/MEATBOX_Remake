@@ -130,6 +130,20 @@ void Animation::ChangeRandomIndex()
 	}
 }
 
+void Animation::SetAnimCnt(int cnt)
+{
+	AnimationInfo* anim = _animInfo.at(_groupIndex).at(_randomIndex);
+	_animCnt = MyMath::Clamp(0, anim->_framePerSheet * anim->_tblNum, cnt);
+	_bAnimEnd = false;
+}
+
+void Animation::SetAnimCntForNumOfAnim(int cnt)
+{
+	AnimationInfo* anim = _animInfo.at(_groupIndex).at(_randomIndex);
+	_animCnt = MyMath::Clamp(0, anim->_framePerSheet * anim->_tblNum, cnt * anim->_framePerSheet);
+	_bAnimEnd = false;
+}
+
 int Animation::GetGraphHandle()
 {
 	try
