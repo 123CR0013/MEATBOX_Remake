@@ -92,17 +92,19 @@ void Animation::AddAnimInfo(AnimationInfo* animInfo, int index)
 	
 	// アニメーション情報を追加
 	this->_animInfo[index].push_back(animInfo);
-	// 同じインデックス番号のアニメーションの数をカウント
+	// 同じグループのアニメーションの数をカウント
+	// 初めてのグループの場合は1を設定
 	if (_animNum.find(index) == _animNum.end())
 	{
 		_animNum[index] = 1;
+		// グループインデックスの最大値を更新
+		_groupIndexMax++;
 	}
+	// 既に同じグループのアニメーションがある場合はカウントアップ
 	else
 	{
 		_animNum[index]++;
 	}
-	// アニメーションインデックスの最大値を更新
-	_groupIndexMax++;
 }
 
 void Animation::SetAnimIndex(int index)

@@ -49,9 +49,9 @@ protected:
 	std::map<int, std::vector<AnimationInfo*>> _animInfo;
 	// グループ内のアニメーション数（ランダム再生用）
 	std::map<int, int> _animNum;
-	// アニメーションインデックス
+	// グループインデックス
 	int _groupIndex;
-	// アニメーションインデックスの最大値
+	// グループインデックスの最大値
 	int _groupIndexMax;
 	// ランダム再生用のインデックス
 	int _randomIndex;
