@@ -44,14 +44,44 @@ void BeamStand::Process()
 	UpdateBeamBodies(vStartPos, vEndPos);
 }
 
+void BeamStand::AnimProcess()
+{
+	if (!_bUse) return;
+
+	SyncBeamBodyAnim();
+
+	GameObject::AnimProcess();
+}
+
 void BeamStand::CreateBeamBody(Vector3 vPos)
 {
-	BeamBody* beamBody = new BeamBody(_mode);
-	beamBody->SetPos(vPos);
+	BeamBody::DIRECTION direction = BeamBody::DIRECTION::UP;
+	if (_vDir.x > 0) {
+		direction = BeamBody::DIRECTION::RIGHT;
+	}
+	else if (_vDir.x < 0) {
+		direction = BeamBody::DIRECTION::LEFT;
+	}
+	else if (_vDir.y < 0) {
+		direction = BeamBody::DIRECTION::UP;
+	}
+	else if (_vDir.y > 0) {
+		direction = BeamBody::DIRECTION::DOWN;
+	}
 
-	_mode->LoadAnimData(beamBody, "BeamBody");
+	for (int i = 0; i < 2; i++) {
+		BeamBody* beamBody = new BeamBody(_mode);
+		beamBody->SetPos(vPos);
 
-	_childObjects.push_back(beamBody);
+		Animation* anim = beamBody->GetAnimation();
+		_mode->LoadAnimData(anim, "BeamBody_Pink");
+		Animation* subAnim = beamBody->GetSubAnimation();
+		_mode->LoadAnimData(subAnim, "BeamBody_White");
+
+		beamBody->SetDirection(direction);
+
+		_childObjects.push_back(beamBody);
+	}
 }
 
 void BeamStand::SetUnuseAllBeamBody()
@@ -61,6 +91,73 @@ void BeamStand::SetUnuseAllBeamBody()
 		if (object->GetType() == TYPE::BEAM_BODY)
 		{
 			object->SetUse(false);
+		}
+	}
+}
+
+// BeamBodyのアニメーションを色ごとに同期
+void BeamStand::SyncBeamBodyAnim()
+{
+	// 1つ目のBeamBodyのアニメーションと以降のBeamBodyのアニメーションを同期する
+
+	int num = 0;
+	float animCnt = 0;
+	float animCntSub = 0;
+
+	int randIndex = -1;
+	int randIndexSub = -1;
+
+	for (auto& object : _childObjects)
+	{
+		if (object->GetType() == TYPE::BEAM_BODY)
+		{
+			if (num == 0) {
+
+				{
+					Animation* anim = object->GetAnimation();
+					animCnt = anim->GetAnimCnt();
+
+					// アニメーションが終了したら
+					if (anim->IsEnd()) {
+						// アニメーションの開始画像をランダムに設定する
+						randIndex = rand() % 3;
+						anim->SetAnimCntForNumOfAnim(randIndex);
+					}
+				}
+
+				{
+					Animation* subAnim = object->GetSubAnimation();
+					animCntSub = subAnim->GetAnimCnt();
+					// アニメーションが終了したら
+					if (subAnim->IsEnd()) {
+						// アニメーションの開始画像をランダムに設定する
+						randIndexSub = rand() % 3;
+						subAnim->SetAnimCntForNumOfAnim(randIndexSub);
+					}
+				}
+
+				num++;
+			}
+			else {
+
+				{
+					Animation* anim = object->GetAnimation();
+					anim->SetAnimCnt(animCnt);
+					if (randIndex != -1)
+					{
+						anim->SetAnimCntForNumOfAnim(randIndex);
+					}
+				}
+
+				{
+					Animation* subAnim = object->GetSubAnimation();
+					subAnim->SetAnimCnt(animCntSub);
+					if (randIndexSub != -1)
+					{
+						subAnim->SetAnimCntForNumOfAnim(randIndexSub);
+					}
+				}
+			}
 		}
 	}
 }

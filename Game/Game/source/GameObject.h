@@ -71,6 +71,7 @@ public:
 	void SetDrawOffset(Vector3 vDrawOffset) { _vDrawOffset = vDrawOffset; }
 
 	Animation* GetAnimation() { return _anim; }
+	virtual Animation* GetSubAnimation() { return nullptr; }
 
 	int GetDrawOrder() { return _drawOrder; }
 	void SetDrawOrder(int drawOrder) { _drawOrder = drawOrder; }
@@ -78,7 +79,7 @@ public:
 	void AddChildObject(GameObject* object) { _childObjects.push_back(object); }
 	std::vector<GameObject*> GetChildObjects() { return _childObjects; }
 
-	bool IsMove()const { return _isMove; }	
+	bool IsMove()const { return _isMove; }
 
 protected:
 	bool _bUse;

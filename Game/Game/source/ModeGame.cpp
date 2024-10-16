@@ -446,21 +446,6 @@ void ModeGame::CreateBeamStand(Vector3 vPos, Vector3 vDir)
 	Animation* anim = beamStand->GetAnimation();
 	LoadAnimData(anim, "BeamStand");
 
-	float angle = 0.0f;
-	if(vDir == Vector3(0, -1, 0)) {
-		angle = PI;
-	}
-	else if (vDir == Vector3(0, 1, 0)) {
-		angle = 0.0f;
-	}
-	else if (vDir == Vector3(-1, 0, 0)) {
-		angle = PI / 2.0f;
-	}
-	else if (vDir == Vector3(1, 0, 0)) {
-		angle = PI * 3.0f / 2.0f;
-	}
-	anim->SetAngle(angle);
-
 	_objects.push_back(beamStand);
 }
 
