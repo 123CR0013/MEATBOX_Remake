@@ -5,7 +5,7 @@
 #include "MapChip.h"
 
 // オブジェクトの下に描画
-#define DRAW_ORDER_UNDERLAP_OBJECT -1
+#define DRAW_ORDER_UNDERLAP_OBJECT -10000
 // オブジェクトの上に描画
 #define DRAW_ORDER_OVERLAP_OBJECT 10000
 

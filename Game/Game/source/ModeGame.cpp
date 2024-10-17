@@ -517,19 +517,21 @@ void ModeGame::SortAnimationInDrawOrder(std::multimap<int, Animation*>& result, 
 	for (auto& anim : anims)
 	{
 		int drawOrder = anim->GetDrawOrder();
-		switch (drawOrder)
-		{
-		default:
-		{
-			int y = (int)(gameObject->GetPos().y);
-			result.insert(std::make_pair(y, anim));
-			break;
-		}
-		case DRAW_ORDER_UNDERLAP_OBJECT:
-		case DRAW_ORDER_OVERLAP_OBJECT:
-			result.insert(std::make_pair(drawOrder, anim));
-			break;
-		}
+		int y = (int)(gameObject->GetPos().y + drawOrder);
+		result.insert(std::make_pair(y, anim));
+		//switch (drawOrder)
+		//{
+		//default:
+		//{
+		//	int y = (int)(gameObject->GetPos().y + drawOrder);
+		//	result.insert(std::make_pair(y, anim));
+		//	break;
+		//}
+		//case DRAW_ORDER_UNDERLAP_OBJECT:
+		//case DRAW_ORDER_OVERLAP_OBJECT:
+		//	result.insert(std::make_pair(drawOrder, anim));
+		//	break;
+		//}
 	}
 
 	for (auto& child : gameObject->GetChildObjects())
