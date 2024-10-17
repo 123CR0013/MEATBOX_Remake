@@ -89,67 +89,89 @@ void BeamStand::SetUnuseAllBeamBody()
 // BeamBodyのアニメーションを色ごとに同期
 void BeamStand::SyncBeamBodyAnim()
 {
+	//--------------------
+	// BeamBody
 	// 1つ目のBeamBodyのアニメーションと以降のBeamBodyのアニメーションを同期する
+	{
+		int num = 0;
+		float animCnt = 0;
+		float animCntSub = 0;
 
-	int num = 0;
-	float animCnt = 0;
-	float animCntSub = 0;
+		int randIndex = -1;
+		int randIndexSub = -1;
+
+		for (auto& object : _childObjects)
+		{
+			if (object->GetType() == TYPE::BEAM_BODY)
+			{
+				if (num == 0) {
+
+					{
+						Animation* anim = object->GetAnimationClass(0);
+						animCnt = anim->GetAnimCnt();
+
+						// アニメーションが終了したら
+						if (anim->IsEnd()) {
+							// アニメーションの開始画像をランダムに設定する
+							randIndex = rand() % 3;
+							anim->SetAnimCntForNumOfAnim(randIndex);
+						}
+					}
+
+					{
+						Animation* subAnim = object->GetAnimationClass(1);
+						animCntSub = subAnim->GetAnimCnt();
+						// アニメーションが終了したら
+						if (subAnim->IsEnd()) {
+							// アニメーションの開始画像をランダムに設定する
+							randIndexSub = rand() % 3;
+							subAnim->SetAnimCntForNumOfAnim(randIndexSub);
+						}
+					}
+				}
+				else {
+
+					{
+						Animation* anim = object->GetAnimationClass(0);
+						anim->SetAnimCnt(animCnt);
+						if (randIndex != -1)
+						{
+							anim->SetAnimCntForNumOfAnim(randIndex);
+						}
+					}
+
+					{
+						Animation* subAnim = object->GetAnimationClass(1);
+						subAnim->SetAnimCnt(animCntSub);
+						if (randIndexSub != -1)
+						{
+							subAnim->SetAnimCntForNumOfAnim(randIndexSub);
+						}
+					}
+				}
+
+				num++;
+			}
+		}
+	}
+	// END BeamBody
+	//--------------------
+
+	//--------------------
+	// BeamOrb
 
 	int randIndex = -1;
-	int randIndexSub = -1;
-
-	for (auto& object : _childObjects)
+	if (GetAnimationClass(1)->IsEnd())
 	{
-		if (object->GetType() == TYPE::BEAM_BODY)
-		{
-			if (num == 0) {
-
-				{
-					Animation* anim = object->GetAnimationClass(0);
-					animCnt = anim->GetAnimCnt();
-
-					// アニメーションが終了したら
-					if (anim->IsEnd()) {
-						// アニメーションの開始画像をランダムに設定する
-						randIndex = rand() % 3;
-						anim->SetAnimCntForNumOfAnim(randIndex);
-					}
-				}
-
-				{
-					Animation* subAnim = object->GetAnimationClass(1);
-					animCntSub = subAnim->GetAnimCnt();
-					// アニメーションが終了したら
-					if (subAnim->IsEnd()) {
-						// アニメーションの開始画像をランダムに設定する
-						randIndexSub = rand() % 3;
-						subAnim->SetAnimCntForNumOfAnim(randIndexSub);
-					}
-				}
-			}
-			else {
-
-				{
-					Animation* anim = object->GetAnimationClass(0);
-					anim->SetAnimCnt(animCnt);
-					if (randIndex != -1)
-					{
-						anim->SetAnimCntForNumOfAnim(randIndex);
-					}
-				}
-
-				{
-					Animation* subAnim = object->GetAnimationClass(1);
-					subAnim->SetAnimCnt(animCntSub);
-					if (randIndexSub != -1)
-					{
-						subAnim->SetAnimCntForNumOfAnim(randIndexSub);
-					}
-				}
-			}
-
-			num++;
-		}
+		randIndex = rand() % 6;
+		GetAnimationClass(1)->SetAnimCntForNumOfAnim(randIndex);
+		GetAnimationClass(3)->SetAnimCntForNumOfAnim(randIndex);
+	}
+	if (GetAnimationClass(2)->IsEnd())
+	{
+		randIndex = rand() % 6;
+		GetAnimationClass(2)->SetAnimCntForNumOfAnim(randIndex);
+		GetAnimationClass(4)->SetAnimCntForNumOfAnim(randIndex);
 	}
 
 	std::array<Vector3, 4> drawOffsetTbl = {
@@ -163,6 +185,8 @@ void BeamStand::SyncBeamBodyAnim()
 	GetAnimationClass(3)->SetDrawOffset(drawOffset);
 	GetAnimationClass(4)->SetDrawOffset(drawOffset);
 
+	// END BeamOrb
+	//--------------------
 }
 
 void BeamStand::UpdateBeamBodies(Vector3 vStartPos, Vector3 vEndPos)
