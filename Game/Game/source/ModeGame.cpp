@@ -487,7 +487,7 @@ void ModeGame::CreateBeamStand(Vector3 vPos, Vector3 vDir)
 			Animation* anim = beamStand->AddAnimationClass();
 			anim->SetDrawOffset(drawOffsetTbl.at(dir));
 			anim->SetSize(30, 30);
-			anim->SetDrawOrder(1);
+			anim->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT + 100);
 			LoadAnimData(anim, name.at(j));
 		}
 	}

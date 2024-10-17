@@ -8,6 +8,8 @@ BeamStand::BeamStand(ModeBase* mode) : GameObject(mode)
 	_vDir = Vector3(0, 0, 0);
 
 	_vBBEndPos = Vector3(0, 0, 0);
+	_pBBEnd = nullptr;
+	_bWallExist = false;
 }
 
 BeamStand::~BeamStand()
@@ -22,12 +24,14 @@ void BeamStand::Process()
 	// 壁, ギミック, ミートボックス, 敵のいずれかに当たるまでBeamBodyを生成
 	Vector3 vStartPos = _vPos + _vDir;
 	_vBBEndPos = vStartPos;
+	_bWallExist = false;
 	while (true)
 	{
 		// 壁との当たり判定
 		MapChip* mapChip = _mapData->GetMapChip(_vBBEndPos);
 		if(mapChip == nullptr || mapChip->GetType() == MapChip::TYPE::WALL)
 		{
+			_bWallExist = true;
 			break;
 		}
 
@@ -60,19 +64,21 @@ void BeamStand::AnimProcess()
 
 void BeamStand::CreateBeamBody(Vector3 vPos)
 {
-	for (int i = 0; i < 2; i++) {
-		BeamBody* beamBody = new BeamBody(_mode);
-		beamBody->SetPos(vPos);
+	BeamBody* beamBody = new BeamBody(_mode);
+	beamBody->SetPos(vPos);
 
-		Animation* anim = beamBody->AddAnimationClass();
-		_mode->LoadAnimData(anim, "BeamBody_Pink");
-		Animation* subAnim = beamBody->AddAnimationClass();
-		_mode->LoadAnimData(subAnim, "BeamBody_White");
+	Animation* anim = beamBody->AddAnimationClass();
+	anim->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
+	_mode->LoadAnimData(anim, "BeamBody_Pink");
+	Animation* subAnim = beamBody->AddAnimationClass();
+	subAnim->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
+	_mode->LoadAnimData(subAnim, "BeamBody_White");
 
-		beamBody->SetDirection(_direction);
+	beamBody->SetDirection(_direction);
 
-		_childObjects.push_back(beamBody);
-	}
+	_childObjects.push_back(beamBody);
+
+	_pBBEnd = beamBody;
 }
 
 void BeamStand::SetUnuseAllBeamBody()
@@ -91,6 +97,32 @@ void BeamStand::SyncBeamBodyAnim()
 {
 	//--------------------
 	// BeamBody
+	
+	// BeamBodyが下向きの場合
+	if (_direction == DIRECTION::DOWN)
+	{
+		// 壁に当たった場合
+		if(_bWallExist)
+		{
+			_pBBEnd->GetAnimationClass(0)->SetAnimIndex(2);
+			_pBBEnd->GetAnimationClass(1)->SetAnimIndex(2);
+
+			// Orbは非表示
+			GetAnimationClass(3)->SetUse(false);
+			GetAnimationClass(4)->SetUse(false);
+		}
+		else
+		{
+			_pBBEnd->GetAnimationClass(0)->SetAnimIndex(1);
+			_pBBEnd->GetAnimationClass(1)->SetAnimIndex(1);
+
+			// Orbは表示
+			GetAnimationClass(3)->SetUse(true);
+			GetAnimationClass(4)->SetUse(true);
+		}
+	}
+
+
 	// 1つ目のBeamBodyのアニメーションと以降のBeamBodyのアニメーションを同期する
 	{
 		int num = 0;

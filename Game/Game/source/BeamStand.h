@@ -70,4 +70,10 @@ protected:
 
 	// BeamBodyのアニメーションを色ごとに同期
 	void SyncBeamBodyAnim();
+
+	// 一番端のBeamBody
+	BeamBody* _pBBEnd;
+
+	// BeamBodyが壁に当たったか
+	bool _bWallExist;
 };
