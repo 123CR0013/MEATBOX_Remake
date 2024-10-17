@@ -14,6 +14,9 @@ public:
 	void Process();
 	void Draw();
 
+	bool GetUse() { return _bUse; }
+	void SetUse(bool bUse) { _bUse = bUse; }
+
 	void AddAnimInfo(AnimationInfo* animInfo, int index);
 	void SetAnimIndex(int index);
 	int GetAnimIndex() { return _groupIndex; }
@@ -55,6 +58,8 @@ public:
 
 
 protected:
+	bool _bUse;
+
 	ObjectBase* _parentObj;
 
 	// アニメーション情報

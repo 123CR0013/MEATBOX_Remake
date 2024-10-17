@@ -7,6 +7,7 @@
 
 Animation::Animation(ObjectBase* object)
 {
+	_bUse = true;
 	_parentObj = object;
 
 	_groupIndex = 0;
@@ -40,6 +41,8 @@ Animation::~Animation()
 
 void Animation::Process()
 {
+	if (_bUse == false) return;
+
 	if (_groupIndex <= _groupIndexMax)
 	{
 		_animCnt++;
@@ -57,7 +60,7 @@ void Animation::Process()
 
 void Animation::Draw()
 {
-	if (_parentObj->GetUse() == false) return;
+	if (_parentObj->GetUse() == false || _bUse == false) return;
 
 	if (_bDrawWithScreenPos) 
 	{
