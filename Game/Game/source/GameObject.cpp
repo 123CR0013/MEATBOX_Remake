@@ -6,8 +6,6 @@ constexpr float MOVE_FRAME = 6.f;
 
 GameObject::GameObject(ModeBase* mode) : ObjectBase(mode)
 {
-	_bUse = true;
-
 	_mapData = nullptr;
 	if (_mode != nullptr)
 	{

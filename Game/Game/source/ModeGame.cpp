@@ -425,7 +425,6 @@ void ModeGame::CreateEnemyTomato(std::vector<Vector3> route)
 
 	Effect* arrow = new Effect(this);
 	arrow->SetLoop(true);
-	arrow->SetDrawOrder(DRAW_ORDER_UNDERLAP_OBJECT);
 	std::string path = "res/Effect/MoveArea/";
 	std::array<std::string, 4> fileName = {
 		"effect_movearea_01",
@@ -433,6 +432,7 @@ void ModeGame::CreateEnemyTomato(std::vector<Vector3> route)
 	};
 
 	Animation* arrowAnim = arrow->AddAnimationClass();
+	arrowAnim->SetDrawOrder(DRAW_ORDER_UNDERLAP_OBJECT);
 	for (int i = 0; i < 2; i++) {
 		AnimationInfo* animInfo = new AnimationInfo();
 		animInfo->_graphHandle.push_back(ResourceServer::LoadGraph(path + fileName[i] + ".png"));

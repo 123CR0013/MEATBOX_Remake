@@ -75,8 +75,6 @@ public:
 	}
 	virtual Animation* GetSubAnimation() { return nullptr; }
 
-	int GetDrawOrder() { return _drawOrder; }
-	void SetDrawOrder(int drawOrder) { _drawOrder = drawOrder; }
 
 	void AddChildObject(GameObject* object) { _childObjects.push_back(object); }
 	std::vector<GameObject*> GetChildObjects() { return _childObjects; }
