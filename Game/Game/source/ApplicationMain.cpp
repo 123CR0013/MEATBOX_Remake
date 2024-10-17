@@ -10,7 +10,7 @@ bool ApplicationMain::Initialize(HINSTANCE hInstance) {
 	if (!base::Initialize(hInstance)) { return false; }
 	// モードの登録
 	ModeServer::GetInstance()->Add(NEW ModeSoundLayer(), 0, "SoundLayer");
-	ModeServer::GetInstance()->Add(NEW ModeSelect(), 1, "ModeSelect");
+	ModeServer::GetInstance()->Add(NEW ModeGame(0,0), 1, "ModeSelect");
 
 	// FPSを安定させるためのクラスを初期化
 	_fpsController = NEW FpsController();

@@ -10,6 +10,8 @@ StickyGroup::StickyGroup(ModeBase* mode) : GameObject(mode)
 	_objectType = TYPE::STICKYGROUP;
 	_bSetToMap = false;
 
+	_bExistHole = false;
+	_bExistFloor = false;
 	_bGoThroughHole = false;
 
 	id = tmpId;
@@ -55,9 +57,15 @@ bool StickyGroup::CheckMove(Vector3 vMove)
 		}
 
 		// 押しつぶせる敵を削除
+		int num = 0;
 		for (auto pEnemy : _pDeleteEnemyList)
 		{
-			CreateEffect(Effect::TYPE::EXPLOSION, pEnemy->GetPos(), _mode);
+			// 5フレームごとに破裂エフェクトを再生
+			Vector3 vEnPos = pEnemy->GetPos();
+			std::function<void()> func = [=]() {CreateEffect_Explosion(vEnPos, _mode, num); };
+			ModeTimeTable::Add(func, 5 * num);
+			num++;
+
 			pEnemy->Destroy();
 		}
 	}
@@ -102,20 +110,30 @@ void StickyGroup::AddSticky(Sticky* pSticky)
 	pSticky->SetStickyGroup(this);
 }
 
-void StickyGroup::AddMeatBox(MeatBox* pMeatBox)
+bool StickyGroup::AddMeatBox(MeatBox* pMeatBox)
 {
-	if (pMeatBox == nullptr) return;
+	if (pMeatBox == nullptr) return false;
+
+	// すでに追加されている場合は追加しない
+	for (auto pMB : _pMeatBox)
+	{
+		if (pMB == pMeatBox) return false;
+	}
 
 	StickyGroup* tmpSG = pMeatBox->GetStickyGroup();
 	if (tmpSG != nullptr) {
 		// ミートボックスが別のStickyGroupに所属している場合、結合する
 		if (tmpSG != this) {
 			Merge(tmpSG);
+			return true;
 		}
 	}
 	// ミートボックスがまだStickyGroupに所属していない場合
 	else {
 		_pMeatBox.push_back(pMeatBox);
 		pMeatBox->SetStickyGroup(this);
+		return true;
 	}
+
+	return false;
 }

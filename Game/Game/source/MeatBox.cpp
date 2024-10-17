@@ -46,6 +46,9 @@ bool MeatBox::_CheckMove(Vector3 vMove)
 	// 移動できるかどうか
 	bool bCanMove = false;
 
+	// Stickyへの追加予約用（AddMeatBox()）
+	_pSticky = nullptr;
+
 	// 移動先のマップチップを取得
 	MapChip* mapChip = CheckMapChip(vNextPos);
 	if (mapChip != nullptr) {
@@ -54,8 +57,11 @@ bool MeatBox::_CheckMove(Vector3 vMove)
 			GameObject* obj = CheckObject(vNextPos);
 			// 移動先にオブジェクトがある場合
 			if (obj != nullptr) {
+				if (obj->GetType() == GameObject::TYPE::PLAYER){
+					bCanMove = true;
+				}
 				// 移動先のオブジェクトが敵の場合
-				if (obj->GetType() == GameObject::TYPE::ENEMY) {
+				else if (obj->GetType() == GameObject::TYPE::ENEMY) {
 
 					// さらに1マス先のマップチップとオブジェクトを調べる
 					Vector3 vTmpPos = vNextPos + vMove;
@@ -125,8 +131,9 @@ bool MeatBox::_CheckMove(Vector3 vMove)
 				else if (obj->GetType() == GameObject::TYPE::STICKY) {
 					// 移動できる
 					bCanMove = true;
-					Sticky* pSticky = static_cast<Sticky*>(obj);
-					pSticky->AddMeatBox(this, Sticky::POSITION::ROOT);
+					
+					// Stickyへの追加予約
+					_pSticky = static_cast<Sticky*>(obj);
 				}
 			}
 			// 移動先にオブジェクトがない場合
@@ -149,9 +156,13 @@ bool MeatBox::_CheckMove(Vector3 vMove)
 			SetGoThroughHole(false);
 		}
 	}
+	// 移動先にマップチップがない場合
 	else {
 		bCanMove = false;
-		_pStickyGroup->SetGoThroughHole(false);
+		if (_pStickyGroup != nullptr) 
+		{
+			_pStickyGroup->SetGoThroughHole(false);
+		}
 	}
 
 
@@ -204,7 +215,7 @@ void MeatBox::Move(Vector3 vMove)
 	_mapData->SetGameObject(this, _vPos);
 
 	// エフェクトを生成
-	CreateEffect(Effect::TYPE::IMPACT, _vPos, _mode);
+	CreateEffect(Effect::TYPE::IMPACT, _vOldPos + (vMove / 2.0f), _mode);
 
 	//移動フラグ
 	_isMove = true;
@@ -216,6 +227,13 @@ void MeatBox::Move(Vector3 vMove)
 	_vPos = _vOldPos;
 
 	_frameCount = 0;
+
+	// _CheckMove()内で予約したStickyへの追加を行う
+	if (_pSticky != nullptr)
+	{
+		_pSticky->AddMeatBox(this, Sticky::POSITION::ROOT);
+	}
+	_pSticky = nullptr;
 }
 
 void MeatBox::DrawDebug()

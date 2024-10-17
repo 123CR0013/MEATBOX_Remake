@@ -76,8 +76,8 @@ void EnemyTomato::MoveProcess()
 		CheckNextPos();
 	}
 
-	// ArrowEffectの設定
-	SetArrowEffect();
+	// MoveAreaEffectの設定
+	SetMoveAreaEffect();
 }
 
 // 次の移動先を設定
@@ -98,32 +98,13 @@ void EnemyTomato::CheckNextPos()
 	_vNextPos = _moveRoute[nextIndex];
 }
 
-// ArrowEffectの設定
-void EnemyTomato::SetArrowEffect()
+// MoveAreaEffectの設定
+void EnemyTomato::SetMoveAreaEffect()
 {
-	// Arrowの位置を設定
+	// MoveAreaEffectの位置を設定
 	_childObjects[0]->SetPos(_vNextPos);
-	// Arrowの色と向きを設定	
-	// index
-	//	0:上 1:下 2:左 3:右 （黄色+0 赤+4）
-	int dirIndex = 0;
-	if (_vPos.y > _vNextPos.y) {
-		dirIndex = 0;
-	}
-	else if (_vPos.y < _vNextPos.y) {
-		dirIndex = 1;
-	}
-	else if (_vPos.x > _vNextPos.x) {
-		dirIndex = 2;
-	}
-	else if (_vPos.x < _vNextPos.x) {
-		dirIndex = 3;
-	}
-
-	int colorIndex = 0;
-	if (_mode->GetPlayerStepCnt() == 1) {
-		colorIndex = 4;
-	}
-
-	_childObjects[0]->SetAnimIndex(dirIndex + colorIndex);
+	// MoveAreaEffectの色を設定
+	int index = _mode->GetPlayerStepCnt() != 1 ? 0 : 1;
+	Animation* anim = _childObjects[0]->GetAnimation();
+	anim->SetAnimIndex(index);
 }

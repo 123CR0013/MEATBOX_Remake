@@ -17,6 +17,14 @@ void Player::Process()
 	GameObject::Process();
 
 	MoveProcess();
+
+	if (_anim->IsEnd())
+	{
+		int animIndex = _anim->GetAnimIndex();
+		if (animIndex == 2 || animIndex == 3) {
+			_anim->SetAnimIndex(_anim->GetAnimIndex() == 2 ? 0 : 1);
+		}
+	}
 }
 
 void Player::MoveProcess()
@@ -58,38 +66,36 @@ void Player::MoveProcess()
 
 
 	if (bMoved) {
-		// プレイヤーのステップカウントを増やす
-		_mode->AddPlayerStepCnt();
+
+		bool bSuccess = false;
 
 		// アニメーション設定
 		if (vMove.x != 0) {
 			_anim->SetAnimIndex(vMove.x == 1 ? 0 : 1);
 		}
 
-		// エフェクト設定
-		CreateEffect(Effect::TYPE::MOVE, vOldPos, _mode);
-
 		//----------------------------------------
 		// マップチップとの判定
 
+		// 移動先のマップチップが床かどうか
+		bool bExistFloor = false;
+
 		// 移動先のマップチップを取得
 		MapChip* mapChip = _mapData->GetMapChip(_vPos);
-		if (mapChip == nullptr)
+		if (mapChip != nullptr)
 		{
-			_vPos = vOldPos;
-			return;
-		}
 
-		switch (mapChip->GetType())
-		{
-		default:
-		case MapChip::TYPE::NONE:
-		case MapChip::TYPE::WALL:
-		case MapChip::TYPE::HOLE:
-			_vPos = vOldPos;
-			break;
-		case MapChip::TYPE::FLOOR:
-			break;
+			switch (mapChip->GetType())
+			{
+			default:
+			case MapChip::TYPE::NONE:
+			case MapChip::TYPE::WALL:
+			case MapChip::TYPE::HOLE:
+				break;
+			case MapChip::TYPE::FLOOR:
+				bExistFloor = true;
+				break;
+			}
 		}
 
 		//----------------------------------------
@@ -99,7 +105,8 @@ void Player::MoveProcess()
 		//----------------------------------------
 		// 移動先のオブジェクトとの判定
 
-		if (_vPos != vOldPos) {
+		// 移動先に床がある場合
+		if (bExistFloor) {
 			// 移動先のオブジェクトを取得
 			GameObject* obj = _mapData->GetGameObject(_vPos);
 			if (obj != nullptr)
@@ -111,10 +118,10 @@ void Player::MoveProcess()
 				case GameObject::TYPE::NONE:
 					break;
 				case GameObject::TYPE::MEATBOX:
-					if (obj->CheckMove(vMove) == false) {
-						_vPos = vOldPos;
-						CreateEffect(Effect::TYPE::QUESTION, _vPos, _mode);
-						return;
+					if (obj->CheckMove(vMove)) 
+					{
+						bSuccess = true;
+						_anim->SetAnimIndex(_anim->GetAnimIndex() == 0 ? 2 : 3);
 					}
 					break;
 				case GameObject::TYPE::ENEMY:
@@ -122,15 +129,35 @@ void Player::MoveProcess()
 					_mode->SetGameOver();
 					break;
 				case GameObject::TYPE::BEAM_STAND:
-					_vPos = vOldPos;
+					break;
+				case GameObject::TYPE::STICKY:
+					bSuccess = true;
 					break;
 				}
+			}
+			// 移動先にオブジェクトがない場合
+			else {
+				bSuccess = true;
 			}
 		}
 		//----------------------------------------
 
-		// マップデータの更新
-		_mapData->SetGameObject(this, _vPos);
+
+		// 移動成功時
+		if (bSuccess) {
+			// プレイヤーのステップカウントを増やす
+			_mode->AddPlayerStepCnt();
+
+			// エフェクト設定
+			CreateEffect(Effect::TYPE::MOVE, vOldPos, _mode);
+
+			// マップデータの更新
+			_mapData->SetGameObject(this, _vPos);
+		}
+		else {
+			_vPos = vOldPos;
+			CreateEffect(Effect::TYPE::QUESTION, _vPos, _mode);
+		}
 
 	}
 }

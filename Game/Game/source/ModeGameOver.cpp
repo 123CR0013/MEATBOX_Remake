@@ -16,7 +16,7 @@ bool ModeGameOver::Process()
 {
     if(global._trg & PAD_INPUT_1) {
 		ModeServer::GetInstance()->Del(this);
-        ModeServer::GetInstance()->Add(NEW ModeUI(), 1, "ModeGame");
+        ModeServer::GetInstance()->Add(NEW ModeGame(0,0), 1, "ModeGame");
 	}
 
     return true;

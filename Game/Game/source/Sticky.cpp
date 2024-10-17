@@ -23,19 +23,30 @@ void Sticky::Process()
 	GameObject::Process();
 
 	// ねばねば本体がミートボックスにくっついている場合、ねばねば本体の座標をミートボックスの座標に合わせる
-	if(_bMBExist[0] == true)
+	if (_bMBExist[0] == true)
 	{
-		_vPos = _pRootMB->GetPos();
+		// MBが移動中でない場合
+		if (_pRootMB->IsMove() == false)
+		{
+			_vPos = _pRootMB->GetPos();
 
-		// 周囲4マスにミートボックスがあるかを調べる
-		CheckMeatBoxExistAround();
+			// 周囲4マスにミートボックスがあるかを調べる
+			CheckMeatBoxExistAround();
+		}
 	}
 	else {
 		// ねばねば本体がミートボックスにくっついていない場合、ねばねば本体の座標をマップに登録する
 		// プレイヤーが上に乗ったときにねばねば本体が消えないようにするため
-		if (_mapData->GetGameObject(_vPos) == nullptr)
+		GameObject* obj = _mapData->GetGameObject(_vPos);
+		if (obj == nullptr)
 		{
 			_mapData->SetGameObject(this, _vPos);
+		}
+		// 上にミートボックスがある場合
+		// BeamBodyの下にねばねばマスがあり、そのマスにミートボックスが押された場合にくっつく様にするため
+		else if (obj->GetType() == TYPE::MEATBOX)
+		{
+			AddMeatBox(static_cast<MeatBox*>(obj), POSITION::ROOT);
 		}
 	}
 }
@@ -44,6 +55,10 @@ bool Sticky::AddMeatBox(MeatBox* pMeatBox, Sticky::POSITION pos)
 {
 	if(_bMBExist[(int)pos] == false && pMeatBox != nullptr)
 	{
+		// StickyGroupにミートボックスを追加
+		bool bSuccess = _pStickyGroup->AddMeatBox(pMeatBox);
+		if (bSuccess == false) return false;
+
 		_bMBExist[(int)pos] = true;
 
 		if(pos == POSITION::ROOT)
@@ -51,9 +66,6 @@ bool Sticky::AddMeatBox(MeatBox* pMeatBox, Sticky::POSITION pos)
 			_pRootMB = pMeatBox;
 			_mapData->EraseGameObject(this);
 		}
-
-		// StickyGroupにミートボックスを追加
-		_pStickyGroup->AddMeatBox(pMeatBox);
 
 		return true;
 	}

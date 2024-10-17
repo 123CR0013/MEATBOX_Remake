@@ -77,7 +77,6 @@ void CSVFile::Parse(std::string data, Type type,Cell &output)
 			if (data.substr(subStartPos, subEndPos).find("\r") != std::string::npos)
 			{
 				breakMrkSize = 2;
-				auto s = data.substr(subStartPos, subEndPos);
 				subEndPos --;
 			}
 

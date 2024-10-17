@@ -22,8 +22,8 @@ protected:
 	// Ÿ‚ÌˆÚ“®æ‚ğİ’è
 	void CheckNextPos();
 
-	// ArrowEffect‚Ìİ’è
-	void SetArrowEffect();
+	// MoveAreaEffect‚Ìİ’è
+	void SetMoveAreaEffect();
 
 	// ˆÚ“®ƒ‹[ƒg
 	std::vector<Vector3> _moveRoute;

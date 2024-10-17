@@ -13,7 +13,7 @@ public:
 
 	void Merge(StickyGroup* other);
 	void AddSticky(Sticky* pSticky);
-	void AddMeatBox(MeatBox* pMeatBox);
+	bool AddMeatBox(MeatBox* pMeatBox);
 
 	void AddDeleteEnemy(GameObject* pEnemy) { _pDeleteEnemyList.push_back(pEnemy); }
 

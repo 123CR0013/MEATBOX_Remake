@@ -7,6 +7,21 @@ public:
 	BeamBody(ModeBase* mode);
 	~BeamBody() override;
 
-protected:
+	void AnimProcess() override;
+	void Draw() override;
 
+	enum class DIRECTION
+	{
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT,
+	};
+	void SetDirection(BeamBody::DIRECTION direction);
+
+	Animation* GetSubAnimation() override { return _subAnim; }
+
+protected:
+	BeamBody::DIRECTION _direction;
+	Animation* _subAnim;
 };

@@ -4,12 +4,23 @@
 
 class Map;
 class GameObject;
+class Animation;
+
+// リザルト画面に渡すデータ
+struct ResultData
+{
+	// 残り歩数
+	int stepCnt;
+	// 最大同時キル
+	int killCnt;
+};
 
 // モード
 class ModeGame : public ModeUI
 {
 	typedef ModeUI base;
 public:
+	ModeGame(int worldID, int stageID);
 	virtual bool Initialize();
 	virtual bool Terminate();
 	virtual bool Process();
@@ -27,7 +38,10 @@ public:
 	void SetGameOver() override;
 
 protected:
+	int _worldID, _stageID;
+
 	Map* _mapData;
+	GameObject* _player;
 	std::vector<GameObject*> _objects;
 
 	// 追加予約オブジェクトの確認
@@ -43,7 +57,7 @@ protected:
 
 	int _plStepCnt;
 
-	void LoadAnimData(GameObject* gameObject, std::string name);
+	void LoadAnimData(Animation* animationClass, std::string name);
 	bool _bExistAnimData = false;
 	nlohmann::json _animDataJson;
 
@@ -58,4 +72,9 @@ protected:
 	void CreateBeamStand(Vector3 vPos, Vector3 vDir);
 
 	void CreateSticky(Vector3 vPos);
+
+	bool _bResult;
+	ResultData _resultData;
+
+	void SortGameObjectInDrawOrder(std::multimap<int, GameObject*>& result, GameObject* gameObject);
 };

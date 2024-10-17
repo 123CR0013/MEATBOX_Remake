@@ -9,6 +9,7 @@ public:
 	~BeamStand() override;
 
 	void Process() override;
+	void AnimProcess() override;
 
 	Vector3 GetDir() { return _vDir; }
 	void SetDir(Vector3 vDir) { _vDir = vDir; }
@@ -38,4 +39,7 @@ protected:
 	void CreateBeamBody(Vector3 vPos);
 	void UpdateBeamBodies(Vector3 vStartPos, Vector3 vEndPos);
 	void SetUnuseAllBeamBody();
+
+	// BeamBodyのアニメーションを色ごとに同期
+	void SyncBeamBodyAnim();
 };

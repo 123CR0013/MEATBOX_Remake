@@ -21,7 +21,8 @@ public:
 		BEAM_STAND,
 		BEAM_BODY,
 		STICKY,
-		STICKYGROUP
+		STICKYGROUP,
+		EFFECT,
 	};
 
 	GameObject(ModeBase* mode);
@@ -69,23 +70,16 @@ public:
 	Vector3 GetDrawOffset() const { return _vDrawOffset; }
 	void SetDrawOffset(Vector3 vDrawOffset) { _vDrawOffset = vDrawOffset; }
 
-	void AddAnimInfo(AnimationInfo* animInfo) { _anim->AddAnimInfo(animInfo); }
-	void SetAnimIndex(int index) { _anim->SetAnimIndex(index); }
-
-	void SetAnimZoom(float zoom) { _anim->SetZoom(zoom); }
-	void SetAnimAngle(float angle) { _anim->SetAngle(angle); }
-	void SetAnimWidth(float width) { _anim->SetWidth(width); }
-	void SetAnimHeight(float height) { _anim->SetHeight(height); }
-	void SetAnimSize(float width, float height) { _anim->SetSize(width, height); }
+	Animation* GetAnimation() { return _anim; }
+	virtual Animation* GetSubAnimation() { return nullptr; }
 
 	int GetDrawOrder() { return _drawOrder; }
 	void SetDrawOrder(int drawOrder) { _drawOrder = drawOrder; }
 
-	void SetDrawWithScreenPos(bool bDrawWithScreenPos) { _anim->SetDrawWithScreenPos(bDrawWithScreenPos); }
-
 	void AddChildObject(GameObject* object) { _childObjects.push_back(object); }
+	std::vector<GameObject*> GetChildObjects() { return _childObjects; }
 
-	bool IsMove()const { return _isMove; }	
+	bool IsMove()const { return _isMove; }
 
 protected:
 	bool _bUse;
