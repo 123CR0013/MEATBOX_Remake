@@ -16,6 +16,7 @@ Animation::Animation(ObjectBase* object)
 
 	_bAnimEnd = false;
 
+	_vDrawOffset = { 0, 0, 0 };
 	_zoom = 1.0f;
 	_angle = 0.0f;
 	// デフォルトの描画サイズはマップチップサイズと同じ
@@ -56,11 +57,11 @@ void Animation::Draw()
 {
 	if (_bDrawWithScreenPos) 
 	{
-		MyDraw::MyDrawModiGraph(MGetIdent(), _parentObj->GetPos() + _parentObj->GetDrawOffset(), _zoom, _angle, _width, _height, GetGraphHandle(), 0);
+		MyDraw::MyDrawModiGraph(MGetIdent(), _parentObj->GetPos() + _vDrawOffset, _zoom, _angle, _width, _height, GetGraphHandle(), 0);
 	}
 	else 
 	{
-		DrawForMapChip::MyDrawModiGraph(MGetIdent(), _parentObj->GetPos() + _parentObj->GetDrawOffset(), _zoom, _angle, _width, _height, GetGraphHandle(), 0);
+		DrawForMapChip::MyDrawModiGraph(MGetIdent(), _parentObj->GetPos() + _vDrawOffset, _zoom, _angle, _width, _height, GetGraphHandle(), 0);
 	}
 }
 

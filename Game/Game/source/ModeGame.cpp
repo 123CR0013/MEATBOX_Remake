@@ -371,9 +371,9 @@ void ModeGame::CreatePlayer(Vector3 vPos)
 {
 	Player* player = new Player(this);
 	player->SetPos(vPos);
-	player->SetDrawOffset(Vector3(0, -0.5f, 0));
 
 	Animation* anim = player->GetAnimation();
+	anim->SetDrawOffset(Vector3(0, -0.5f, 0));
 	anim->SetSize(160, 160);
 	LoadAnimData(anim, "Player");
 
@@ -385,9 +385,9 @@ void ModeGame::CreateMeatBox(Vector3 vPos)
 {
 	MeatBox* meatBox = new MeatBox(this);
 	meatBox->SetPos(vPos);
-	meatBox->SetDrawOffset(Vector3(0, -0.2f, 0));
 
 	Animation* anim = meatBox->GetAnimation();
+	anim->SetDrawOffset(Vector3(0, -0.2f, 0));
 	LoadAnimData(anim, "Meatbox");
 
 	_objects.push_back(meatBox);
@@ -397,9 +397,9 @@ void ModeGame::CreateEnemy(Vector3 vPos)
 {
 	Enemy* enemy = new Enemy(this);
 	enemy->SetPos(vPos);
-	enemy->SetDrawOffset(Vector3(0, -0.2f, 0));
 
 	Animation* anim = enemy->GetAnimation();
+	anim->SetDrawOffset(Vector3(0, -0.2f, 0));
 	LoadAnimData(anim, "Namako");
 
 	_objects.push_back(enemy);
@@ -410,9 +410,9 @@ void ModeGame::CreateEnemyTomato(std::vector<Vector3> route)
 	EnemyTomato* enemyTomato = new EnemyTomato(this);
 	enemyTomato->SetPos(route[0]);
 	enemyTomato->SetMoveRoute(route);
-	enemyTomato->SetDrawOffset(Vector3(0, -0.2f, 0));
 
 	Animation* anim = enemyTomato->GetAnimation();
+	anim->SetDrawOffset(Vector3(0, -0.2f, 0));
 	LoadAnimData(anim, "Tomato");
 
 	_objects.push_back(enemyTomato);
@@ -456,9 +456,9 @@ void ModeGame::CreateSticky(Vector3 vPos)
 {
 	Sticky* sticky = new Sticky(this);
 	sticky->SetPos(vPos);
-	sticky->SetDrawOffset(Vector3(0, -0.2f, 0));
 
 	Animation* anim = sticky->GetAnimation();
+	anim->SetDrawOffset(Vector3(0, -0.2f, 0));
 	LoadAnimData(anim, "Sticky");
 
 	StickyGroup* stickyGroup = new StickyGroup(this);

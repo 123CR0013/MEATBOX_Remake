@@ -17,7 +17,6 @@ GameObject::GameObject(ModeBase* mode) : ObjectBase(mode)
 	_objectType = TYPE::NONE;
 
 	_vPos = { 0, 0, 0 };
-	_vDrawOffset = { 0, 0, 0 };
 	_anim = new Animation(this);
 
 	_drawOrder = 0;

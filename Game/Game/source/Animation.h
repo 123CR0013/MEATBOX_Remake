@@ -29,6 +29,9 @@ public:
 
 	int GetGraphHandle();
 
+	Vector3 GetDrawOffset() { return _vDrawOffset; }
+	void SetDrawOffset(Vector3 offset) { _vDrawOffset = offset; }
+
 	float GetZoom() { return _zoom; }
 	void SetZoom(float zoom) { _zoom = zoom; }
 
@@ -67,6 +70,9 @@ protected:
 	// アニメーション終了フラグ
 	bool _bAnimEnd;
 
+	// 描画オフセット
+	// _parentObjのvPosにこの値を加算して描画する
+	Vector3 _vDrawOffset;
 
 	float _zoom;
 	float _angle;

@@ -67,9 +67,6 @@ public:
 		}
 	}
 
-	Vector3 GetDrawOffset() const { return _vDrawOffset; }
-	void SetDrawOffset(Vector3 vDrawOffset) { _vDrawOffset = vDrawOffset; }
-
 	Animation* GetAnimation() { return _anim; }
 	virtual Animation* GetSubAnimation() { return nullptr; }
 

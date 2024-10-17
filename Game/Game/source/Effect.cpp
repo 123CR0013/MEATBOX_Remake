@@ -83,10 +83,10 @@ void CreateEffect_Impact(Vector3 vPos, ModeBase* mode)
 {
 	Effect* effect = new Effect(mode);
 	effect->SetPos(vPos);
-	effect->SetDrawOffset(Vector3(0.0f, -0.2f, 0.0f));
 	effect->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
 
 	Animation* anim = effect->GetAnimation();
+	anim->SetDrawOffset(Vector3(0.0f, -0.2f, 0.0f));
 	anim->SetSize(220, 220);
 
 	AnimationInfo* animInfo = new AnimationInfo();
@@ -102,7 +102,6 @@ void CreateEffect_Question(Vector3 vPos, ModeBase* mode)
 {
 	Effect* effect = new Effect(mode);
 	effect->SetPos(vPos);
-	effect->SetDrawOffset(Vector3(-0.5f, -0.5f, 0));
 	effect->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
 
 	AnimationInfo* animInfo = new AnimationInfo();
@@ -110,6 +109,7 @@ void CreateEffect_Question(Vector3 vPos, ModeBase* mode)
 	animInfo->_framePerSheet = 24;
 
 	Animation* anim = effect->GetAnimation();
+	anim->SetDrawOffset(Vector3(-0.5f, -0.5f, 0));
 	anim->AddAnimInfo(animInfo, 0);
 
 	anim->SetZoom(0.5f);
