@@ -20,7 +20,17 @@ void Effect::Process()
 {
 	if(!_bLoop)
 	{
-		if (_anim->IsEnd())
+		bool bEnd = true;
+		for (auto& anim : _anims)
+		{
+			if (!anim->IsEnd())
+			{
+				bEnd = false;
+				break;
+			}
+		}
+
+		if (bEnd)
 		{
 			_mode->RemoveGameObject(this);
 		}
@@ -29,15 +39,18 @@ void Effect::Process()
 
 void Effect::Draw()
 {
+	if (!_bUse) return;
+
 	if(!_bLoop)
 	{
-		if (_anim->IsEnd())
+		for (auto& _anim : _anims)
 		{
-			return;
+			if (_anim->IsEnd() == false)
+			{
+				_anim->Draw();
+			}
 		}
 	}
-
-	GameObject::Draw();
 }
 
 void CreateEffect(Effect::TYPE type, Vector3 vPos, ModeBase* mode)
@@ -73,7 +86,7 @@ void CreateEffect_Move(Vector3 vPos, ModeBase* mode)
 	ResourceServer::LoadDivGraph("res/Effect/Move/ef_smoke_sheet.png", 4, 4, 1, 100, 100, animInfo->_graphHandle);
 	animInfo->_framePerSheet = 4;
 
-	Animation* anim = effect->GetAnimation();
+	Animation* anim = effect->AddAnimationClass();
 	anim->AddAnimInfo(animInfo, 0);
 
 	mode->AddGameObject(effect);
@@ -85,7 +98,7 @@ void CreateEffect_Impact(Vector3 vPos, ModeBase* mode)
 	effect->SetPos(vPos);
 	effect->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
 
-	Animation* anim = effect->GetAnimation();
+	Animation* anim = effect->AddAnimationClass();
 	anim->SetDrawOffset(Vector3(0.0f, -0.2f, 0.0f));
 	anim->SetSize(220, 220);
 
@@ -108,7 +121,7 @@ void CreateEffect_Question(Vector3 vPos, ModeBase* mode)
 	animInfo->_graphHandle.push_back(ResourceServer::LoadGraph("res/Effect/Question/hatena.png"));
 	animInfo->_framePerSheet = 24;
 
-	Animation* anim = effect->GetAnimation();
+	Animation* anim = effect->AddAnimationClass();
 	anim->SetDrawOffset(Vector3(-0.5f, -0.5f, 0));
 	anim->AddAnimInfo(animInfo, 0);
 
@@ -166,7 +179,7 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode, int num)
 		effect->SetPos(vNewPos);
 		effect->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
 
-		Animation* anim = effect->GetAnimation();
+		Animation* anim = effect->AddAnimationClass();
 		anim->SetSize(w, h);
 
 		AnimationInfo* animInfo = new AnimationInfo();
@@ -191,7 +204,7 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode, int num)
 			effect->SetPos(vPos);
 			effect->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
 
-			Animation* anim = effect->GetAnimation();
+			Animation* anim = effect->AddAnimationClass();
 			anim->SetSize(w, h);
 
 			AnimationInfo* animInfo = new AnimationInfo();
@@ -208,7 +221,7 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode, int num)
 			effect->SetPos(vScreenPos.at(num));
 			effect->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
 
-			Animation* anim = effect->GetAnimation();
+			Animation* anim = effect->AddAnimationClass();
 			anim->SetSize(w, h);
 			anim->SetDrawWithScreenPos(true);
 
@@ -233,7 +246,7 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode, int num)
 		effect->SetPos(vNewPos);
 		effect->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
 
-		Animation* anim = effect->GetAnimation();
+		Animation* anim = effect->AddAnimationClass();
 		anim->SetSize(w, h);
 
 		AnimationInfo* animInfo = new AnimationInfo();

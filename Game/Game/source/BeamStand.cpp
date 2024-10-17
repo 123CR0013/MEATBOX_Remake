@@ -4,7 +4,10 @@
 BeamStand::BeamStand(ModeBase* mode) : GameObject(mode)
 {
 	_objectType = TYPE::BEAM_STAND;
+	_direction = DIRECTION::UP;
 	_vDir = Vector3(0, 0, 0);
+
+	_vBBEndPos = Vector3(0, 0, 0);
 }
 
 BeamStand::~BeamStand()
@@ -18,18 +21,18 @@ void BeamStand::Process()
 
 	// 壁, ギミック, ミートボックス, 敵のいずれかに当たるまでBeamBodyを生成
 	Vector3 vStartPos = _vPos + _vDir;
-	Vector3 vEndPos = vStartPos;
+	_vBBEndPos = vStartPos;
 	while (true)
 	{
 		// 壁との当たり判定
-		MapChip* mapChip = _mapData->GetMapChip(vEndPos);
+		MapChip* mapChip = _mapData->GetMapChip(_vBBEndPos);
 		if(mapChip == nullptr || mapChip->GetType() == MapChip::TYPE::WALL)
 		{
 			break;
 		}
 
 		// ミートボックス, 敵との当たり判定
-		GameObject* obj = _mapData->GetGameObject(vEndPos);
+		GameObject* obj = _mapData->GetGameObject(_vBBEndPos);
 		if(obj != nullptr)
 		{
 			if(obj->GetType() == TYPE::MEATBOX || obj->GetType() == TYPE::ENEMY)
@@ -38,10 +41,12 @@ void BeamStand::Process()
 			}
 		}
 
-		vEndPos += _vDir;
+		_vBBEndPos += _vDir;
 	}
 
-	UpdateBeamBodies(vStartPos, vEndPos);
+	UpdateBeamBodies(vStartPos, _vBBEndPos);
+
+	_vBBEndPos -= _vDir;
 }
 
 void BeamStand::AnimProcess()
@@ -55,30 +60,16 @@ void BeamStand::AnimProcess()
 
 void BeamStand::CreateBeamBody(Vector3 vPos)
 {
-	BeamBody::DIRECTION direction = BeamBody::DIRECTION::UP;
-	if (_vDir.x > 0) {
-		direction = BeamBody::DIRECTION::RIGHT;
-	}
-	else if (_vDir.x < 0) {
-		direction = BeamBody::DIRECTION::LEFT;
-	}
-	else if (_vDir.y < 0) {
-		direction = BeamBody::DIRECTION::UP;
-	}
-	else if (_vDir.y > 0) {
-		direction = BeamBody::DIRECTION::DOWN;
-	}
-
 	for (int i = 0; i < 2; i++) {
 		BeamBody* beamBody = new BeamBody(_mode);
 		beamBody->SetPos(vPos);
 
-		Animation* anim = beamBody->GetAnimation();
+		Animation* anim = beamBody->AddAnimationClass();
 		_mode->LoadAnimData(anim, "BeamBody_Pink");
-		Animation* subAnim = beamBody->GetSubAnimation();
+		Animation* subAnim = beamBody->AddAnimationClass();
 		_mode->LoadAnimData(subAnim, "BeamBody_White");
 
-		beamBody->SetDirection(direction);
+		beamBody->SetDirection(_direction);
 
 		_childObjects.push_back(beamBody);
 	}
@@ -114,7 +105,7 @@ void BeamStand::SyncBeamBodyAnim()
 			if (num == 0) {
 
 				{
-					Animation* anim = object->GetAnimation();
+					Animation* anim = object->GetAnimationClass(0);
 					animCnt = anim->GetAnimCnt();
 
 					// アニメーションが終了したら
@@ -126,7 +117,7 @@ void BeamStand::SyncBeamBodyAnim()
 				}
 
 				{
-					Animation* subAnim = object->GetSubAnimation();
+					Animation* subAnim = object->GetAnimationClass(1);
 					animCntSub = subAnim->GetAnimCnt();
 					// アニメーションが終了したら
 					if (subAnim->IsEnd()) {
@@ -135,13 +126,11 @@ void BeamStand::SyncBeamBodyAnim()
 						subAnim->SetAnimCntForNumOfAnim(randIndexSub);
 					}
 				}
-
-				num++;
 			}
 			else {
 
 				{
-					Animation* anim = object->GetAnimation();
+					Animation* anim = object->GetAnimationClass(0);
 					anim->SetAnimCnt(animCnt);
 					if (randIndex != -1)
 					{
@@ -150,7 +139,7 @@ void BeamStand::SyncBeamBodyAnim()
 				}
 
 				{
-					Animation* subAnim = object->GetSubAnimation();
+					Animation* subAnim = object->GetAnimationClass(1);
 					subAnim->SetAnimCnt(animCntSub);
 					if (randIndexSub != -1)
 					{
@@ -158,8 +147,22 @@ void BeamStand::SyncBeamBodyAnim()
 					}
 				}
 			}
+
+			num++;
 		}
 	}
+
+	std::array<Vector3, 4> drawOffsetTbl = {
+	Vector3(0, -0.5f, 0),
+	Vector3(0,  0.5f, 0),
+	Vector3(-0.5f, -0.15f, 0),
+	Vector3(0.5f, -0.15f, 0),
+	};
+
+	Vector3 drawOffset = (_vBBEndPos - _vPos) + drawOffsetTbl.at(static_cast<int>(_direction));
+	GetAnimationClass(3)->SetDrawOffset(drawOffset);
+	GetAnimationClass(4)->SetDrawOffset(drawOffset);
+
 }
 
 void BeamStand::UpdateBeamBodies(Vector3 vStartPos, Vector3 vEndPos)

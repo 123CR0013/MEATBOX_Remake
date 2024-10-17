@@ -67,7 +67,12 @@ public:
 		}
 	}
 
-	Animation* GetAnimation() { return _anim; }
+	Animation* AddAnimationClass();
+
+	Animation* GetAnimationClass(int num) { 
+		if (num < 0 || num >= _anims.size()) return nullptr;
+		return _anims.at(num);
+	}
 	virtual Animation* GetSubAnimation() { return nullptr; }
 
 	int GetDrawOrder() { return _drawOrder; }
@@ -87,7 +92,7 @@ protected:
 	TYPE _objectType;
 
 	// アニメーション
-	Animation* _anim;
+	std::vector<Animation*> _anims;
 
 	// 描画順
 	// -1: オブジェクトの下に描画（エフェクト）

@@ -18,11 +18,12 @@ void Player::Process()
 
 	MoveProcess();
 
-	if (_anim->IsEnd())
+	Animation* anim = GetAnimationClass(0);
+	if (anim->IsEnd())
 	{
-		int animIndex = _anim->GetAnimIndex();
+		int animIndex = anim->GetAnimIndex();
 		if (animIndex == 2 || animIndex == 3) {
-			_anim->SetAnimIndex(_anim->GetAnimIndex() == 2 ? 0 : 1);
+			anim->SetAnimIndex(anim->GetAnimIndex() == 2 ? 0 : 1);
 		}
 	}
 }
@@ -71,7 +72,7 @@ void Player::MoveProcess()
 
 		// アニメーション設定
 		if (vMove.x != 0) {
-			_anim->SetAnimIndex(vMove.x == 1 ? 0 : 1);
+			GetAnimationClass(0)->SetAnimIndex(vMove.x == 1 ? 0 : 1);
 		}
 
 		//----------------------------------------
@@ -121,7 +122,9 @@ void Player::MoveProcess()
 					if (obj->CheckMove(vMove)) 
 					{
 						bSuccess = true;
-						_anim->SetAnimIndex(_anim->GetAnimIndex() == 0 ? 2 : 3);
+
+						Animation* anim = GetAnimationClass(0);
+						anim->SetAnimIndex(anim->GetAnimIndex() == 0 ? 2 : 3);
 					}
 					break;
 				case GameObject::TYPE::ENEMY:

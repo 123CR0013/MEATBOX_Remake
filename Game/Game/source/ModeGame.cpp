@@ -372,7 +372,7 @@ void ModeGame::CreatePlayer(Vector3 vPos)
 	Player* player = new Player(this);
 	player->SetPos(vPos);
 
-	Animation* anim = player->GetAnimation();
+	Animation* anim = player->AddAnimationClass();
 	anim->SetDrawOffset(Vector3(0, -0.5f, 0));
 	anim->SetSize(160, 160);
 	LoadAnimData(anim, "Player");
@@ -386,7 +386,7 @@ void ModeGame::CreateMeatBox(Vector3 vPos)
 	MeatBox* meatBox = new MeatBox(this);
 	meatBox->SetPos(vPos);
 
-	Animation* anim = meatBox->GetAnimation();
+	Animation* anim = meatBox->AddAnimationClass();
 	anim->SetDrawOffset(Vector3(0, -0.2f, 0));
 	LoadAnimData(anim, "Meatbox");
 
@@ -398,7 +398,7 @@ void ModeGame::CreateEnemy(Vector3 vPos)
 	Enemy* enemy = new Enemy(this);
 	enemy->SetPos(vPos);
 
-	Animation* anim = enemy->GetAnimation();
+	Animation* anim = enemy->AddAnimationClass();
 	anim->SetDrawOffset(Vector3(0, -0.2f, 0));
 	LoadAnimData(anim, "Namako");
 
@@ -411,7 +411,7 @@ void ModeGame::CreateEnemyTomato(std::vector<Vector3> route)
 	enemyTomato->SetPos(route[0]);
 	enemyTomato->SetMoveRoute(route);
 
-	Animation* anim = enemyTomato->GetAnimation();
+	Animation* anim = enemyTomato->AddAnimationClass();
 	anim->SetDrawOffset(Vector3(0, -0.2f, 0));
 	LoadAnimData(anim, "Tomato");
 
@@ -427,7 +427,7 @@ void ModeGame::CreateEnemyTomato(std::vector<Vector3> route)
 		"effect_movearea_02",
 	};
 
-	Animation* arrowAnim = arrow->GetAnimation();
+	Animation* arrowAnim = arrow->AddAnimationClass();
 	for (int i = 0; i < 2; i++) {
 		AnimationInfo* animInfo = new AnimationInfo();
 		animInfo->_graphHandle.push_back(ResourceServer::LoadGraph(path + fileName[i] + ".png"));
@@ -446,8 +446,45 @@ void ModeGame::CreateBeamStand(Vector3 vPos, Vector3 vDir)
 	beamStand->SetPos(vPos);
 	beamStand->SetDir(vDir);
 
-	Animation* anim = beamStand->GetAnimation();
-	LoadAnimData(anim, "BeamStand");
+	{
+		Animation* anim = beamStand->AddAnimationClass();
+		LoadAnimData(anim, "BeamStand");
+	}
+
+	int dir = 0;
+	if (vDir.x < 0) {
+		dir = 2;
+	}
+	else if (vDir.x > 0) {
+		dir = 3;
+	}
+	else if (vDir.y < 0) {
+		dir = 0;
+	}
+	else if (vDir.y > 0) {
+		dir = 1;
+	}
+
+	std::array<Vector3, 4> drawOffsetTbl = {
+		Vector3(0, -0.5f, 0),
+		Vector3(0,  0.5f, 0),
+		Vector3(-0.5f, -0.15f, 0),
+		Vector3( 0.5f, -0.15f, 0),
+	};
+
+	std::array<std::string, 2> name = {
+		"BeamOrb_Pink",
+		"BeamOrb_White",
+	};
+	for (int i = 0; i < 2; i++)
+	{
+		for (int j = 0; j < 2; j++) {
+			Animation* anim = beamStand->AddAnimationClass();
+			anim->SetDrawOffset(drawOffsetTbl.at(dir));
+			anim->SetSize(30, 30);
+			LoadAnimData(anim, name.at(j));
+		}
+	}
 
 	_objects.push_back(beamStand);
 }
@@ -457,7 +494,7 @@ void ModeGame::CreateSticky(Vector3 vPos)
 	Sticky* sticky = new Sticky(this);
 	sticky->SetPos(vPos);
 
-	Animation* anim = sticky->GetAnimation();
+	Animation* anim = sticky->AddAnimationClass();
 	anim->SetDrawOffset(Vector3(0, -0.2f, 0));
 	LoadAnimData(anim, "Sticky");
 
