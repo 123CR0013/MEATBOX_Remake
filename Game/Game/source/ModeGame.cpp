@@ -138,10 +138,10 @@ bool ModeGame::Render() {
 	_mapData->Draw();
 
 	// ï`âÊèáÇ…ï¿Ç—ë÷Ç¶
-	std::multimap<int, GameObject*> drawObjects;
-	SortGameObjectInDrawOrder(drawObjects, _player);
+	std::multimap<int, Animation*> drawObjects;
+	SortAnimationInDrawOrder(drawObjects, _player);
 	for (auto& object : _objects) {
-		SortGameObjectInDrawOrder(drawObjects, object);
+		SortAnimationInDrawOrder(drawObjects, object);
 	}
 
 	for (auto& object : drawObjects) {
@@ -510,26 +510,30 @@ void ModeGame::CreateSticky(Vector3 vPos)
 	_objects.push_back(stickyGroup);
 }
 
-void ModeGame::SortGameObjectInDrawOrder(std::multimap<int, GameObject*>& result, GameObject* gameObject)
+void ModeGame::SortAnimationInDrawOrder(std::multimap<int, Animation*>& result, GameObject* gameObject)
 {
-	int drawOrder = gameObject->GetDrawOrder();
-	switch (drawOrder)
+	std::vector<Animation*> anims = gameObject->GetAllAnimationClass();
+	for (auto& anim : anims)
 	{
-	default:
-	{
-		int y = (int)(gameObject->GetPos().y);
-		result.insert(std::make_pair(y, gameObject));
-		break;
-	}
-	case DRAW_ORDER_UNDERLAP_OBJECT:
-	case DRAW_ORDER_OVERLAP_OBJECT:
-		result.insert(std::make_pair(drawOrder, gameObject));
-		break;
+		int drawOrder = anim->GetDrawOrder();
+		switch (drawOrder)
+		{
+		default:
+		{
+			int y = (int)(gameObject->GetPos().y);
+			result.insert(std::make_pair(y, anim));
+			break;
+		}
+		case DRAW_ORDER_UNDERLAP_OBJECT:
+		case DRAW_ORDER_OVERLAP_OBJECT:
+			result.insert(std::make_pair(drawOrder, anim));
+			break;
+		}
 	}
 
 	for (auto& child : gameObject->GetChildObjects())
 	{
-		SortGameObjectInDrawOrder(result, child);
+		SortAnimationInDrawOrder(result, child);
 	}
 }
 

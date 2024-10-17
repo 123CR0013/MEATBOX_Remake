@@ -73,8 +73,7 @@ public:
 		if (num < 0 || num >= _anims.size()) return nullptr;
 		return _anims.at(num);
 	}
-	virtual Animation* GetSubAnimation() { return nullptr; }
-
+	std::vector<Animation*>& GetAllAnimationClass() { return _anims; }
 
 	void AddChildObject(GameObject* object) { _childObjects.push_back(object); }
 	std::vector<GameObject*> GetChildObjects() { return _childObjects; }

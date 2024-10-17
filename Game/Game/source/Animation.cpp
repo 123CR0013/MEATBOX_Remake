@@ -57,6 +57,8 @@ void Animation::Process()
 
 void Animation::Draw()
 {
+	if (_parentObj->GetUse() == false) return;
+
 	if (_bDrawWithScreenPos) 
 	{
 		MyDraw::MyDrawModiGraph(MGetIdent(), _parentObj->GetPos() + _vDrawOffset, _zoom, _angle, _width, _height, GetGraphHandle(), 0);
