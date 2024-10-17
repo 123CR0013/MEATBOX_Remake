@@ -17,6 +17,7 @@ public:
 	~Effect() override;
 
 	void Process() override;
+	void AnimProcess() override;
 	void Draw() override;
 
 	void SetLoop(bool bLoop) { _bLoop = bLoop; }

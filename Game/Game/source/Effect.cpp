@@ -17,7 +17,16 @@ Effect::~Effect()
 
 void Effect::Process()
 {
-	if(!_bLoop)
+
+}
+
+void Effect::AnimProcess()
+{
+	if (!_bUse) return;
+	GameObject::AnimProcess();
+
+	// Ä¶I—¹ˆ—
+	if (!_bLoop)
 	{
 		bool bEnd = true;
 		for (auto& anim : _anims)
