@@ -80,6 +80,11 @@ bool ModeGame::Terminate() {
 }
 
 bool ModeGame::Process() {
+	if (global._trg & PAD_INPUT_1) {
+		Terminate();
+		Initialize();
+	}
+
 	base::Process();
 
 	CheckObjectsToRemove();
@@ -124,10 +129,6 @@ bool ModeGame::Process() {
 		NEW ResultScreen(this);
 	}
 
-	if (global._trg & PAD_INPUT_1) {
-		Terminate();
-		Initialize();
-	}
 
 	return true;
 }
