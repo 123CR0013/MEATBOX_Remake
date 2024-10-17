@@ -18,8 +18,6 @@ GameObject::GameObject(ModeBase* mode) : ObjectBase(mode)
 
 	_vPos = { 0, 0, 0 };
 
-	_drawOrder = 0;
-
 	_isMove = false;
 	_frameCount = 0;
 }

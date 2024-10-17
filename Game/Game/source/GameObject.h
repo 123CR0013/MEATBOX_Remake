@@ -39,8 +39,8 @@ public:
 	virtual void Draw();
 	virtual void DrawDebug();
 
-	bool GetUse() { return _bUse; }
-	virtual void SetUse(bool bUse) { 
+
+	virtual void SetUse(bool bUse) override { 
 		_bUse = bUse;
 		
 		if (_mapData != nullptr && _bSetToMap == true)
@@ -84,8 +84,6 @@ public:
 	bool IsMove()const { return _isMove; }
 
 protected:
-	bool _bUse;
-
 	Map* _mapData;
 	bool _bSetToMap = true;
 
@@ -93,12 +91,6 @@ protected:
 
 	// アニメーション
 	std::vector<Animation*> _anims;
-
-	// 描画順
-	// -1: オブジェクトの下に描画（エフェクト）
-	// 0 : y座標が小さいものから描画（オブジェクト）
-	// 10000: オブジェクトの上に描画（エフェクト）
-	int _drawOrder;
 
 	std::vector<GameObject*> _childObjects;
 

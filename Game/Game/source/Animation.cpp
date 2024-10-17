@@ -22,6 +22,8 @@ Animation::Animation(ObjectBase* object)
 	// デフォルトの描画サイズはマップチップサイズと同じ
 	_width = CHIP_W;
 	_height = CHIP_H;
+
+	_drawOrder = 0;
 }
 
 Animation::~Animation()
