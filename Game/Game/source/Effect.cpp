@@ -1,5 +1,4 @@
 #include "Effect.h"
-#include "EffectExplosion.h"
 #include "ModeGame.h"
 #include "Map.h"
 #include "ApplicationMain.h"
