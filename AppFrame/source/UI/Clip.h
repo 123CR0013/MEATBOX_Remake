@@ -15,6 +15,7 @@ private:
 	int _screenHandle;
 	int _clipHandle;
 	int _blendHandle;
+	int _mixHandle;
 
 	/*
 		mWidthとmHeightがクリップする矩形サイズ

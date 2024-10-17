@@ -12,21 +12,38 @@ StageSelectButton::StageSelectButton(UIScreen* owner,size_t stageNum)
 	_height = 700.f;
 	_transform.mLocation = Vector2(1920.f / 2.f + 1920.f * static_cast<float>(_stageNum), 1080.f / 2.f);
 
-	_backGround = NEW Box(GetOwner());
+	_backGround = NEW Graph(GetOwner(),0);
 	_backGround->RegistParent(this);
 	_backGround->SetWidth(1920.f);
 	_backGround->SetHeight(1080.f);
-	_backGround->SetColor(255, 255, 255);
+	_backGround->Load("res/UI/Select/Stage/ui_stage_background_03.png");
 
-	for (size_t i = 0; i < _buttons.size(); ++i)
+	const Matrix3 inMat = Matrix3::CreateTranslation(_transform.mLocation).Invert();
+
+	_monitor = NEW Graph(GetOwner(),500);
+	_monitor->RegistParent(this);
+	_monitor->SetLocation(Vector2(966.f + 1920.f * static_cast<float>(_stageNum), 447.f) * inMat);
+	_monitor->Load("res/UI/Select/Stage/ui_stage_monitor_01.png");
+
+	//ボタン作成
 	{
-		_buttons[i] = NEW Button(GetOwner());
-		_buttons[i]->RegistParent(_backGround);
-		_buttons[i]->SetWidth(100.f);
-		_buttons[i]->SetHeight(50.f);
-		_buttons[i]->SetLocation(-100.f + (100.f + 50.f) * i, 0.f);
+		Matrix3 monitorInMat = Matrix3::CreateTranslation(_monitor->GetWorldLocation()).Invert();
+		Vector2 pos[BUTTON_NUM] =
+		{
+			{675.f,551.f},
+			{820.f,551.f},
+			{965.f,551.f},
+			{1110.f,551.f},
+			{1255.f,551.f}
+		};
+		for (size_t i = 0; i < BUTTON_NUM; ++i)
+		{
+			_buttons[i] = NEW Graph(GetOwner(), 2000);
+			_buttons[i]->Load("res/UI/Select/Stage/ui_stage_folder_01.png");
+			_buttons[i]->RegistParent(_monitor);
+			_buttons[i]->SetLocation(Vector2(pos[i].x + 1920.f * static_cast<float>(_stageNum), pos[i].y) * monitorInMat);
+		}
 	}
-
 	std::string fileName = "data/StageData/" + std::to_string(_stageNum + 1) + ".amg";
 
 	ZFile ifs(fileName);
@@ -40,29 +57,20 @@ StageSelectButton::StageSelectButton(UIScreen* owner,size_t stageNum)
 		{
 			_stageDatas[i] = data["Button"][i].GetBool();
 
-			if (_stageDatas[i])
-			{
-				_buttons[i]->SetColor(0, 255, 255);
-			}
-			else
-			{
-				_buttons[i]->SetColor(255, 255, 0);
-			}
+			//if (_stageDatas[i])
+			//{
+			//	_buttons[i]->SetColor(0, 255, 255);
+			//}
+			//else
+			//{
+			//	_buttons[i]->SetColor(255, 255, 0);
+			//}
 		}
 	}
 	else
 	{
 		std::string data = "展開失敗:" + ifs.Filename();
 		MessageBoxA(NULL, data.c_str(), NULL, MB_OK);
-	}
-	
-	{
-		_stageName = NEW Text(GetOwner());
-		_stageName->RegistParent(this);
-		_stageName->SetText("ステージ" + std::to_string(_stageNum));
-		_stageName->SetWidth(200.f);
-		_stageName->SetHeight(100.f);
-		_stageName->SetLocation(0.f, -100.f);
 	}
 }
 

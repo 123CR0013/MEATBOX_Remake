@@ -15,6 +15,8 @@ public:
 	virtual ~Graph(){}
 
 	void Draw()override final {
+		if (_handle == -1)return;
+
 		auto _pos = GetVertexes();
 
 		DrawModiGraphF(
@@ -26,14 +28,24 @@ public:
 		);
 	}
 
+	void LoadSize() {
+		if (_handle != -1)
+		{
+			int width, height;
+			GetGraphSize(_handle, &width, &height);
+			_width = static_cast<float>(width);
+			_height = static_cast<float>(height);
+		}
+	}
+
 	bool Load(const std::string& fileName) {
 		_handle = ResourceServer::LoadGraph(fileName);
-		int width,height;
-		GetGraphSize(_handle, &width, &height);
-		_width = static_cast<float>(width);
-		_height = static_cast<float>(height);
+		LoadSize();
 		return _handle != -1;
 	}
+
+	int GetHandle()const { return _handle; }
+	void SetHandle(int handle) { _handle = handle; LoadSize(); }
 private:
 	int _handle;
 };

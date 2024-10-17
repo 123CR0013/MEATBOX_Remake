@@ -8,7 +8,7 @@ public:
 	virtual ~MenuScreen();
 
 	void Update()override;
-
+	void Draw()override;
 private:
 	unsigned int _buttonNum;
 	class Graph* _backGround;

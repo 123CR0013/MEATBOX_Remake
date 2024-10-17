@@ -3,7 +3,7 @@
 
 constexpr float TAKE_FRAME = 5.f;
 
-SoundAdjustScreen::SoundAdjustScreen(ModeUI* owner, MoveUI* carsol, std::array<class Graph*, 5>* BGMLevelUIs,SoundItemBase::TYPE type)
+SoundAdjustScreen::SoundAdjustScreen(ModeUI* owner, MoveUI* carsol, std::array<class Box*, 5>* BGMLevelUIs,SoundItemBase::TYPE type)
 	:UIScreen(owner)
 	,_carsol(carsol)
 	,_LevelUIs(BGMLevelUIs)
@@ -28,6 +28,9 @@ SoundAdjustScreen::SoundAdjustScreen(ModeUI* owner, MoveUI* carsol, std::array<c
 	_carsol->SetTo((*_LevelUIs)[_level]->GetWorldLocation() * _inWorldMatParent);
 	_carsol->SetFrameCount(0.f);
 
+	CreateScaleAnim("plus", 1.f,0.f, 10);
+	CreateScaleAnim("minus", -1.f, 0.f, 10);
+
 	RegistUI(_carsol);
 }
 
@@ -48,6 +51,8 @@ void SoundAdjustScreen::Update()
 	{
 		if (_level > 0)
 		{
+			(*_LevelUIs)[_level]->PlayAnimation("minus");
+
 			_level =  _level - 1;
 			_carsol->SetFrom(_carsol->GetLocation());
 			_carsol->SetTo((*_LevelUIs)[_level]->GetWorldLocation() * _inWorldMatParent);
@@ -68,6 +73,8 @@ void SoundAdjustScreen::Update()
 			_carsol->SetFrom(_carsol->GetLocation());
 			_carsol->SetTo((*_LevelUIs)[_level]->GetWorldLocation() * _inWorldMatParent);
 			_carsol->SetFrameCount(0.f);
+
+			(*_LevelUIs)[_level]->PlayAnimation("plus");
 
 			global._soundServer->ChangeVolume(_type, (float)(_level)/ (float)_LevelUIs->size());
 

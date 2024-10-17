@@ -72,9 +72,14 @@ void CSVFile::Parse(std::string data, Type type,Cell &output)
 				if (subEndPos == std::string::npos)break;
 			}
 
-			size_t breakMrkSize = 2;
-			subEndPos = data.substr(subStartPos).find("\r");
-			if (subEndPos != std::string::npos)subEndPos = data.substr(subStartPos).find("\n"); breakMrkSize = 1;
+			size_t breakMrkSize = 1;
+			subEndPos = data.substr(subStartPos).find("\n");
+			if (data.substr(subStartPos, subEndPos).find("\r") != std::string::npos)
+			{
+				breakMrkSize = 2;
+				auto s = data.substr(subStartPos, subEndPos);
+				subEndPos --;
+			}
 
 			if (subEndPos != std::string::npos) {
 				output[i].emplace_back(data.substr(subStartPos, subEndPos));

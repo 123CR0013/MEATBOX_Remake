@@ -318,9 +318,6 @@
     <ClInclude Include="source\UI\UIAnimation.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="source\UI\UIScreen.h">
-      <Filter>UI</Filter>
-    </ClInclude>
     <ClInclude Include="source\Mode\ModeUI.h">
       <Filter>ModeServer</Filter>
     </ClInclude>
@@ -359,6 +356,9 @@
     </ClInclude>
     <ClInclude Include="source\Mode\ModeTimeTable.h">
       <Filter>ModeServer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\UI\UIScreen.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

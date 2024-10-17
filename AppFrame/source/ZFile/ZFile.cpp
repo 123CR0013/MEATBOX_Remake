@@ -170,6 +170,5 @@ ZFile::ZFile(const std::string& fileName, char* data, size_t size)
 
 ZFile::~ZFile()
 {
-
 	SAFE_DELETE(_data);
 }

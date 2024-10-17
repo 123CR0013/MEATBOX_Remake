@@ -280,3 +280,38 @@ void ScaleTrack::Update() {
 	mOwner->GetOwner()->SetScale(Vector2(x, y));
 }
 
+
+//----------------------------------------------
+const std::string WorldRotateTrack::WORLD_ROTATE_TRACK = "WORLD_ROTATE_TRACK";
+
+
+WorldRotateTrack::WorldRotateTrack(UIAnimation* owner)
+	:Track(owner)
+{
+
+}
+
+WorldRotateTrack::~WorldRotateTrack() {}
+
+void WorldRotateTrack::Update() {
+
+	auto animTrackmap = GetOwnerAnimTrackMap();
+
+	auto animName = mOwner->GetAnimName();
+
+	auto keyNum = GetKeyNum();
+	unsigned int beforeKeyNum = keyNum != 0 ? keyNum - 1 : 0;
+
+	float toAngle = animTrackmap[animName][WORLD_ROTATE_TRACK][keyNum][UIAnimation::ROTATE];
+	float beforeAngle = keyNum != 0 ? animTrackmap[animName][WORLD_ROTATE_TRACK][beforeKeyNum][UIAnimation::ROTATE] : mOwner->GetBeforeTransform().mRotate;
+
+	float beforeToFrame = keyNum != 0 ? animTrackmap[animName][WORLD_ROTATE_TRACK][beforeKeyNum][UIAnimation::TO_FRAME] : 0.f;
+	float toFrame = animTrackmap[animName][WORLD_ROTATE_TRACK][keyNum][UIAnimation::TO_FRAME] - beforeToFrame;
+	float frameCount = (float)mOwner->GetFromFrameCount() - beforeToFrame;
+
+	unsigned char easingNum = (unsigned char)(animTrackmap[animName][WORLD_ROTATE_TRACK][keyNum][UIAnimation::EASING_NUM]);
+
+	float angle = Easing::EasingFuncs[easingNum](frameCount, beforeAngle, toAngle, toFrame);
+	mOwner->GetOwner()->SetRotate(angle);
+}
+

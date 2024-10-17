@@ -22,7 +22,7 @@ void UIAnimation::AddCreateFunc(const std::string& trackName, std::function<Trac
 UIAnimation::UIAnimation(UI* owner)
 	:_owner(owner)
 	, _beforeTransform(owner->GetTransform())
-	, mBeforeAlpha(owner->GetAlpha())
+	, _beforeAlpha(owner->GetAlpha())
 	, _maxFrame(0)
 	, _fromFrameCount(1)
 	, _framePassSpeed(1)
@@ -33,7 +33,7 @@ UIAnimation::UIAnimation(UI* owner)
 
 void UIAnimation::Play(const std::string& animName, bool isUpdate)
 {
-	mBeforeAlpha = 0.f;
+	_beforeAlpha = 0.f;
 	_maxFrame = 0;
 	_framePassSpeed = 1;
 	_animName = animName;
@@ -41,7 +41,7 @@ void UIAnimation::Play(const std::string& animName, bool isUpdate)
 	_loopCount = 0;
 
 	if (isUpdate) {
-		mBeforeAlpha = _owner->GetAlpha();
+		_beforeAlpha = _owner->GetAlpha();
 		_beforeTransform = _owner->GetTransform();
 		_fromFrameCount = 1;
 	}
@@ -79,7 +79,15 @@ void UIAnimation::Update() {
 }
 
 void UIAnimation::LoadAnimData() {
+
+	for (auto&& track : _tracks)
+	{
+		delete track;
+	}
+	_tracks.clear();
+	
 	auto animTrackMap = _owner->GetOwner()->GetAnimTrackMap();
+
 	if (animTrackMap.find(_animName) != animTrackMap.end()) {
 		for (auto&& trackData: animTrackMap[_animName]) {
 

@@ -25,7 +25,20 @@ private:
 	Vector2 _to;
 
 	float _frameCount;
+	float _takeFrame;
 	unsigned int _fromFrame;
 
+	Graph* _container;
+	Graph* _meatBox;
+	Graph* _terminal;
+
+	FlipBook* _light;
+	FlipBook* _arm;
+
+	Empty* _containerParent;
+	Empty* _terminalParent;
+	Empty* _armParent;
+
+	char _moveArrowX;
 	bool _isSelect;
 };

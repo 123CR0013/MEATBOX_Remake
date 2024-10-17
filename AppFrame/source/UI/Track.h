@@ -99,4 +99,18 @@ public:
 
 	static const std::string SCALE_TRACK;
 
-};;
+};
+
+class WorldRotateTrack final :public Track
+{
+public:
+	WorldRotateTrack(class UIAnimation* owner);
+	~WorldRotateTrack();
+
+	void Update()override;
+
+	const std::string& GetName()const override { return WORLD_ROTATE_TRACK; }
+
+	static const std::string WORLD_ROTATE_TRACK;
+};
+

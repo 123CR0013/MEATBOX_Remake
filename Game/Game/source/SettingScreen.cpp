@@ -42,24 +42,56 @@ SettingScreen::SettingScreen(MoveUI* carsol,ModeUI* owner)
 	_carsol->SetFrameCount(0.f);
 	RegistUI(_carsol);
 
+	_soundLevelUIHandle = ::LoadGraph("res/UI/Select/SoundAdjust/ui_volume_control_01.png");
+
+	GraphFilter(_soundLevelUIHandle, DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_LESS, 5, TRUE, 0, 0);
+
+	UINT _level = global._soundServer->GetVolume(SoundItemBase::TYPE::BGM) / (255 / _BGMLevelUIs.size());
+
+	_level = (unsigned int)MyMath::Clamp(0.f, (float)(_BGMLevelUIs.size() - 1), (float)_level);
+
 	for (size_t i = 0; i < _BGMLevelUIs.size(); ++i)
 	{
-		_BGMLevelUIs[i] = NEW Graph(this, 0);
-		_BGMLevelUIs[i]->Load("res/UI/Select/SoundAdjust/ui_volume_control_01.png");
-		_BGMLevelUIs[i]->SetWidth(50.f + 12.f * i);
-		_BGMLevelUIs[i]->SetHeight(50.f + 12.f * i);
-		_BGMLevelUIs[i]->SetLeftLocation(Vector2(900.f + 132.f * (float)i, 228.f - 12.f * (float)i) * matInBackGround);
+		_BGMLevelUIs[i] = NEW Box(this);
+		_BGMLevelUIs[i]->SetWidth(50.f + 12.f * i - 1.f);	//˜g‘g‚Ý‚æ‚è¬‚³‚­
+		_BGMLevelUIs[i]->SetHeight(50.f + 12.f * i );	
+		_BGMLevelUIs[i]->SetColor(0, 255, 0);
+		_BGMLevelUIs[i]->SetLeftLocation(Vector2(1000.f + 132.f * (float)i + 1.f, 228.f - 12.f * (float)i) * matInBackGround);
 		_BGMLevelUIs[i]->RegistParent(_backGround);
+
+		float scaleX = i <= _level ? 1.f : 0.f;
+		_BGMLevelUIs[i]->SetScale(scaleX, 1.f);
+
+		Graph* graph = NEW Graph(this, 1000);
+		graph->SetHandle(_soundLevelUIHandle);
+		graph->SetWidth(50.f + 12.f * i);
+		graph->SetHeight(50.f + 12.f * i);
+		graph->SetLeftLocation(Vector2(1000.f + 132.f * (float)i, 228.f - 12.f * (float)i) * matInBackGround);
+		graph->RegistParent(_backGround);
 	}
+
+	_level = global._soundServer->GetVolume(SoundItemBase::TYPE::SE) / (255 / _SELevelUIs.size());
+
+	_level = (unsigned int)MyMath::Clamp(0.f, (float)(_SELevelUIs.size() - 1), (float)_level);
 
 	for (size_t i = 0; i < _SELevelUIs.size(); ++i)
 	{
-		_SELevelUIs[i] = NEW Graph(this, 0);
-		_SELevelUIs[i]->Load("res/UI/Select/SoundAdjust/ui_volume_control_01.png");
-		_SELevelUIs[i]->SetWidth(50.f + 12.f * i);
-		_SELevelUIs[i]->SetHeight(50.f + 12.f * i);
-		_SELevelUIs[i]->SetLeftLocation(Vector2(900.f + 132.f * (float)i, 408 - 12.f * (float)i) * matInBackGround);
+		_SELevelUIs[i] = NEW Box(this);
+		_SELevelUIs[i]->SetWidth(50.f + 12.f * i - 1.f);	//˜g‘g‚Ý‚æ‚è¬‚³‚­
+		_SELevelUIs[i]->SetHeight(50.f + 12.f * i );	
+		_SELevelUIs[i]->SetColor(0, 255, 0);
+		_SELevelUIs[i]->SetLeftLocation(Vector2(1000.f + 132.f * (float)i + 1.f, 458 - 12.f * (float)i) * matInBackGround);
 		_SELevelUIs[i]->RegistParent(_backGround);
+
+		float scaleX = i <= _level ? 1.f : 0.f;
+		_SELevelUIs[i]->SetScale(scaleX, 1.f);
+
+		Graph* graph = NEW Graph(this, 1000);
+		graph->SetHandle(_soundLevelUIHandle);
+		graph->SetWidth(50.f + 12.f * i);
+		graph->SetHeight(50.f + 12.f * i);
+		graph->SetLeftLocation(Vector2(1000.f + 132.f * (float)i, 458 - 12.f * (float)i) * matInBackGround);
+		graph->RegistParent(_backGround);
 	}
 
 	//”wŒi‚ð‰æ–Ê‰º‚É
@@ -81,11 +113,16 @@ SettingScreen::SettingScreen(MoveUI* carsol,ModeUI* owner)
 	CreateRotateAnim("Lean", PI / 12.f, 5);
 
 	_buttons.front()->PlayAnimation("Lean");
+
+	CreateScaleAnim("plus", 1.f,0.f, 5);
+	CreateScaleAnim("minus", -1.f, 0.f, 5);
 }
 
 SettingScreen::~SettingScreen()
 {
 	RemoveUI(_carsol);
+
+	DeleteGraph(_soundLevelUIHandle);
 }
 
 void SettingScreen::Update()

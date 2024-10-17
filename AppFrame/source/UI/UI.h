@@ -24,7 +24,11 @@ public:
 	//再生しているアニメーションを逆再生
 	void ReverseAnimation();
 
+	void ResetAnimation(const std::string& animeName, UINT looNum = 1);
+
 	bool IsFinishAnimation();
+
+	void DrawSort();
 
 	//setter
 	void SetTransform(const Transform2& transform) { _transform = transform; }
@@ -36,9 +40,11 @@ public:
 	void SetScale(const Vector2& scale) { _transform.mScale = scale; }
 	void SetScale(float x, float y) { _transform.mScale = { x,y }; }
 	void SetAlpha(float alpha) { _alpha = alpha; }
+	void SetSize(float width, float height) { _width = width; _height = height; }
+	void SetSize(const Vector2& size) { SetSize(size.x, size.y); }
 	void SetWidth(float width) { _width = width; }
 	void SetHeight(float height) { _height = height; }
-	void SetOrder(unsigned int order) { _order = order; }
+	void SetDrawOrder(UINT order) { _drawOrder = order; DrawSort(); }
 
 	void RegistParent(class UI* parent);
 	void RemoveParent();
@@ -54,8 +60,9 @@ public:
 	float GetAlpha()const { return _alpha; }
 	float GetWidth()const { return _width; }
 	float GetHeight()const { return _height; }
-	Vector2 GetSize()const { return Vector2(_width, _height); }
+	Vector2 GetSize()const { return { _width, _height }; }
 	unsigned int GetOrder()const { return _order; }
+	UINT GetDrawOrder()const { return _drawOrder; }
 	UI* GetParent()const { return _parent; }
 
 	Matrix3 GetWorldMatrix() 
@@ -89,6 +96,13 @@ public:
 	bool IsRightClickTrg();
 	bool IsRightClickRel();
 
+	enum class DrawType
+	{
+		kCenter,		//mLocationを中心として、描画
+		kLeft			//mLocationを左上として、描画
+	};
+
+	void SetDrawType(DrawType drawType) { _drawType = drawType; }
 protected:
 
 	//描画する4頂点の取得
@@ -96,7 +110,7 @@ protected:
 	//1:右上
 	//2:右下
 	//3:左下
-	std::array<Vector2, 4> GetVertexes(bool isTurn = false);
+	std::array<Vector2, 4> GetVertexes();
 
 	//座標・回転値・スケール
 	Transform2 _transform;
@@ -110,6 +124,9 @@ protected:
 
 	//反転描画するか
 	bool _isTurn;
+
+	//描画の起点
+	DrawType _drawType;
 protected:
 	bool OnMouse();	
 
@@ -138,6 +155,7 @@ private:
 
 	//処理・描画順序
 	unsigned int _order;
+	UINT _drawOrder;
 
 	//オーナー(自身を保持するクラス)
 	class UIScreen* _owner;

@@ -83,3 +83,5 @@
 #include"UI/Graph.h"
 #include"UI/UIScreen.h"
 #include"UI/Text.h"
+#include"UI/FlipBook.h"
+#include"UI/Clip.h"

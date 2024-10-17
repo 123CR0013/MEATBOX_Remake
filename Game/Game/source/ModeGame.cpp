@@ -22,6 +22,8 @@
 #include <fstream>
 #include <sstream>
 
+#include"MainScreen.h"
+
 bool ModeGame::Initialize() {
 	if (!base::Initialize()) { return false; }
 
@@ -29,6 +31,8 @@ bool ModeGame::Initialize() {
 	CreateMap();
 
 	_plStepCnt = 0;
+
+	NEW MainScreen(this);
 
 	return true;
 }

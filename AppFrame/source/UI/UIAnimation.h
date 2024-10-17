@@ -18,7 +18,7 @@ public:
 	unsigned int GetMaxFrame()const { return _maxFrame; }
 
 	const Transform2& GetBeforeTransform()const { return _beforeTransform; }
-	float GetBeforeAlpha()const { return mBeforeAlpha; }
+	float GetBeforeAlpha()const { return _beforeAlpha; }
 
 	const std::string& GetAnimName()const { return _animName; }
 
@@ -31,6 +31,13 @@ public:
 		_fromFrameCount = _fromFrameCount == _maxFrame ? _maxFrame - 1 : _fromFrameCount; 
 	}
 
+	void Reset()
+	{
+		_fromFrameCount = 1;
+		_fromFrameCount = 1;
+		_loopNum = 0;
+	}
+
 	void SetLoopNum(unsigned int loopNum) { _loopNum = loopNum; }
 protected:
 
@@ -40,7 +47,7 @@ protected:
 
 	//アニメーション前のパラメーター
 	Transform2 _beforeTransform;
-	float mBeforeAlpha;
+	float _beforeAlpha;
 
 	//再生するアニメーション名
 	std::string _animName;

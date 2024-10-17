@@ -15,6 +15,7 @@ public:
 
 	void AddUIScreen(class UIScreen* screen);
 	void DeleteUIScreen(class UIScreen* screen);
+	void ClearUIScreen();
 
 private:
 

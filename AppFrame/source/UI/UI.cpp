@@ -21,6 +21,8 @@ UI::UI(UIScreen* owner,unsigned int order)
 	,_isForceFalseInputMouse(true)
 	,_parent(nullptr)
 	,_order(order)
+	,_drawOrder(order)
+	,_drawType(DrawType::kCenter)
 {
 	_owner->RegistUI(this);
 	_playAnimation.second = std::make_unique<UIAnimation>(this);
@@ -73,6 +75,23 @@ void UI::ReverseAnimation() {
 	}
 }
 
+void UI::ResetAnimation(const std::string& animName, UINT loopNum)
+{
+	_playAnimation.second->Reset();
+
+	auto animTrackMap = _owner->GetAnimTrackMap();
+
+	if (animTrackMap.find(animName) != animTrackMap.end()) {
+		//逆再生が終わっていれば、前パラメーターを更新する
+		if (!_isUpdateBeforeTransform) { _isUpdateBeforeTransform = _playAnimation.second->GetFromFrameCount() == 0; }
+
+		_playAnimation.first = animName;
+		_playAnimation.second->Play(animName, false);
+		_playAnimation.second->SetLoopNum(loopNum);
+		_isUpdateBeforeTransform = true;
+	}
+}
+
 bool UI::IsFinishAnimation()
 {
 	return
@@ -83,7 +102,12 @@ bool UI::IsFinishAnimation()
 		&& 0 == _playAnimation.second->GetFromFrameCount();
 }
 
-std::array<Vector2, 4> UI::GetVertexes(bool isTurn) {
+void UI::DrawSort()
+{
+	_owner->DrawSort();
+}
+
+std::array<Vector2, 4> UI::GetVertexes() {
 	auto m = _parent ? _transform.CreateMatrix3() * _parent->GetWorldMatrix() : _transform.CreateMatrix3();
 
 	// 描画する画像の4つの頂点座標
@@ -95,6 +119,14 @@ std::array<Vector2, 4> UI::GetVertexes(bool isTurn) {
 		{-_width / 2.f,  _height / 2.f}	// 左下
 	};
 
+	if (_drawType == DrawType::kLeft)
+	{
+		_pos[0] = { 0.f,0.f };
+		_pos[1] = { _width,0.f };
+		_pos[2] = { _width,_height };
+		_pos[3] = { 0.f,_height };
+	}
+
 	if (_isTurn) {
 		// 反転用
 		Vector2 posTurn[4] = {
@@ -104,6 +136,15 @@ std::array<Vector2, 4> UI::GetVertexes(bool isTurn) {
 			{-_width / 2.f,  _height / 2.f},	// 左下
 			{_width / 2.f,  _height / 2.f }	// 右下
 		};
+
+		if (_drawType == DrawType::kLeft)
+		{
+			posTurn[0] = { 0.f,0.f };
+			posTurn[1] = { -_width,0.f };
+			posTurn[2] = { -_width,_height };
+			posTurn[3] = { 0.f,_height };
+		}
+
 		for (int i = 0; i < 4; i++) {
 			_pos[i] = posTurn[i];
 		}
@@ -187,7 +228,7 @@ void UI::RegistParent(UI* parent)
 	if (this == parent || !parent)return;
 	RemoveParent();
 	_parent = parent;
-	_order = parent->GetOrder() + 1;
+	_order = parent->GetOrder() > _order ? parent->GetOrder() + 1 : _order;
 	_owner->Sort();
 
 	if (std::find(parent->GetChildren().begin(), parent->GetChildren().end(), this) != parent->GetChildren().end()) { return; }

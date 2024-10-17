@@ -9,7 +9,7 @@ Clip::Clip(class UIScreen* owner,unsigned int order)
 	,_child(new Empty(owner,order - 1))
 {
 	_screenHandle = MakeScreen(1920, 1080,TRUE);
-	_clipHandle = MakeScreen(1920, 1080,FALSE);
+	_clipHandle = MakeScreen(1920, 1080,TRUE);
 	_blendHandle = MakeScreen(1920, 1080,TRUE);
 	_child->RegistParent(this);
 }
@@ -47,19 +47,11 @@ void Clip::Process()
 
 	bool isOnMouse = OnMouse();
 
-	if(OnMouse()){
-		auto pos = _child->GetLocation();
 
-		pos.y -= GetMouseWheelRotVolF() * 10.f;
-
-		_child->SetLocation(pos);
-	}
-
-
-	for (auto&& child : _grandChildren)
+	for (auto&& grandChild : _grandChildren)
 	{
-		child->SetForceFalseInputMouse(isOnMouse);
-		child->Process();
+		grandChild->SetForceFalseInputMouse(isOnMouse);
+		grandChild->Process();
 	}
 
 }
@@ -69,9 +61,9 @@ void Clip::Draw()
 	SetDrawScreen(_screenHandle);
 	ClearDrawScreen();
 
-	for (auto&& child : _grandChildren)
+	for (auto&& grandChild : _grandChildren)
 	{
-		child->Draw();
+		grandChild->Draw();
 	}
 
 	//切り抜くための図形を描画
@@ -97,16 +89,20 @@ void Clip::Draw()
 	}
 
 	//切り抜き
-	GraphBlendBlt(_screenHandle, _clipHandle, _blendHandle, 255,
+	//ただ、_screenHandleで描画されていない部分が切り抜かれれば、そこにはアルファチャンネルがないので黒く描画される
+	 GraphBlendBlt(_screenHandle, _clipHandle, _blendHandle, 255,
 		DX_GRAPH_BLEND_RGBA_SELECT_MIX,
 		DX_RGBA_SELECT_SRC_R,
 		DX_RGBA_SELECT_SRC_G,
 		DX_RGBA_SELECT_SRC_B,
-		DX_RGBA_SELECT_BLEND_R
+		DX_RGBA_SELECT_BLEND_A
 	);
+
+	//上記の問題は、出力結果である_brendHandleと_screenHandleのアルファ値の乗算(AND)をすれば、解決する
+	GraphBlend(_blendHandle, _screenHandle, 255, DX_GRAPH_BLEND_MULTIPLE_A_ONLY);
 
 	// 描画先を裏画面にする
 	SetDrawScreen(DX_SCREEN_BACK);
-	
+
 	DrawGraph(0, 0, _blendHandle, TRUE);
 }

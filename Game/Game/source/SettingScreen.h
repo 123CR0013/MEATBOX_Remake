@@ -13,8 +13,9 @@ private:
 	unsigned int _buttonNum;
 	class Graph* _backGround;
 	std::array<class Graph*, 3>_buttons;
-	std::array<class Graph*, 5>_BGMLevelUIs;
-	std::array<class Graph*, 5>_SELevelUIs;
+	std::array<class Box*, 5>_BGMLevelUIs;
+	std::array<class Box*, 5>_SELevelUIs;
+	int _soundLevelUIHandle;
 
 	unsigned int _BGMLevel;
 	unsigned int _SELevel;

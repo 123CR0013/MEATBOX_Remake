@@ -45,6 +45,8 @@ bool ModeTimeTable::Process()
 
 void ModeTimeTable::Add(std::function<void()>func, UINT afterFrame)
 {
+	if (!_lpInstance)return;
+
 	UINT frame = _lpInstance->_frameCount + afterFrame;
 
 	if (_lpInstance->_tasks.empty())

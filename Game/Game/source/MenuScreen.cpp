@@ -132,3 +132,8 @@ void MenuScreen::Update()
 		_isFinish = true;
 	}
 }
+
+void MenuScreen::Draw()
+{
+	UIScreen::Draw();
+}

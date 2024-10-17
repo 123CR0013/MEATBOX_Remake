@@ -8,7 +8,6 @@ ModeSelect::ModeSelect()
 }
 
 ModeSelect::~ModeSelect() {
-
 }
 
 bool ModeSelect::Initialize()

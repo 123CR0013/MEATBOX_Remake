@@ -95,3 +95,11 @@ void ModeUI::DeleteUIScreen(UIScreen* screen) {
 	}
 	_deleteUIScreens.emplace_back(screen);
 }
+
+void ModeUI::ClearUIScreen()
+{
+	for (auto&& UIScreen : _UIScreens)
+	{
+		DeleteUIScreen(UIScreen);
+	}
+}
