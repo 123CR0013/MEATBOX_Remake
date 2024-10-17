@@ -95,14 +95,14 @@ bool ModeGame::Process() {
 	if (!_player->IsMove())_player->Process();
 	_player->ProcessFinish();
 	_player->ProcessChildObjects();
-	_player->AnimProcess();
+	//_player->AnimProcess();
 	
 	for(auto& object : _objects) {
 		object->ProcessInit();
 		if(!object->IsMove())object->Process();
 		object->ProcessFinish();
 		object->ProcessChildObjects();
-		object->AnimProcess();
+		//object->AnimProcess();
 	}
 
 	if (_plStepCnt >= 2) {
@@ -146,6 +146,11 @@ bool ModeGame::Render() {
 
 	for (auto& object : drawObjects) {
 		object.second->Draw();
+	}
+
+	_player->AnimProcess();
+	for (auto& object : _objects) {
+		object->AnimProcess();
 	}
 
 	DrawDebug();
