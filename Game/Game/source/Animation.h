@@ -54,6 +54,8 @@ public:
 	int GetDrawOrder() { return _drawOrder; }
 	void SetDrawOrder(int drawOrder) { _drawOrder = drawOrder; }
 
+	// 描画座標をスクリーン座標として扱うか
+	bool GetDrawWithScreenPos() { return _bDrawWithScreenPos; }
 	void SetDrawWithScreenPos(bool bDrawWithScreenPos) { _bDrawWithScreenPos = bDrawWithScreenPos; }
 
 
@@ -92,7 +94,7 @@ protected:
 	// 10000: オブジェクトの上に描画（エフェクト）
 	int _drawOrder;
 
-	// _parentObjのvPosをスクリーン座標として扱うか
+	// 描画座標をスクリーン座標として扱うか
 	bool _bDrawWithScreenPos = false;
 };
 

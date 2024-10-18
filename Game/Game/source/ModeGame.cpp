@@ -513,29 +513,26 @@ void ModeGame::CreateSticky(Vector3 vPos)
 	_objects.push_back(stickyGroup);
 }
 
+// 描画順序をソート
+// Animationクラス単位でソート
 void ModeGame::SortAnimationInDrawOrder(std::multimap<int, Animation*>& result, GameObject* gameObject)
 {
 	std::vector<Animation*> anims = gameObject->GetAllAnimationClass();
 	for (auto& anim : anims)
 	{
-		int drawOrder = anim->GetDrawOrder();
-		int y = (int)(gameObject->GetPos().y + drawOrder);
-		result.insert(std::make_pair(y, anim));
-		//switch (drawOrder)
-		//{
-		//default:
-		//{
-		//	int y = (int)(gameObject->GetPos().y + drawOrder);
-		//	result.insert(std::make_pair(y, anim));
-		//	break;
-		//}
-		//case DRAW_ORDER_UNDERLAP_OBJECT:
-		//case DRAW_ORDER_OVERLAP_OBJECT:
-		//	result.insert(std::make_pair(drawOrder, anim));
-		//	break;
-		//}
+		// ソート値を計算
+		float sortValue = gameObject->GetPos().y + anim->GetDrawOffset().y;
+		// マップチップ座標に統一する
+		if (anim->GetDrawWithScreenPos()) sortValue / 100.0f;
+		sortValue *= 10.0f;
+		// 補正値を加算
+		sortValue += anim->GetDrawOrder();
+
+		// リザルトに追加
+		result.insert(std::make_pair(static_cast<int>(sortValue), anim));
 	}
 
+	// 子オブジェクトもソート
 	for (auto& child : gameObject->GetChildObjects())
 	{
 		SortAnimationInDrawOrder(result, child);
