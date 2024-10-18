@@ -8,6 +8,7 @@ MeatBox::MeatBox(ModeBase* mode) : GameObject(mode)
 {
 	_objectType = TYPE::MEATBOX;
 	_pStickyGroup = nullptr;
+	_pSticky = nullptr;
 }
 
 MeatBox::~MeatBox()
