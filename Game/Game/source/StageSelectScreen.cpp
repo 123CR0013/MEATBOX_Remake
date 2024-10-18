@@ -1,6 +1,7 @@
 #include"StageSelectScreen.h"
 #include"StageSelectButton.h"
 #include"MenuScreen.h"
+#include"ModeGame.h"
 
 constexpr float TAKE_FRAME = 30.f;
 
@@ -148,6 +149,12 @@ void StageSelectScreen::Update() {
 					_selectButtons[_stageTypeNum]->GetButtons()[_stageNum]->PlayAnimation("Select");
 				}
 			}
+		}
+
+		if (global._trg & PAD_INPUT_1)
+		{
+			ModeServer::GetInstance()->Add(NEW ModeGame(_stageTypeNum,_stageNum), 1, "ModeGame");
+			ModeServer::GetInstance()->Del(GetOwner());
 		}
 	}
 	else

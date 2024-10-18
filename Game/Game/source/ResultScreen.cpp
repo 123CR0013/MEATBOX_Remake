@@ -1,6 +1,11 @@
 #include"ResultScreen.h"
 #include"ModeGame.h"
+#include"ModeSelect.h"
 #include"Number.h"
+
+constexpr USHORT NEXT = 0;
+constexpr USHORT RETRY = 1;
+constexpr USHORT BACK = 2;
 
 ResultScreen::ResultScreen(ModeUI* owner)
 	:UIScreen(owner)
@@ -262,17 +267,29 @@ void ResultScreen::Update()
 
 		if (global._trg & PAD_INPUT_1)
 		{
-			global.SetGameEnd(true);
+			switch (_selectNum)
+			{
+				case NEXT:
+				{
+					break;
+				}
+				case RETRY:
+				{
+					break;
+				}
+				case BACK:
+				{
+					ModeServer::GetInstance()->Del(GetOwner());
+					ModeServer::GetInstance()->Add(NEW ModeSelect(),1,"ModeSelect");
+					break;
+				}
+			}
 		}
 
 		break;
 	}
 
-	if (global._trg & PAD_INPUT_3)
-	{
-		ClearUIScreen();
-		NEW ResultScreen(GetOwner());
-	}
+	
 }
 
 void ResultScreen::Draw()

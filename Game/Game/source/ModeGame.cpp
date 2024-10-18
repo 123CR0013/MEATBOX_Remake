@@ -133,7 +133,6 @@ bool ModeGame::Process() {
 }
 
 bool ModeGame::Render() {
-	base::Render();
 
 	_mapData->Draw();
 
@@ -147,6 +146,8 @@ bool ModeGame::Render() {
 	for (auto& object : drawObjects) {
 		object.second->Draw();
 	}
+
+	base::Render();
 
 	DrawDebug();
 
