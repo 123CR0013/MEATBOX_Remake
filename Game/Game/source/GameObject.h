@@ -5,7 +5,7 @@
 #include "MapChip.h"
 
 // オブジェクトの下に描画
-#define DRAW_ORDER_UNDERLAP_OBJECT -1
+#define DRAW_ORDER_UNDERLAP_OBJECT -10000
 // オブジェクトの上に描画
 #define DRAW_ORDER_OVERLAP_OBJECT 10000
 
@@ -39,8 +39,8 @@ public:
 	virtual void Draw();
 	virtual void DrawDebug();
 
-	bool GetUse() { return _bUse; }
-	virtual void SetUse(bool bUse) { 
+
+	virtual void SetUse(bool bUse) override { 
 		_bUse = bUse;
 		
 		if (_mapData != nullptr && _bSetToMap == true)
@@ -67,14 +67,13 @@ public:
 		}
 	}
 
-	Vector3 GetDrawOffset() const { return _vDrawOffset; }
-	void SetDrawOffset(Vector3 vDrawOffset) { _vDrawOffset = vDrawOffset; }
+	Animation* AddAnimationClass();
 
-	Animation* GetAnimation() { return _anim; }
-	virtual Animation* GetSubAnimation() { return nullptr; }
-
-	int GetDrawOrder() { return _drawOrder; }
-	void SetDrawOrder(int drawOrder) { _drawOrder = drawOrder; }
+	Animation* GetAnimationClass(int num) { 
+		if (num < 0 || num >= _anims.size()) return nullptr;
+		return _anims.at(num);
+	}
+	std::vector<Animation*>& GetAllAnimationClass() { return _anims; }
 
 	void AddChildObject(GameObject* object) { _childObjects.push_back(object); }
 	std::vector<GameObject*> GetChildObjects() { return _childObjects; }
@@ -82,21 +81,13 @@ public:
 	bool IsMove()const { return _isMove; }
 
 protected:
-	bool _bUse;
-
 	Map* _mapData;
 	bool _bSetToMap = true;
 
 	TYPE _objectType;
 
 	// アニメーション
-	Animation* _anim;
-
-	// 描画順
-	// -1: オブジェクトの下に描画（エフェクト）
-	// 0 : y座標が小さいものから描画（オブジェクト）
-	// 10000: オブジェクトの上に描画（エフェクト）
-	int _drawOrder;
+	std::vector<Animation*> _anims;
 
 	std::vector<GameObject*> _childObjects;
 

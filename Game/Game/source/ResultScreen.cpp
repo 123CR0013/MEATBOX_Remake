@@ -265,7 +265,7 @@ void ResultScreen::Update()
 			_buttons[_selectNum]->PlayAnimation("ButtonScale");
 		}
 
-		if (global._trg & PAD_INPUT_1)
+		if (global._trg & PAD_INPUT_3)
 		{
 			switch (_selectNum)
 			{

@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "BeamStand.h"
 
 class BeamBody : public GameObject
 {
@@ -10,18 +11,8 @@ public:
 	void AnimProcess() override;
 	void Draw() override;
 
-	enum class DIRECTION
-	{
-		UP,
-		DOWN,
-		LEFT,
-		RIGHT,
-	};
-	void SetDirection(BeamBody::DIRECTION direction);
-
-	Animation* GetSubAnimation() override { return _subAnim; }
+	void SetDirection(BeamStand::DIRECTION direction);
 
 protected:
-	BeamBody::DIRECTION _direction;
-	Animation* _subAnim;
+	BeamStand::DIRECTION _direction;
 };

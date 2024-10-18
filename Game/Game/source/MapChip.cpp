@@ -8,7 +8,6 @@ MapChip::MapChip(ModeBase* mode) : ObjectBase(mode)
 	_chipType = TYPE::NONE;
 
 	_vPos = { 0, 0, 0 };
-	_vDrawOffset = { 0, 0, 0 };
 	_anim = new Animation(this);
 }
 

@@ -3,9 +3,7 @@
 BeamBody::BeamBody(ModeBase* mode) : GameObject(mode)
 {
 	_objectType = TYPE::BEAM_BODY;
-	_direction = DIRECTION::UP;
-
-	_subAnim = new Animation(this);
+	_direction = BeamStand::DIRECTION::UP;
 }
 
 BeamBody::~BeamBody()
@@ -18,7 +16,6 @@ void BeamBody::AnimProcess()
 	if (!_bUse) return;
 
 	GameObject::AnimProcess();
-	_subAnim->Process();
 }
 
 void BeamBody::Draw()
@@ -26,26 +23,25 @@ void BeamBody::Draw()
 	if (!_bUse) return;
 
 	GameObject::Draw();
-	_subAnim->Draw();
 }
 
-void BeamBody::SetDirection(DIRECTION direction)
+void BeamBody::SetDirection(BeamStand::DIRECTION direction)
 {
 	_direction = direction;
 	switch (_direction)
 	{
-	case BeamBody::DIRECTION::UP:
-		_anim->SetAnimIndex(1);
-		_subAnim->SetAnimIndex(1);
+	case BeamStand::DIRECTION::UP:
+		GetAnimationClass(0)->SetAnimIndex(1);
+		GetAnimationClass(1)->SetAnimIndex(1);
 		break;
-	case BeamBody::DIRECTION::DOWN:
-		_anim->SetAnimIndex(1);
-		_subAnim->SetAnimIndex(1);
+	case BeamStand::DIRECTION::DOWN:
+		GetAnimationClass(0)->SetAnimIndex(1);
+		GetAnimationClass(1)->SetAnimIndex(1);
 		break;
-	case BeamBody::DIRECTION::LEFT:
-	case BeamBody::DIRECTION::RIGHT:
-		_anim->SetAnimIndex(0);
-		_subAnim->SetAnimIndex(0);
+	case BeamStand::DIRECTION::LEFT:
+	case BeamStand::DIRECTION::RIGHT:
+		GetAnimationClass(0)->SetAnimIndex(0);
+		GetAnimationClass(1)->SetAnimIndex(0);
 	default:
 		break;
 	}

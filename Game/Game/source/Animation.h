@@ -14,6 +14,9 @@ public:
 	void Process();
 	void Draw();
 
+	bool GetUse() { return _bUse; }
+	void SetUse(bool bUse) { _bUse = bUse; }
+
 	void AddAnimInfo(AnimationInfo* animInfo, int index);
 	void SetAnimIndex(int index);
 	int GetAnimIndex() { return _groupIndex; }
@@ -28,6 +31,9 @@ public:
 	bool IsEnd() { return _bAnimEnd; }
 
 	int GetGraphHandle();
+
+	Vector3 GetDrawOffset() { return _vDrawOffset; }
+	void SetDrawOffset(Vector3 offset) { _vDrawOffset = offset; }
 
 	float GetZoom() { return _zoom; }
 	void SetZoom(float zoom) { _zoom = zoom; }
@@ -45,10 +51,15 @@ public:
 	void SetSize(float width, float height) { _width = width; _height = height; }
 	void SetSize(Vector2 size) { _width = size.x; _height = size.y; }
 
+	int GetDrawOrder() { return _drawOrder; }
+	void SetDrawOrder(int drawOrder) { _drawOrder = drawOrder; }
+
 	void SetDrawWithScreenPos(bool bDrawWithScreenPos) { _bDrawWithScreenPos = bDrawWithScreenPos; }
 
 
 protected:
+	bool _bUse;
+
 	ObjectBase* _parentObj;
 
 	// アニメーション情報
@@ -67,10 +78,19 @@ protected:
 	// アニメーション終了フラグ
 	bool _bAnimEnd;
 
+	// 描画オフセット
+	// _parentObjのvPosにこの値を加算して描画する
+	Vector3 _vDrawOffset;
 
 	float _zoom;
 	float _angle;
 	float _width, _height;
+
+	// 描画順
+	// -1: オブジェクトの下に描画（エフェクト）
+	// 0 : y座標が小さいものから描画（オブジェクト）
+	// 10000: オブジェクトの上に描画（エフェクト）
+	int _drawOrder;
 
 	// _parentObjのvPosをスクリーン座標として扱うか
 	bool _bDrawWithScreenPos = false;

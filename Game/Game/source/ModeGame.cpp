@@ -80,6 +80,11 @@ bool ModeGame::Terminate() {
 }
 
 bool ModeGame::Process() {
+	if (global._trg & PAD_INPUT_1) {
+		Terminate();
+		Initialize();
+	}
+
 	base::Process();
 
 	CheckObjectsToRemove();
@@ -95,14 +100,14 @@ bool ModeGame::Process() {
 	if (!_player->IsMove())_player->Process();
 	_player->ProcessFinish();
 	_player->ProcessChildObjects();
-	_player->AnimProcess();
+	//_player->AnimProcess();
 	
 	for(auto& object : _objects) {
 		object->ProcessInit();
 		if(!object->IsMove())object->Process();
 		object->ProcessFinish();
 		object->ProcessChildObjects();
-		object->AnimProcess();
+		//object->AnimProcess();
 	}
 
 	if (_plStepCnt >= 2) {
@@ -124,10 +129,6 @@ bool ModeGame::Process() {
 		NEW ResultScreen(this);
 	}
 
-	if (global._trg & PAD_INPUT_1) {
-		Terminate();
-		Initialize();
-	}
 
 	return true;
 }
@@ -137,10 +138,10 @@ bool ModeGame::Render() {
 	_mapData->Draw();
 
 	// ï`âÊèáÇ…ï¿Ç—ë÷Ç¶
-	std::multimap<int, GameObject*> drawObjects;
-	SortGameObjectInDrawOrder(drawObjects, _player);
+	std::multimap<int, Animation*> drawObjects;
+	SortAnimationInDrawOrder(drawObjects, _player);
 	for (auto& object : _objects) {
-		SortGameObjectInDrawOrder(drawObjects, object);
+		SortAnimationInDrawOrder(drawObjects, object);
 	}
 
 	for (auto& object : drawObjects) {
@@ -148,6 +149,11 @@ bool ModeGame::Render() {
 	}
 
 	base::Render();
+
+	_player->AnimProcess();
+	for (auto& object : _objects) {
+		object->AnimProcess();
+	}
 
 	DrawDebug();
 
@@ -372,9 +378,9 @@ void ModeGame::CreatePlayer(Vector3 vPos)
 {
 	Player* player = new Player(this);
 	player->SetPos(vPos);
-	player->SetDrawOffset(Vector3(0, -0.5f, 0));
 
-	Animation* anim = player->GetAnimation();
+	Animation* anim = player->AddAnimationClass();
+	anim->SetDrawOffset(Vector3(0, -0.5f, 0));
 	anim->SetSize(160, 160);
 	LoadAnimData(anim, "Player");
 
@@ -386,9 +392,9 @@ void ModeGame::CreateMeatBox(Vector3 vPos)
 {
 	MeatBox* meatBox = new MeatBox(this);
 	meatBox->SetPos(vPos);
-	meatBox->SetDrawOffset(Vector3(0, -0.2f, 0));
 
-	Animation* anim = meatBox->GetAnimation();
+	Animation* anim = meatBox->AddAnimationClass();
+	anim->SetDrawOffset(Vector3(0, -0.2f, 0));
 	LoadAnimData(anim, "Meatbox");
 
 	_objects.push_back(meatBox);
@@ -398,9 +404,9 @@ void ModeGame::CreateEnemy(Vector3 vPos)
 {
 	Enemy* enemy = new Enemy(this);
 	enemy->SetPos(vPos);
-	enemy->SetDrawOffset(Vector3(0, -0.2f, 0));
 
-	Animation* anim = enemy->GetAnimation();
+	Animation* anim = enemy->AddAnimationClass();
+	anim->SetDrawOffset(Vector3(0, -0.2f, 0));
 	LoadAnimData(anim, "Namako");
 
 	_objects.push_back(enemy);
@@ -411,9 +417,9 @@ void ModeGame::CreateEnemyTomato(std::vector<Vector3> route)
 	EnemyTomato* enemyTomato = new EnemyTomato(this);
 	enemyTomato->SetPos(route[0]);
 	enemyTomato->SetMoveRoute(route);
-	enemyTomato->SetDrawOffset(Vector3(0, -0.2f, 0));
 
-	Animation* anim = enemyTomato->GetAnimation();
+	Animation* anim = enemyTomato->AddAnimationClass();
+	anim->SetDrawOffset(Vector3(0, -0.2f, 0));
 	LoadAnimData(anim, "Tomato");
 
 	_objects.push_back(enemyTomato);
@@ -421,14 +427,14 @@ void ModeGame::CreateEnemyTomato(std::vector<Vector3> route)
 
 	Effect* arrow = new Effect(this);
 	arrow->SetLoop(true);
-	arrow->SetDrawOrder(DRAW_ORDER_UNDERLAP_OBJECT);
 	std::string path = "res/Effect/MoveArea/";
 	std::array<std::string, 4> fileName = {
 		"effect_movearea_01",
 		"effect_movearea_02",
 	};
 
-	Animation* arrowAnim = arrow->GetAnimation();
+	Animation* arrowAnim = arrow->AddAnimationClass();
+	arrowAnim->SetDrawOrder(DRAW_ORDER_UNDERLAP_OBJECT);
 	for (int i = 0; i < 2; i++) {
 		AnimationInfo* animInfo = new AnimationInfo();
 		animInfo->_graphHandle.push_back(ResourceServer::LoadGraph(path + fileName[i] + ".png"));
@@ -447,8 +453,46 @@ void ModeGame::CreateBeamStand(Vector3 vPos, Vector3 vDir)
 	beamStand->SetPos(vPos);
 	beamStand->SetDir(vDir);
 
-	Animation* anim = beamStand->GetAnimation();
-	LoadAnimData(anim, "BeamStand");
+	{
+		Animation* anim = beamStand->AddAnimationClass();
+		LoadAnimData(anim, "BeamStand");
+	}
+
+	int dir = 0;
+	if (vDir.x < 0) {
+		dir = 2;
+	}
+	else if (vDir.x > 0) {
+		dir = 3;
+	}
+	else if (vDir.y < 0) {
+		dir = 0;
+	}
+	else if (vDir.y > 0) {
+		dir = 1;
+	}
+
+	std::array<Vector3, 4> drawOffsetTbl = {
+		Vector3(0, -0.5f, 0),
+		Vector3(0,  0.5f, 0),
+		Vector3(-0.5f, -0.15f, 0),
+		Vector3( 0.5f, -0.15f, 0),
+	};
+
+	std::array<std::string, 2> name = {
+		"BeamOrb_Pink",
+		"BeamOrb_White",
+	};
+	for (int i = 0; i < 2; i++)
+	{
+		for (int j = 0; j < 2; j++) {
+			Animation* anim = beamStand->AddAnimationClass();
+			anim->SetDrawOffset(drawOffsetTbl.at(dir));
+			anim->SetSize(30, 30);
+			anim->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT + 100);
+			LoadAnimData(anim, name.at(j));
+		}
+	}
 
 	_objects.push_back(beamStand);
 }
@@ -457,9 +501,9 @@ void ModeGame::CreateSticky(Vector3 vPos)
 {
 	Sticky* sticky = new Sticky(this);
 	sticky->SetPos(vPos);
-	sticky->SetDrawOffset(Vector3(0, -0.2f, 0));
 
-	Animation* anim = sticky->GetAnimation();
+	Animation* anim = sticky->AddAnimationClass();
+	anim->SetDrawOffset(Vector3(0, -0.2f, 0));
 	LoadAnimData(anim, "Sticky");
 
 	StickyGroup* stickyGroup = new StickyGroup(this);
@@ -469,26 +513,32 @@ void ModeGame::CreateSticky(Vector3 vPos)
 	_objects.push_back(stickyGroup);
 }
 
-void ModeGame::SortGameObjectInDrawOrder(std::multimap<int, GameObject*>& result, GameObject* gameObject)
+void ModeGame::SortAnimationInDrawOrder(std::multimap<int, Animation*>& result, GameObject* gameObject)
 {
-	int drawOrder = gameObject->GetDrawOrder();
-	switch (drawOrder)
+	std::vector<Animation*> anims = gameObject->GetAllAnimationClass();
+	for (auto& anim : anims)
 	{
-	default:
-	{
-		int y = (int)(gameObject->GetPos().y);
-		result.insert(std::make_pair(y, gameObject));
-		break;
-	}
-	case DRAW_ORDER_UNDERLAP_OBJECT:
-	case DRAW_ORDER_OVERLAP_OBJECT:
-		result.insert(std::make_pair(drawOrder, gameObject));
-		break;
+		int drawOrder = anim->GetDrawOrder();
+		int y = (int)(gameObject->GetPos().y + drawOrder);
+		result.insert(std::make_pair(y, anim));
+		//switch (drawOrder)
+		//{
+		//default:
+		//{
+		//	int y = (int)(gameObject->GetPos().y + drawOrder);
+		//	result.insert(std::make_pair(y, anim));
+		//	break;
+		//}
+		//case DRAW_ORDER_UNDERLAP_OBJECT:
+		//case DRAW_ORDER_OVERLAP_OBJECT:
+		//	result.insert(std::make_pair(drawOrder, anim));
+		//	break;
+		//}
 	}
 
 	for (auto& child : gameObject->GetChildObjects())
 	{
-		SortGameObjectInDrawOrder(result, child);
+		SortAnimationInDrawOrder(result, child);
 	}
 }
 

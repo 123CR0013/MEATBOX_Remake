@@ -6,8 +6,6 @@ constexpr float MOVE_FRAME = 6.f;
 
 GameObject::GameObject(ModeBase* mode) : ObjectBase(mode)
 {
-	_bUse = true;
-
 	_mapData = nullptr;
 	if (_mode != nullptr)
 	{
@@ -17,10 +15,6 @@ GameObject::GameObject(ModeBase* mode) : ObjectBase(mode)
 	_objectType = TYPE::NONE;
 
 	_vPos = { 0, 0, 0 };
-	_vDrawOffset = { 0, 0, 0 };
-	_anim = new Animation(this);
-
-	_drawOrder = 0;
 
 	_isMove = false;
 	_frameCount = 0;
@@ -28,11 +22,16 @@ GameObject::GameObject(ModeBase* mode) : ObjectBase(mode)
 
 GameObject::~GameObject()
 {
-	delete _anim;
+	for (auto& anim : _anims)
+	{
+		delete anim;
+	}
+	_anims.clear();
 	for(auto& object : _childObjects)
 	{
 		delete object;
 	}
+	_childObjects.clear();
 }
 
 void GameObject::Destroy()
@@ -100,7 +99,10 @@ bool GameObject::CheckMove(Vector3 vMove)
 void GameObject::AnimProcess()
 {
 	if (!_bUse) return;
-	_anim->Process();
+	for (auto& anim : _anims)
+	{
+		anim->Process();
+	}
 	for (auto& object : _childObjects)
 	{
 		object->AnimProcess();
@@ -110,7 +112,10 @@ void GameObject::AnimProcess()
 void GameObject::Draw()
 {
 	if (!_bUse) return;
-	_anim->Draw();
+	for (auto& anim : _anims)
+	{
+		anim->Draw();
+	}
 
 	//for(auto& object : _childObjects)
 	//{
@@ -120,5 +125,12 @@ void GameObject::Draw()
 
 void GameObject::DrawDebug()
 {
+}
+
+Animation* GameObject::AddAnimationClass()
+{
+	Animation* anim = new Animation(this);
+	_anims.push_back(anim);
+	return anim;
 }
 

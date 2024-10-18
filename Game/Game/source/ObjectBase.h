@@ -7,18 +7,18 @@ public:
 	ObjectBase(ModeBase* mode);
 	~ObjectBase();
 
+	bool GetUse() { return _bUse; }
+	virtual void SetUse(bool bUse) { _bUse = bUse; }
+
 	virtual void SetPos(Vector3 pos) { _vPos = pos; }
 	Vector3 GetPos() { return _vPos; }
-
-	void SetDrawOffset(Vector3 offset) { _vDrawOffset = offset; }
-	Vector3 GetDrawOffset() { return _vDrawOffset; }
 
 protected:
 	ModeBase* _mode;
 
+	bool _bUse;
+
 	// マップチップ座標
 	Vector3 _vPos;
-	// 描画オフセット
-	Vector3 _vDrawOffset;
 };
 

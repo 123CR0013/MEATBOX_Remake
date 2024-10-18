@@ -7,6 +7,7 @@
 
 Animation::Animation(ObjectBase* object)
 {
+	_bUse = true;
 	_parentObj = object;
 
 	_groupIndex = 0;
@@ -16,11 +17,14 @@ Animation::Animation(ObjectBase* object)
 
 	_bAnimEnd = false;
 
+	_vDrawOffset = { 0, 0, 0 };
 	_zoom = 1.0f;
 	_angle = 0.0f;
 	// デフォルトの描画サイズはマップチップサイズと同じ
 	_width = CHIP_W;
 	_height = CHIP_H;
+
+	_drawOrder = 0;
 }
 
 Animation::~Animation()
@@ -37,6 +41,8 @@ Animation::~Animation()
 
 void Animation::Process()
 {
+	if (_bUse == false) return;
+
 	if (_groupIndex <= _groupIndexMax)
 	{
 		_animCnt++;
@@ -54,13 +60,15 @@ void Animation::Process()
 
 void Animation::Draw()
 {
+	if (_parentObj->GetUse() == false || _bUse == false) return;
+
 	if (_bDrawWithScreenPos) 
 	{
-		MyDraw::MyDrawModiGraph(MGetIdent(), _parentObj->GetPos() + _parentObj->GetDrawOffset(), _zoom, _angle, _width, _height, GetGraphHandle(), 0);
+		MyDraw::MyDrawModiGraph(MGetIdent(), _parentObj->GetPos() + _vDrawOffset, _zoom, _angle, _width, _height, GetGraphHandle(), 0);
 	}
 	else 
 	{
-		DrawForMapChip::MyDrawModiGraph(MGetIdent(), _parentObj->GetPos() + _parentObj->GetDrawOffset(), _zoom, _angle, _width, _height, GetGraphHandle(), 0);
+		DrawForMapChip::MyDrawModiGraph(MGetIdent(), _parentObj->GetPos() + _vDrawOffset, _zoom, _angle, _width, _height, GetGraphHandle(), 0);
 	}
 }
 

@@ -2,10 +2,10 @@
 
 ObjectBase::ObjectBase(ModeBase* mode)
 {
+	_bUse = true;
 	_mode = mode;
 
 	_vPos = Vector3(0, 0, 0);
-	_vDrawOffset = Vector3(0, 0, 0);
 }
 
 ObjectBase::~ObjectBase()

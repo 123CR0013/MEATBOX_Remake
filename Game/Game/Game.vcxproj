@@ -162,7 +162,6 @@
     <ClCompile Include="source\BeamStand.cpp" />
     <ClCompile Include="source\Effect.cpp" />
     <ClCompile Include="source\DrawForMapChip.cpp" />
-    <ClCompile Include="source\EffectExplosion.cpp" />
     <ClCompile Include="source\Enemy.cpp" />
     <ClCompile Include="source\EnemyTomato.cpp" />
     <ClCompile Include="source\Number.cpp" />
@@ -194,7 +193,6 @@
     <ClInclude Include="source\BeamStand.h" />
     <ClInclude Include="source\Effect.h" />
     <ClInclude Include="source\DrawForMapChip.h" />
-    <ClInclude Include="source\EffectExplosion.h" />
     <ClInclude Include="source\Enemy.h" />
     <ClInclude Include="source\EnemyTomato.h" />
     <ClInclude Include="source\Number.h" />

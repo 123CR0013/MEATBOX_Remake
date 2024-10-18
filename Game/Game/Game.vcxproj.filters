@@ -44,9 +44,6 @@
     <ClCompile Include="source\ObjectBase.cpp">
       <Filter>Object\Base</Filter>
     </ClCompile>
-    <ClCompile Include="source\EffectExplosion.cpp">
-      <Filter>Object\Effect</Filter>
-    </ClCompile>
     <ClCompile Include="source\ModeSoundLayer.cpp">
       <Filter>Mode\SoundLayer</Filter>
     </ClCompile>
@@ -140,9 +137,6 @@
     </ClInclude>
     <ClInclude Include="source\ObjectBase.h">
       <Filter>Object\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="source\EffectExplosion.h">
-      <Filter>Object\Effect</Filter>
     </ClInclude>
     <ClInclude Include="source\ModeSoundLayer.h">
       <Filter>Mode\SoundLayer</Filter>

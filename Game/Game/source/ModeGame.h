@@ -76,5 +76,5 @@ protected:
 	bool _bResult;
 	ResultData _resultData;
 
-	void SortGameObjectInDrawOrder(std::multimap<int, GameObject*>& result, GameObject* gameObject);
+	void SortAnimationInDrawOrder(std::multimap<int, Animation*>& result, GameObject* gameObject);
 };
