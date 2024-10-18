@@ -68,10 +68,10 @@ void BeamStand::CreateBeamBody(Vector3 vPos)
 	beamBody->SetPos(vPos);
 
 	Animation* anim = beamBody->AddAnimationClass();
-	anim->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
+	anim->SetDrawOrder(12);
 	_mode->LoadAnimData(anim, "BeamBody_Pink");
 	Animation* subAnim = beamBody->AddAnimationClass();
-	subAnim->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
+	subAnim->SetDrawOrder(13);
 	_mode->LoadAnimData(subAnim, "BeamBody_White");
 
 	beamBody->SetDirection(_direction);

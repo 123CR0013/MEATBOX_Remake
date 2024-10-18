@@ -94,7 +94,7 @@ void CreateEffect_Move(Vector3 vPos, ModeBase* mode)
 	animInfo->_framePerSheet = 4;
 
 	Animation* anim = effect->AddAnimationClass();
-	anim->SetDrawOrder(DRAW_ORDER_UNDERLAP_OBJECT);
+	anim->SetDrawOrder(1);
 	anim->AddAnimInfo(animInfo, 0);
 
 	mode->AddGameObject(effect);
@@ -188,10 +188,28 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode, int num)
 
 		Animation* anim = effect->AddAnimationClass();
 		anim->SetSize(w, h);
-		anim->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
+		anim->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT + 100);
 
 		AnimationInfo* animInfo = new AnimationInfo();
 		ResourceServer::LoadDivGraph("res/Effect/Explosion/Meat/ef_meat_sheet.png", 6, 6, 1, w, h, animInfo->_graphHandle);
+		animInfo->_framePerSheet = 8;
+
+		anim->AddAnimInfo(animInfo, 0);
+
+		mode->AddGameObject(effect);
+	}
+
+	// ŒŒ
+	{
+		Effect* effect = new Effect(mode);
+		effect->SetPos(vNewPos);
+
+		Animation* anim = effect->AddAnimationClass();
+		anim->SetSize(w, h);
+		anim->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT + 200);
+
+		AnimationInfo* animInfo = new AnimationInfo();
+		ResourceServer::LoadDivGraph("res/Effect/Explosion/Blood/ef_blood_sheet.png", 7, 7, 1, w, h, animInfo->_graphHandle);
 		animInfo->_framePerSheet = 8;
 
 		anim->AddAnimInfo(animInfo, 0);
@@ -213,7 +231,7 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode, int num)
 
 			Animation* anim = effect->AddAnimationClass();
 			anim->SetSize(w, h);
-			anim->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
+			anim->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT + 300);
 
 			AnimationInfo* animInfo = new AnimationInfo();
 			ResourceServer::LoadDivGraph("res/Effect/Explosion/Eye/ef_eye_sheet_01.png", 2, 2, 1, w, h, animInfo->_graphHandle);
@@ -230,7 +248,7 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode, int num)
 
 			Animation* anim = effect->AddAnimationClass();
 			anim->SetSize(560, 1240);
-			anim->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
+			anim->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT + 400);
 			anim->SetDrawWithScreenPos(true);
 
 			AnimationInfo* animInfo = new AnimationInfo();
@@ -246,23 +264,5 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode, int num)
 
 			mode->AddGameObject(effect);
 		}
-	}
-
-	// ŒŒ
-	{
-		Effect* effect = new Effect(mode);
-		effect->SetPos(vNewPos);
-
-		Animation* anim = effect->AddAnimationClass();
-		anim->SetSize(w, h);
-		anim->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
-
-		AnimationInfo* animInfo = new AnimationInfo();
-		ResourceServer::LoadDivGraph("res/Effect/Explosion/Blood/ef_blood_sheet.png", 7, 7, 1, w, h, animInfo->_graphHandle);
-		animInfo->_framePerSheet = 8;
-
-		anim->AddAnimInfo(animInfo, 0);
-
-		mode->AddGameObject(effect);
 	}
 }

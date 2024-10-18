@@ -88,10 +88,8 @@ protected:
 	float _angle;
 	float _width, _height;
 
-	// 描画順
-	// -1: オブジェクトの下に描画（エフェクト）
-	// 0 : y座標が小さいものから描画（オブジェクト）
-	// 10000: オブジェクトの上に描画（エフェクト）
+	// 描画順の補正値
+	// (_parentObj->_vPos.y + _drawOrder) * 10 + _drawOrder の値が小さいものから描画される
 	int _drawOrder;
 
 	// 描画座標をスクリーン座標として扱うか

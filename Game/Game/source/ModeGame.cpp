@@ -382,6 +382,7 @@ void ModeGame::CreatePlayer(Vector3 vPos)
 	Animation* anim = player->AddAnimationClass();
 	anim->SetDrawOffset(Vector3(0, -0.5f, 0));
 	anim->SetSize(160, 160);
+	anim->SetDrawOrder(5);
 	LoadAnimData(anim, "Player");
 
 	//_objects.push_back(player);
@@ -395,6 +396,7 @@ void ModeGame::CreateMeatBox(Vector3 vPos)
 
 	Animation* anim = meatBox->AddAnimationClass();
 	anim->SetDrawOffset(Vector3(0, -0.2f, 0));
+	anim->SetDrawOrder(2);
 	LoadAnimData(anim, "Meatbox");
 
 	_objects.push_back(meatBox);
@@ -407,6 +409,7 @@ void ModeGame::CreateEnemy(Vector3 vPos)
 
 	Animation* anim = enemy->AddAnimationClass();
 	anim->SetDrawOffset(Vector3(0, -0.2f, 0));
+	anim->SetDrawOrder(2);
 	LoadAnimData(anim, "Namako");
 
 	_objects.push_back(enemy);
@@ -420,6 +423,7 @@ void ModeGame::CreateEnemyTomato(std::vector<Vector3> route)
 
 	Animation* anim = enemyTomato->AddAnimationClass();
 	anim->SetDrawOffset(Vector3(0, -0.2f, 0));
+	anim->SetDrawOrder(2);
 	LoadAnimData(anim, "Tomato");
 
 	_objects.push_back(enemyTomato);
@@ -455,6 +459,7 @@ void ModeGame::CreateBeamStand(Vector3 vPos, Vector3 vDir)
 
 	{
 		Animation* anim = beamStand->AddAnimationClass();
+		anim->SetDrawOrder(2);
 		LoadAnimData(anim, "BeamStand");
 	}
 
@@ -489,7 +494,7 @@ void ModeGame::CreateBeamStand(Vector3 vPos, Vector3 vDir)
 			Animation* anim = beamStand->AddAnimationClass();
 			anim->SetDrawOffset(drawOffsetTbl.at(dir));
 			anim->SetSize(30, 30);
-			anim->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT + 100);
+			anim->SetDrawOrder(19 + j);
 			LoadAnimData(anim, name.at(j));
 		}
 	}
@@ -504,6 +509,7 @@ void ModeGame::CreateSticky(Vector3 vPos)
 
 	Animation* anim = sticky->AddAnimationClass();
 	anim->SetDrawOffset(Vector3(0, -0.2f, 0));
+	anim->SetDrawOrder(0);
 	LoadAnimData(anim, "Sticky");
 
 	StickyGroup* stickyGroup = new StickyGroup(this);
