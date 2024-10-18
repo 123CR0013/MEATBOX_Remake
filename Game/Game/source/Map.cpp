@@ -17,6 +17,12 @@ Map::Map(ModeBase* mode)
 
 Map::~Map()
 {
+	for (auto& mapChip : _mapChips)
+	{
+		if (mapChip == nullptr) continue;
+		delete mapChip;
+	}
+	_mapChips.fill(nullptr);
 }
 
 void Map::CreateMap(nlohmann::json json)
