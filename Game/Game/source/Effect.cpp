@@ -229,7 +229,7 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode, int num)
 			effect->SetPos(vScreenPos.at(num));
 
 			Animation* anim = effect->AddAnimationClass();
-			anim->SetSize(w, h);
+			anim->SetSize(560, 1240);
 			anim->SetDrawOrder(DRAW_ORDER_OVERLAP_OBJECT);
 			anim->SetDrawWithScreenPos(true);
 
@@ -237,7 +237,7 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode, int num)
 			std::vector<int> graphHandle;
 			animInfo->_graphHandle.push_back(-1);
 			animInfo->_graphHandle.push_back(-1);
-			ResourceServer::LoadDivGraph("res/Effect/Explosion/Eye/ef_eye_sheet_02.png", 4, 4, 1, w, h, graphHandle);
+			ResourceServer::LoadDivGraph("res/Effect/Explosion/Eye/ef_eye_sheet_02.png", 4, 4, 1, 560, 1240, graphHandle);
 			animInfo->_graphHandle.insert(animInfo->_graphHandle.end(), graphHandle.begin(), graphHandle.end());
 
 			animInfo->_framePerSheet = 8;
