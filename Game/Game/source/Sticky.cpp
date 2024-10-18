@@ -63,7 +63,14 @@ bool Sticky::AddMeatBox(MeatBox* pMeatBox, Sticky::POSITION pos)
 
 		if(pos == POSITION::ROOT)
 		{
+			GetAnimationClass(0)->SetUse(false);
+
 			_pRootMB = pMeatBox;
+			Animation* mbAnim = pMeatBox->GetAnimationClass(0);
+			int animCnt = mbAnim->GetAnimCnt();
+			mbAnim->SetAnimIndex(1);
+			mbAnim->SetAnimCnt(animCnt);
+
 			_mapData->EraseGameObject(this);
 		}
 
