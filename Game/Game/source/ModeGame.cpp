@@ -35,6 +35,8 @@ ModeGame::ModeGame(int worldID, int stageID)
 	_bResult = false;
 	_resultData.remainingStepCnt = 0;
 	_resultData.killCntMax = 0;
+
+	_bPause = false;
 }
 
 bool ModeGame::Initialize() {
@@ -55,6 +57,8 @@ bool ModeGame::Initialize() {
 	NEW MainScreen(this);
 
 	_bResult = false;
+
+	_bPause = false;
 
 	return true;
 }
@@ -80,55 +84,62 @@ bool ModeGame::Terminate() {
 }
 
 bool ModeGame::Process() {
-	if (global._trg & PAD_INPUT_1) {
-		Terminate();
-		Initialize();
+	if (!_bPause) {
+		if (global._trg & PAD_INPUT_1) {
+			Terminate();
+			Initialize();
+		}
 	}
 
 	base::Process();
 
 	CheckObjectsToRemove();
-	CheckObjectsToAdd();
 
-	_mapData->Process();
+	if (!_bPause) {
 
-	_player->ProcessInit();
-	for (auto& object : _objects) {
-		object->ProcessInit();
-	}
+		CheckObjectsToAdd();
 
-	if (!_player->IsMove())_player->Process();
-	_player->ProcessFinish();
-	_player->ProcessChildObjects();
-	//_player->AnimProcess();
-	
-	for(auto& object : _objects) {
-		object->ProcessInit();
-		if(!object->IsMove())object->Process();
-		object->ProcessFinish();
-		object->ProcessChildObjects();
-		//object->AnimProcess();
-	}
+		_mapData->Process();
 
-	if (_enMoveCnt >= 2) {
-		_enMoveCnt = 0;
-	}
+		_player->ProcessInit();
+		for (auto& object : _objects) {
+			object->ProcessInit();
+		}
 
-	// クリア判定（敵が残っていなかったらクリア）
-	bool bEnemyExist = false;
-	for (auto& object : _objects) {
-		if (object->GetType() == GameObject::TYPE::ENEMY) {
-			bEnemyExist = true;
-			break;
+		if (!_player->IsMove())_player->Process();
+		_player->ProcessFinish();
+		_player->ProcessChildObjects();
+		//_player->AnimProcess();
+
+		for (auto& object : _objects) {
+			object->ProcessInit();
+			if (!object->IsMove())object->Process();
+			object->ProcessFinish();
+			object->ProcessChildObjects();
+			//object->AnimProcess();
+		}
+
+		if (_enMoveCnt >= 2) {
+			_enMoveCnt = 0;
+		}
+
+		// クリア判定（敵が残っていなかったらクリア）
+		bool bEnemyExist = false;
+		for (auto& object : _objects) {
+			if (object->GetType() == GameObject::TYPE::ENEMY) {
+				bEnemyExist = true;
+				break;
+			}
+		}
+
+		// クリア画面を表示
+		if (!bEnemyExist && !_bResult) {
+			_bResult = true;
+			NEW ResultScreen(this);
+
+			_bPause = true;
 		}
 	}
-
-	// クリア画面を表示
-	if (!bEnemyExist && !_bResult) {
-		_bResult = true;
-		NEW ResultScreen(this);
-	}
-
 
 	return true;
 }

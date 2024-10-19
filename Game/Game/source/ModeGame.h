@@ -90,4 +90,6 @@ protected:
 	// 描画順序をソート
 	// Animationクラス単位でソート
 	void SortAnimationInDrawOrder(std::multimap<int, Animation*>& result, GameObject* gameObject);
+
+	bool _bPause;
 };
