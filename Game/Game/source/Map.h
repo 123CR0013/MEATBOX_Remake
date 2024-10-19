@@ -30,6 +30,7 @@ public:
 	void Process();
 	void Draw();
 	void DrawDebug();
+	void AnimProcess();
 
 	MapChip* GetMapChip(int x, int y);
 	MapChip* GetMapChip(Vector3 pos);

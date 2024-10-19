@@ -150,6 +150,8 @@ bool ModeGame::Render() {
 
 	base::Render();
 
+	_mapData->AnimProcess();
+
 	_player->AnimProcess();
 	for (auto& object : _objects) {
 		object->AnimProcess();

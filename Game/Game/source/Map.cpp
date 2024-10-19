@@ -59,11 +59,7 @@ void Map::CreateMap(nlohmann::json json)
 
 void Map::Process()
 {
-	for (auto& mapChip : _mapChips)
-	{
-		if(mapChip == nullptr) continue;
-		mapChip->AnimProcess();
-	}
+
 }
 
 void Map::Draw()
@@ -98,6 +94,15 @@ void Map::DrawDebug()
 			"STICKYGROUP"
 		};
 		DrawFormatString(object->GetPos().x * CHIP_W, object->GetPos().y * CHIP_H, COLOR_RED, typeTbl[static_cast<int>(type)].c_str());
+	}
+}
+
+void Map::AnimProcess()
+{
+	for (auto& mapChip : _mapChips)
+	{
+		if (mapChip == nullptr) continue;
+		mapChip->AnimProcess();
 	}
 }
 
