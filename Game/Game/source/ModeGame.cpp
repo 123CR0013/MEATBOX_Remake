@@ -185,6 +185,11 @@ void ModeGame::RemoveGameObject(GameObject* object)
 	_objectsToRemove.push_back(object);
 }
 
+void ModeGame::CheckKillCnt(int killCnt)
+{
+	_resultData.killCnt = MyMath::Max(_resultData.killCnt, killCnt);
+}
+
 void ModeGame::SetGameOver()
 {
 	ModeServer::GetInstance()->Del(this);

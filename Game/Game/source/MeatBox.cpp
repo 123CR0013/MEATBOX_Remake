@@ -108,6 +108,7 @@ bool MeatBox::_CheckMove(Vector3 vMove)
 							CreateEffect(Effect::TYPE::EXPLOSION, vNextPos, _mode);
 							// “G‚ðíœ
 							obj->Destroy();
+							_mode->CheckKillCnt(1);
 						}
 					}
 				}

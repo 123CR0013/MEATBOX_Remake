@@ -68,6 +68,7 @@ bool StickyGroup::CheckMove(Vector3 vMove)
 
 			pEnemy->Destroy();
 		}
+		_mode->CheckKillCnt(num);
 	}
 
 	_pDeleteEnemyList.clear();

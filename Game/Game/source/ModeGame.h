@@ -34,6 +34,7 @@ public:
 
 	void AddPlayerStepCnt() override { _plStepCnt++; }
 	int GetPlayerStepCnt() override { return _plStepCnt; }
+	void CheckKillCnt(int killCnt) override;
 
 	void SetGameOver() override;
 
