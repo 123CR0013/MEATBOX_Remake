@@ -10,9 +10,9 @@ class Animation;
 struct ResultData
 {
 	// 残り歩数
-	int stepCnt;
+	int remainingStepCnt;
 	// 最大同時キル
-	int killCnt;
+	int killCntMax;
 };
 
 // モード
@@ -27,13 +27,20 @@ public:
 	virtual bool Render();
 	virtual bool DrawDebug();
 
+	int GetWorldID() override { return _worldID; }
+	int GetStageID() override { return _stageID; }
+
 	Map* GetMapData() override { return _mapData; }
 
 	void AddGameObject(GameObject* object) override;
 	void RemoveGameObject(GameObject* object) override;
 
-	void AddPlayerStepCnt() override { _plStepCnt++; }
-	int GetPlayerStepCnt() override { return _plStepCnt; }
+	void AddPlayerStepCnt() override { 
+		_resultData.remainingStepCnt--;
+		_enMoveCnt++; 
+	}
+	int GetEnemyMoveCnt() override { return _enMoveCnt; }
+
 	void CheckKillCnt(int killCnt) override;
 
 	void SetGameOver() override;
@@ -55,8 +62,10 @@ protected:
 	std::vector<GameObject*> _objectsToRemove;
 
 
-
-	int _plStepCnt;
+	// プレイヤーが移動するたびに1加算
+	// 2になったら敵が移動する
+	// Process()終了時に2以上なら0に戻す
+	int _enMoveCnt;
 
 	void LoadAnimData(Animation* animationClass, std::string name);
 	bool _bExistAnimData = false;

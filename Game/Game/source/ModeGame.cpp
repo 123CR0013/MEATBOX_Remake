@@ -31,10 +31,10 @@ ModeGame::ModeGame(int worldID, int stageID)
 	_stageID = stageID;
 	_mapData = nullptr;
 	_player = nullptr;
-	_plStepCnt = 0;
+	_enMoveCnt = 0;
 	_bResult = false;
-	_resultData.stepCnt = 0;
-	_resultData.killCnt = 0;
+	_resultData.remainingStepCnt = 0;
+	_resultData.killCntMax = 0;
 }
 
 bool ModeGame::Initialize() {
@@ -42,15 +42,15 @@ bool ModeGame::Initialize() {
 
 	_mapData = nullptr;
 	_player = nullptr;
-	_plStepCnt = 0;
+	_enMoveCnt = 0;
 	_bResult = false;
-	_resultData.stepCnt = 0;
-	_resultData.killCnt = 0;
+	_resultData.remainingStepCnt = 0;
+	_resultData.killCntMax = 0;
 
 	_mapData = new Map(this);
 	CreateMap();
 
-	_plStepCnt = 0;
+	_enMoveCnt = 0;
 
 	NEW MainScreen(this);
 
@@ -110,8 +110,8 @@ bool ModeGame::Process() {
 		//object->AnimProcess();
 	}
 
-	if (_plStepCnt >= 2) {
-		_plStepCnt = 0;
+	if (_enMoveCnt >= 2) {
+		_enMoveCnt = 0;
 	}
 
 	// クリア判定（敵が残っていなかったらクリア）
@@ -187,7 +187,7 @@ void ModeGame::RemoveGameObject(GameObject* object)
 
 void ModeGame::CheckKillCnt(int killCnt)
 {
-	_resultData.killCnt = MyMath::Max(_resultData.killCnt, killCnt);
+	_resultData.killCntMax = MyMath::Max(_resultData.killCntMax, killCnt);
 }
 
 void ModeGame::SetGameOver()

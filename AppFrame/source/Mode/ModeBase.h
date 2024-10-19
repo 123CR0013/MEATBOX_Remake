@@ -29,11 +29,13 @@ public:
 
 
 public: // ModeGame—p
+	virtual int GetWorldID() { return 0; }
+	virtual int GetStageID() { return 0; }
 	virtual class Map* GetMapData() { return nullptr; }
 	virtual void AddGameObject(class GameObject* object) {};
 	virtual void RemoveGameObject(class GameObject* object) {};
 	virtual void AddPlayerStepCnt() {}
-	virtual int GetPlayerStepCnt() { return 0; }
+	virtual int GetEnemyMoveCnt() { return 0; }
 	virtual void SetGameOver() {}
 	virtual void LoadAnimData(class Animation* animationClass, std::string name) {}
 	virtual void CheckKillCnt(int killCnt) {}

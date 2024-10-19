@@ -37,7 +37,7 @@ void EnemyTomato::MoveProcess()
 		return;
 	}
 
-	if(_mode->GetPlayerStepCnt() == 2)
+	if(_mode->GetEnemyMoveCnt() == 2)
 	{
 		// 移動先のオブジェクトを取得
 		GameObject* obj = _mapData->GetGameObject(_vNextPos);
@@ -104,7 +104,7 @@ void EnemyTomato::SetMoveAreaEffect()
 	// MoveAreaEffectの位置を設定
 	_childObjects[0]->SetPos(_vNextPos);
 	// MoveAreaEffectの色を設定
-	int index = _mode->GetPlayerStepCnt() != 1 ? 0 : 1;
+	int index = _mode->GetEnemyMoveCnt() != 1 ? 0 : 1;
 	Animation* anim = _childObjects[0]->GetAnimationClass(0);
 	anim->SetAnimIndex(index);
 }
