@@ -31,6 +31,7 @@ public:
 public: // ModeGame—p
 	virtual int GetWorldID() { return 0; }
 	virtual int GetStageID() { return 0; }
+	virtual void ChangeStage(int worldID, int stageID) {}
 	virtual class Map* GetMapData() { return nullptr; }
 	virtual void AddGameObject(class GameObject* object) {};
 	virtual void RemoveGameObject(class GameObject* object) {};

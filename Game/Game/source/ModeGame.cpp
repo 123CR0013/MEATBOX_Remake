@@ -175,6 +175,15 @@ bool ModeGame::DrawDebug()
 	return true;
 }
 
+void ModeGame::ChangeStage(int worldID, int stageID)
+{
+	_worldID = worldID;
+	_stageID = stageID;
+
+	Terminate();
+	Initialize();
+}
+
 void ModeGame::AddGameObject(GameObject* object)
 {
 	_objectsToAdd.push_back(object);

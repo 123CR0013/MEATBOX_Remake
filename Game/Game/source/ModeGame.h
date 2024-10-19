@@ -29,6 +29,7 @@ public:
 
 	int GetWorldID() override { return _worldID; }
 	int GetStageID() override { return _stageID; }
+	void ChangeStage(int worldID, int stageID) override;
 
 	Map* GetMapData() override { return _mapData; }
 
