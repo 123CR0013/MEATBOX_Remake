@@ -17,7 +17,13 @@ void Player::Process()
 	GameObject::Process();
 
 	MoveProcess();
+}
 
+void Player::AnimProcess()
+{
+	GameObject::AnimProcess();
+
+	// 蹴りアニメーションから待機アニメーションに戻す
 	Animation* anim = GetAnimationClass(0);
 	if (anim->IsEnd())
 	{

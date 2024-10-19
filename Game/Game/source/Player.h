@@ -8,6 +8,7 @@ public:
 	~Player() override;
 
 	void Process() override;
+	void AnimProcess() override;
 
 protected:
 	void MoveProcess();
