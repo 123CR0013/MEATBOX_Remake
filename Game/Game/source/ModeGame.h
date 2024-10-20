@@ -6,15 +6,6 @@ class Map;
 class GameObject;
 class Animation;
 
-// リザルト画面に渡すデータ
-struct ResultData
-{
-	// 残り歩数
-	int remainingStepCnt;
-	// 最大同時キル
-	int killCntMax;
-};
-
 // モード
 class ModeGame : public ModeUI
 {
@@ -30,6 +21,8 @@ public:
 	int GetWorldID() override { return _worldID; }
 	int GetStageID() override { return _stageID; }
 	void ChangeStage(int worldID, int stageID) override;
+
+	ResultData GetResultData() override { return _resultData; }
 
 	Map* GetMapData() override { return _mapData; }
 

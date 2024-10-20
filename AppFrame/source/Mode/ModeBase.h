@@ -32,6 +32,17 @@ public: // ModeGame用
 	virtual int GetWorldID() { return 0; }
 	virtual int GetStageID() { return 0; }
 	virtual void ChangeStage(int worldID, int stageID) {}
+
+	// リザルト画面に渡すデータ
+	struct ResultData
+	{
+		// 残り歩数
+		int remainingStepCnt;
+		// 最大同時キル
+		int killCntMax;
+	};
+	virtual struct ResultData GetResultData() { return ResultData(); }
+
 	virtual class Map* GetMapData() { return nullptr; }
 	virtual void AddGameObject(class GameObject* object) {};
 	virtual void RemoveGameObject(class GameObject* object) {};
