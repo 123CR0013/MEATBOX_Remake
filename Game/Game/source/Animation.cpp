@@ -4,6 +4,7 @@
 #include "DrawForMapChip.h"
 
 #include "Map.h"
+#include "ApplicationMain.h"
 
 Vector3 Animation::_vVibRange = { 0, 0, 0 };
 Vector3 Animation::_vVib = { 0, 0, 0 };
@@ -68,13 +69,15 @@ void Animation::Draw()
 
 	Vector3 vDrawPos = _parentObj->GetPos() + _vDrawOffset + _vVib;
 
+	float rate = g_oApplicationMain.DispSizeW() / 1920.0f;
+
 	if (_bDrawWithScreenPos) 
 	{
-		MyDraw::MyDrawModiGraph(MGetIdent(), vDrawPos, _zoom, _angle, _width, _height, GetGraphHandle(), 0);
+		MyDraw::MyDrawModiGraph(MGetIdent(), vDrawPos * rate, _zoom, _angle, _width * rate, _height * rate, GetGraphHandle(), 0);
 	}
 	else 
 	{
-		DrawForMapChip::MyDrawModiGraph(MGetIdent(), vDrawPos, _zoom, _angle, _width, _height, GetGraphHandle(), 0);
+		DrawForMapChip::MyDrawModiGraph(MGetIdent(), vDrawPos * rate, _zoom, _angle, _width * rate, _height * rate, GetGraphHandle(), 0);
 	}
 }
 

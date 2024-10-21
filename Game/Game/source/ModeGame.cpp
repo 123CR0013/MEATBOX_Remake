@@ -170,7 +170,7 @@ bool ModeGame::Render() {
 
 	Animation::VibrationProcess();
 
-	DrawDebug();
+	//DrawDebug();
 
 	return true;
 }
