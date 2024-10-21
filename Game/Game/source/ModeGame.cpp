@@ -94,10 +94,10 @@ bool ModeGame::Process() {
 	base::Process();
 
 	CheckObjectsToRemove();
+	CheckObjectsToAdd();
 
 	if (!_bPause) {
 
-		CheckObjectsToAdd();
 
 		_mapData->Process();
 
@@ -123,21 +123,23 @@ bool ModeGame::Process() {
 			_enMoveCnt = 0;
 		}
 
-		// クリア判定（敵が残っていなかったらクリア）
-		bool bEnemyExist = false;
-		for (auto& object : _objects) {
-			if (object->GetType() == GameObject::TYPE::ENEMY) {
-				bEnemyExist = true;
-				break;
+		if (!_player->IsMove()) {
+			// クリア判定（敵が残っていなかったらクリア）
+			bool bEnemyExist = false;
+			for (auto& object : _objects) {
+				if (object->GetType() == GameObject::TYPE::ENEMY) {
+					bEnemyExist = true;
+					break;
+				}
 			}
-		}
 
-		// クリア画面を表示
-		if (!bEnemyExist && !_bResult) {
-			_bResult = true;
-			NEW ResultScreen(this);
+			// クリア画面を表示
+			if (!bEnemyExist && !_bResult) {
+				_bResult = true;
+				NEW ResultScreen(this);
 
-			_bPause = true;
+				_bPause = true;
+			}
 		}
 	}
 
