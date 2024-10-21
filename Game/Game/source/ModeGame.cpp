@@ -168,6 +168,8 @@ bool ModeGame::Render() {
 		object->AnimProcess();
 	}
 
+	Animation::VibrationProcess();
+
 	DrawDebug();
 
 	return true;

@@ -69,6 +69,10 @@ bool StickyGroup::CheckMove(Vector3 vMove)
 			pEnemy->Destroy();
 		}
 		_mode->CheckKillCnt(num);
+
+		std::array<float, 4> vibRange = { 0.0f, 0.05f, 0.1f, 0.15f };
+		float vib = vibRange.at(MyMath::Clamp(0, 3, num ));
+		Animation::SetVibration(Vector3(vib, vib, 0));
 	}
 
 	_pDeleteEnemyList.clear();

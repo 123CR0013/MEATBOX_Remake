@@ -59,6 +59,12 @@ public:
 	void SetDrawWithScreenPos(bool bDrawWithScreenPos) { _bDrawWithScreenPos = bDrawWithScreenPos; }
 
 
+	// 画面振動用
+	// 振動の最大振幅を設定
+	static void SetVibration(Vector3 vRange, int time = 10);
+	// 振動処理
+	static void VibrationProcess();
+
 protected:
 	bool _bUse;
 
@@ -94,6 +100,17 @@ protected:
 
 	// 描画座標をスクリーン座標として扱うか
 	bool _bDrawWithScreenPos = false;
+
+	
+	// 振動用の変数
+	// 最大振幅（マップチップ座標）
+	static Vector3 _vVibRange;
+	// 現在の振動量
+	static Vector3 _vVib;
+	// 振動時間
+	static int _vibTime;
+
+	static void RandVibration();
 };
 
 

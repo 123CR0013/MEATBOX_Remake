@@ -109,6 +109,7 @@ bool MeatBox::_CheckMove(Vector3 vMove)
 							// “G‚ðíœ
 							obj->Destroy();
 							_mode->CheckKillCnt(1);
+							Animation::SetVibration(Vector3(0.05f, 0.05f, 0));
 						}
 					}
 				}
