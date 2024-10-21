@@ -1,5 +1,6 @@
 // “ÆŽ©•`‰æƒ‰ƒCƒuƒ‰ƒŠ
 #include "mydraw.h"
+#include "../Application/ApplicationBase.h"
 
 // ‰æ‘œ‚Ì’†S‚Å‰ñ“]‚µ‚Ä•`‰æ‚·‚é
 void _MyDrawModiGraph(MATRIX mView, VECTOR position, float zoom, float angle, int width, int height, int cgHandle, int turn) {
@@ -68,6 +69,20 @@ void MyDraw::MyDrawModiGraph(MATRIX mView, Vector3 position, float zoom, float a
 {
 	VECTOR pos = VGet(position.x, position.y, position.z);
 	_MyDrawModiGraph(mView, pos, zoom, angle, width, height, cgHandle, turn);
+}
+
+void MyDraw::MyDrawModiGraphWithScreenSize(MATRIX mView, VECTOR position, float zoom, float angle, int width, int height, int cgHandle, int turn)
+{
+	float rate = ApplicationBase::GetInstance()->DispSizeW() / 1920.0f;
+	VECTOR pos = VGet(position.x * rate, position.y * rate, position.z);
+	_MyDrawModiGraph(mView, pos, zoom, angle, width * rate, height * rate, cgHandle, turn);
+}
+
+void MyDraw::MyDrawModiGraphWithScreenSize(MATRIX mView, Vector3 position, float zoom, float angle, int width, int height, int cgHandle, int turn)
+{
+	float rate = ApplicationBase::GetInstance()->DispSizeW() / 1920.0f;
+	Vector3 pos = position * rate;
+	_MyDrawModiGraph(mView, pos.ToVECTOR(), zoom, angle, width * rate, height * rate, cgHandle, turn);
 }
 
 // 4“_‚ðŽw’è‚µ‚ÄŽlŠp‚ð•`‚­
