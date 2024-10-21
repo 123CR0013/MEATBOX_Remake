@@ -219,7 +219,7 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode, int num)
 
 	if (0 <= num && num <= 2) {
 		std::array<Vector3, 3> vScreenPos = {
-			Vector3(g_oApplicationMain.DispSizeW() / 2.0f, g_oApplicationMain.DispSizeH() - (h / 2.0f), 0.0f),
+			Vector3(1920.0f / 2.0f, 1080.0f - (h / 2.0f), 0.0f),
 			Vector3(445, 324, 0),
 			Vector3(1505, 540, 0),
 		};
