@@ -106,9 +106,17 @@ bool MeatBox::_CheckMove(Vector3 vMove)
 						else {
 							// エフェクトを生成
 							CreateEffect(Effect::TYPE::EXPLOSION, vNextPos, _mode);
+
+							// SE再生
+							global._soundServer->Play("se_kill_01");
+
 							// 敵を削除
 							obj->Destroy();
+
+							// キルカウントをチェック
 							_mode->CheckKillCnt(1);
+
+							// 画面振動
 							Animation::SetVibration(Vector3(0.05f, 0.05f, 0));
 						}
 					}
@@ -230,6 +238,12 @@ void MeatBox::Move(Vector3 vMove)
 	_vPos = _vOldPos;
 
 	_frameCount = 0;
+
+	if (_pStickyGroup == nullptr)
+	{
+		// SE再生
+		global._soundServer->Play("se_attack_01");
+	}
 
 	// _CheckMove()内で予約したStickyへの追加を行う
 	if (_pSticky != nullptr)

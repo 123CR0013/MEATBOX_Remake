@@ -68,8 +68,19 @@ bool StickyGroup::CheckMove(Vector3 vMove)
 
 			pEnemy->Destroy();
 		}
+		// キルカウントをチェック
 		_mode->CheckKillCnt(num);
 
+		// SE再生
+		global._soundServer->Play("se_sticky_01"); // 移動
+
+		// 敵を撃破していたら
+		if (num > 0) {
+			// SE再生
+			global._soundServer->Play("se_kill_01"); // 撃破
+		}
+
+		// 画面振動
 		std::array<float, 4> vibRange = { 0.0f, 0.05f, 0.1f, 0.15f };
 		float vib = vibRange.at(MyMath::Clamp(0, 3, num ));
 		Animation::SetVibration(Vector3(vib, vib, 0));
