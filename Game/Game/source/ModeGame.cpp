@@ -29,6 +29,7 @@ ModeGame::ModeGame(int worldID, int stageID)
 {
 	_worldID = worldID;
 	_stageID = stageID;
+	_bGameOver = false;
 	_mapData = nullptr;
 	_player = nullptr;
 	_enMoveCnt = 0;
@@ -42,6 +43,7 @@ ModeGame::ModeGame(int worldID, int stageID)
 bool ModeGame::Initialize() {
 	if (!base::Initialize()) { return false; }
 
+	_bGameOver = false;
 	_mapData = nullptr;
 	_player = nullptr;
 	_enMoveCnt = 0;
@@ -216,6 +218,7 @@ void ModeGame::CheckKillCnt(int killCnt)
 
 void ModeGame::SetGameOver()
 {
+	_bGameOver = true;
 	ModeServer::GetInstance()->Del(this);
 	ModeServer::GetInstance()->Add(NEW ModeGameOver(), 1, "ModeGameOver");
 }
