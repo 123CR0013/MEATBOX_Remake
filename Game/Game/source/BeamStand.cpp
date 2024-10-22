@@ -104,8 +104,11 @@ void BeamStand::SyncBeamBodyAnim()
 		// •Ç‚É“–‚½‚Á‚½ê‡
 		if(_bWallExist)
 		{
-			_pBBEnd->GetAnimationClass(0)->SetAnimIndex(2);
-			_pBBEnd->GetAnimationClass(1)->SetAnimIndex(2);
+			if (_pBBEnd != nullptr)
+			{
+				_pBBEnd->GetAnimationClass(0)->SetAnimIndex(2);
+				_pBBEnd->GetAnimationClass(1)->SetAnimIndex(2);
+			}
 
 			// Orb‚Í”ñ•\Ž¦
 			GetAnimationClass(3)->SetUse(false);
@@ -113,8 +116,11 @@ void BeamStand::SyncBeamBodyAnim()
 		}
 		else
 		{
-			_pBBEnd->GetAnimationClass(0)->SetAnimIndex(1);
-			_pBBEnd->GetAnimationClass(1)->SetAnimIndex(1);
+			if (_pBBEnd != nullptr)
+			{
+				_pBBEnd->GetAnimationClass(0)->SetAnimIndex(1);
+				_pBBEnd->GetAnimationClass(1)->SetAnimIndex(1);
+			}
 
 			// Orb‚Í•\Ž¦
 			GetAnimationClass(3)->SetUse(true);
