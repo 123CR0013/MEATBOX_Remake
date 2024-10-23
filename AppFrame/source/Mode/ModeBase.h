@@ -52,6 +52,8 @@ public: // ModeGame—p
 	virtual void SetGameOver() {}
 	virtual void LoadAnimData(class Animation* animationClass, std::string name) {}
 	virtual void CheckKillCnt(int killCnt) {}
+	virtual bool GetPause() { return false; }
+	virtual void SetPause(bool bPause) {}
 
 private:
 	friend	ModeServer;

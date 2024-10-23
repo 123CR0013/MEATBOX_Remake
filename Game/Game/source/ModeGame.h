@@ -40,6 +40,9 @@ public:
 	bool GetGameOver() override { return _bGameOver; }
 	void SetGameOver() override;
 
+	bool GetPause() override { return _bPause; }
+	void SetPause(bool bPause) override { _bPause = bPause; }
+
 protected:
 	int _worldID, _stageID;
 
