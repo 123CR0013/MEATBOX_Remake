@@ -23,6 +23,7 @@ public:
 		STICKY,
 		STICKYGROUP,
 		EFFECT,
+		TUTORIAL,
 	};
 
 	GameObject(ModeBase* mode);

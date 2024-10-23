@@ -169,6 +169,11 @@ bool MeatBox::_CheckMove(Vector3 vMove)
 					_pSticky = static_cast<Sticky*>(obj);
 					break; // End case GameObject::TYPE::STICKY
 
+					// 移動先のオブジェクトがチュートリアルの場合
+				case GameObject::TYPE::TUTORIAL:
+					bCanMove = true;
+					break; // End case GameObject::TYPE::TUTORIAL
+
 				} // End switch (obj->GetType())
 			}
 			// 移動先にオブジェクトがない場合

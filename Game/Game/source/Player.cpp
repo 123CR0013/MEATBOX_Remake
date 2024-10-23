@@ -142,6 +142,9 @@ void Player::MoveProcess()
 				case GameObject::TYPE::STICKY:
 					bSuccess = true;
 					break;
+				case GameObject::TYPE::TUTORIAL:
+					bSuccess = true;
+					break;
 				}
 			}
 			// 移動先にオブジェクトがない場合

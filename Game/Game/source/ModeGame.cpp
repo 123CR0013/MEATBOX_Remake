@@ -18,6 +18,8 @@
 
 #include "Effect.h"
 
+#include "TutorialObject.h"
+
 #include "Animation.h"
 
 #include <fstream>
@@ -404,6 +406,21 @@ void ModeGame::CreateGameObjects(nlohmann::json json)
 			{
 				CreateSticky(pos);
 			}
+			else if (name == "Tutorial")
+			{
+				int id = -1;
+
+				nlohmann::json properties = object.at("properties");
+				for (auto& prop : properties)
+				{
+					if (prop.at("name") == "InfoNum") {
+						id = prop.at("value");
+						break;
+					}
+				}
+
+				CreateTutorial(pos, id);
+			}
 		}
 	}
 }
@@ -551,6 +568,19 @@ void ModeGame::CreateSticky(Vector3 vPos)
 
 	_objects.push_back(sticky);
 	_objects.push_back(stickyGroup);
+}
+
+void ModeGame::CreateTutorial(Vector3 vPos, int id)
+{
+	TutorialObject* tutorial = new TutorialObject(this, id);
+	tutorial->SetPos(vPos);
+
+	Animation* anim = tutorial->AddAnimationClass();
+	anim->SetDrawOffset(Vector3(0, 0.0f, 0));
+	anim->SetDrawOrder(0);
+	LoadAnimData(anim, "Tutorial");
+
+	_objects.push_back(tutorial);
 }
 
 // •`‰æ‡˜‚ğƒ\[ƒg

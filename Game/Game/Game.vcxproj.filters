@@ -86,6 +86,9 @@
     <ClCompile Include="source\Number.cpp">
       <Filter>Mode\Game</Filter>
     </ClCompile>
+    <ClCompile Include="source\TutorialObject.cpp">
+      <Filter>Object\Tutorial</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ApplicationMain.h" />
@@ -183,6 +186,9 @@
     <ClInclude Include="source\Number.h">
       <Filter>Mode\Game</Filter>
     </ClInclude>
+    <ClInclude Include="source\TutorialObject.h">
+      <Filter>Object\Tutorial</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ApplicationMain.h">
@@ -252,6 +258,9 @@
     </Filter>
     <Filter Include="Mode\Result">
       <UniqueIdentifier>{194acdeb-bd7d-4659-91ee-dc4d00da98fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Tutorial">
+      <UniqueIdentifier>{7797e067-63d4-4dd8-8b47-fad62f003c21}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
