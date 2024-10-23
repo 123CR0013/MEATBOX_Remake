@@ -226,8 +226,8 @@ void ModeGame::CheckKillCnt(int killCnt)
 void ModeGame::SetGameOver()
 {
 	_bGameOver = true;
-	ModeServer::GetInstance()->Del(this);
-	ModeServer::GetInstance()->Add(NEW ModeGameOver(), 1, "ModeGameOver");
+	_bPause = true;
+	ModeServer::GetInstance()->Add(NEW ModeGameOver(this), 2, "ModeGameOver");
 }
 
 void ModeGame::CheckObjectsToAdd()

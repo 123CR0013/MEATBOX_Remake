@@ -1,6 +1,12 @@
 #include "ModeGameOver.h"
 #include "ModeGame.h"
 
+ModeGameOver::ModeGameOver(ModeBase* nextMode)
+{
+	_bgGraphHandle = -1;
+	_nextMode = nextMode;
+}
+
 bool ModeGameOver::Initialize()
 {
     _bgGraphHandle = ResourceServer::LoadGraph("res/UI/GameOver/GameOver.png");
@@ -16,7 +22,9 @@ bool ModeGameOver::Process()
 {
     if(global._trg & PAD_INPUT_1) {
 		ModeServer::GetInstance()->Del(this);
-        ModeServer::GetInstance()->Add(NEW ModeGame(0,0), 1, "ModeGame");
+
+		_nextMode->ResetStage();
+		_nextMode->SetPause(false);
 	}
 
     return true;

@@ -6,6 +6,7 @@ class ModeGameOver : public ModeBase
 {
 	typedef ModeBase base;
 public:
+	ModeGameOver(ModeBase* nextMode);
 	virtual bool Initialize();
 	virtual bool Terminate();
 	virtual bool Process();
@@ -13,4 +14,5 @@ public:
 
 protected:
 	int _bgGraphHandle;
+	ModeBase* _nextMode;
 };
