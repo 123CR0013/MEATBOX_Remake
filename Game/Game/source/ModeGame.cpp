@@ -62,7 +62,6 @@ bool ModeGame::Initialize() {
 
 	_bResult = false;
 
-	_bPause = false;
 
 	return true;
 }
