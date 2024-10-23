@@ -32,6 +32,7 @@ public: // ModeGame用
 	virtual int GetWorldID() { return 0; }
 	virtual int GetStageID() { return 0; }
 	virtual void ChangeStage(int worldID, int stageID) {}
+	virtual void ResetStage() {}
 
 	// リザルト画面に渡すデータ
 	struct ResultData
