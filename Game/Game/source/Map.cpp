@@ -93,7 +93,22 @@ void Map::DrawDebug()
 			"STICKY",
 			"STICKYGROUP"
 		};
-		DrawFormatString(object->GetPos().x * CHIP_W, object->GetPos().y * CHIP_H, COLOR_RED, typeTbl[static_cast<int>(type)].c_str());
+
+		//‰æ–ÊƒTƒCƒY‚É‡‚í‚¹‚é
+		{
+			auto inst = ApplicationBase::GetInstance();
+
+			float scaleW = inst->DispSizeW() / 1920.f;
+			float scaleH = inst->DispSizeH() / 1080.f;
+
+			Matrix3 m = Matrix3::CreateScale(scaleW, scaleH);
+
+			Vector2 drawPos(object->GetPos().x * CHIP_W, object->GetPos().y * CHIP_H);
+			drawPos = drawPos * m;
+
+			DrawFormatString(drawPos.x, drawPos.y, COLOR_RED, typeTbl[static_cast<int>(type)].c_str());
+		}
+
 	}
 }
 

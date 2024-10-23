@@ -1,5 +1,6 @@
 #include "ApplicationBase.h"
 #include"../Mode/ModeTimeTable.h"
+#include"../ScriptEngine/StringUtil.h"
 
 ApplicationBase	*ApplicationBase::_lpInstance = NULL;
 
@@ -73,6 +74,8 @@ bool ApplicationBase::Initialize(HINSTANCE hInstance) {
 bool ApplicationBase::Terminate() {
 
 	delete _serverMode;
+
+	StringUtility::Delete();
 
 	// EffekseerÇèIóπÇ∑ÇÈÅB
 	Effkseer_End();

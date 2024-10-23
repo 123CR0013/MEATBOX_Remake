@@ -5,7 +5,7 @@
 class ResultScreen final :public UIScreen
 {
 public:
-	ResultScreen(class ModeUI* owner);
+	ResultScreen(class ModeGame* owner);
 	~ResultScreen();
 
 	void Update()override;
@@ -26,8 +26,10 @@ private:
 	Graph* _gaugeBar;
 	Clip* _gaugeClip;
 
+	Graph* _rank;
+
 	Graph* _subFrame;				//‘I‘ðŽˆ‚Ì”wŒi
-	std::array<Graph*, 3>_buttons;
+	std::array<Button*, 3>_buttons;
 	UINT _selectNum;
 
 	UINT _frameCount;
@@ -39,8 +41,15 @@ private:
 		kStepCount,
 		kKillCount,
 		kGauge,
+		kRank,
 		kChoice
 	}_step;
 
+	const ModeBase::ResultData _resultData;
+	const int _worldID;
+	const int _stageID;
+	int _worldIDNext;
+	int _stageIDNext;
 
+	class ModeGame* _game;
 };

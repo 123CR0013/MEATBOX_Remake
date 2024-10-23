@@ -34,6 +34,8 @@ public:
 
 	static int CompareMemNoCaseLength(const char* p1, const char* p2, int length);
 	static int CompareMemStrNoCase(const char* mem, std::string str);
+
+	static void Delete() { if (_cb)delete _cb; _cb = nullptr; }
 private:
 	static StringUtilityCodeBase* _cb;
 

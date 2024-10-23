@@ -116,6 +116,21 @@ SettingScreen::SettingScreen(MoveUI* carsol,ModeUI* owner)
 
 	CreateScaleAnim("plus", 1.f,0.f, 5);
 	CreateScaleAnim("minus", -1.f, 0.f, 5);
+
+	//‘€ìà–¾UI
+	{
+		_tutorialArrow = NEW Graph(this);
+		_tutorialArrow->Load("res/UI/ui_tutorial_arrow_01.png");
+		_tutorialArrow->SetLeftLocation(30.f, 997.f);
+
+		_tutorialSelect = NEW Graph(this);
+		_tutorialSelect->Load("res/UI/ui_tutorial_select_01.png");
+		_tutorialSelect->SetLeftLocation(184.f, 997.f);
+
+		_tutorialReturn = NEW Graph(this);
+		_tutorialReturn->Load("res/UI/ui_tutorial_return_01.png");
+		_tutorialReturn->SetLeftLocation(993.f, 997.f);
+	}
 }
 
 SettingScreen::~SettingScreen()
@@ -140,23 +155,34 @@ void SettingScreen::Update()
 
 	if (global._trg & PAD_INPUT_UP)
 	{
-		_buttons[_buttonNum]->ReverseAnimation();
-		_buttonNum = _buttonNum == 0 ? 0 : _buttonNum - 1;
-		_buttons[_buttonNum]->PlayAnimation("Lean");
+		if (_buttonNum > 0)
+		{
 
-		_carsol->SetFrom(_carsol->GetLocation());
-		_carsol->SetTo(_buttons[_buttonNum]->GetWorldLocation()* _inMatCarsolParent);
-		_carsol->SetFrameCount(0.f);
+			_buttons[_buttonNum]->ReverseAnimation();
+			_buttonNum--;
+			_buttons[_buttonNum]->PlayAnimation("Lean");
+
+			_carsol->SetFrom(_carsol->GetLocation());
+			_carsol->SetTo(_buttons[_buttonNum]->GetWorldLocation() * _inMatCarsolParent);
+			_carsol->SetFrameCount(0.f);
+
+			global._soundServer->Play("SE_01");
+		}
 	}
 	if (global._trg & PAD_INPUT_DOWN)
 	{
-		_buttons[_buttonNum]->ReverseAnimation();
-		_buttonNum = _buttonNum == _buttons.size() - 1 ? _buttons.size() - 1 : _buttonNum + 1;
-		_buttons[_buttonNum]->PlayAnimation("Lean");
+		if (_buttonNum < _buttons.size() - 1)
+		{
+			_buttons[_buttonNum]->ReverseAnimation();
+			_buttonNum++;
+			_buttons[_buttonNum]->PlayAnimation("Lean");
 
-		_carsol->SetFrom(_carsol->GetLocation());
-		_carsol->SetTo(_buttons[_buttonNum]->GetWorldLocation()* _inMatCarsolParent);
-		_carsol->SetFrameCount(0.f);
+			_carsol->SetFrom(_carsol->GetLocation());
+			_carsol->SetTo(_buttons[_buttonNum]->GetWorldLocation() * _inMatCarsolParent);
+			_carsol->SetFrameCount(0.f);
+
+			global._soundServer->Play("SE_01");
+		}
 	}
 
 	if (global._trg & PAD_INPUT_1) {
@@ -188,14 +214,30 @@ void SettingScreen::Update()
 		default:
 			break;
 		}
+		global._soundServer->Play("SE_04");
+		auto exe = [=]()mutable
+		{
+			_tutorialArrow->SetAlpha(0.f);
+			_tutorialSelect->SetAlpha(0.f);
+			_tutorialReturn->SetAlpha(0.f);
+		};
+
+		ModeTimeTable::Add(exe, 1);
+	}
+	else
+	{
+		_tutorialArrow->SetAlpha(1.f);
+		_tutorialSelect->SetAlpha(1.f);
+		_tutorialReturn->SetAlpha(1.f);
 	}
 
-	if (global._trg & PAD_INPUT_3)
+	if (global._trg & PAD_INPUT_2)
 	{
 		_carsol->SetFrom(_carsol->GetLocation());
 		_carsol->SetFrameCount(0.f);
 		_carsol->SetTo(_backPos);
 		_backGround->ReverseAnimation();
 		_isFinish = true;
+		global._soundServer->Play("SE_05");
 	}
 }

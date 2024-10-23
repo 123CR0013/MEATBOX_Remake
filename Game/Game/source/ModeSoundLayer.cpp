@@ -45,23 +45,13 @@ bool ModeSoundLayer::Initialize() {
 	global._soundServer->Add("BGM_06", NEW SoundItemBGM("res/Sound/bgm/lightsout_01.wav"));
 	global._soundServer->Add("BGM_07", NEW SoundItemBGM("res/Sound/bgm/gameover_01.wav"));
 	global._soundServer->Add("BGM_08", NEW SoundItemBGM("res/Sound/bgm/result_01.wav"));
-	global._soundServer->Add("SE_01", NEW SoundItemSE("res/Sound/se/footsteps_01.wav"));
-	global._soundServer->Add("SE_02", NEW SoundItemSE("res/Sound/se/knifeattack_01.wav"));
-	global._soundServer->Add("SE_03", NEW SoundItemSE("res/Sound/se/knifehit_01.wav"));
-	global._soundServer->Add("SE_04", NEW SoundItemSE("res/Sound/se/falldown_01.wav"));
-	global._soundServer->Add("SE_05", NEW SoundItemSE("res/Sound/se/detectionrise_01.wav"));
-	global._soundServer->Add("SE_06", NEW SoundItemSE("res/Sound/se/gunshot_01.wav"));
-	global._soundServer->Add("SE_07", NEW SoundItemSE("res/Sound/se/siren_01.wav"));
-	global._soundServer->Add("SE_08", NEW SoundItemSE("res/Sound/se/decoy_01.wav"));
-	global._soundServer->Add("SE_09", NEW SoundItemSE("res/Sound/se/lightsoutstart_01.wav"));
-	global._soundServer->Add("SE_10", NEW SoundItemSE("res/Sound/se/lightsoutfinish_01.wav"));
-	global._soundServer->Add("SE_11", NEW SoundItemSE("res/Sound/se/selection_01.wav"));
-	global._soundServer->Add("SE_12", NEW SoundItemSE("res/Sound/se/decision_01.wav"));
-	global._soundServer->Add("SE_13", NEW SoundItemSE("res/Sound/se/confirmation_01.wav"));
-	global._soundServer->Add("SE_14", NEW SoundItemSE("res/Sound/se/pause_01.wav"));
-	global._soundServer->Add("SE_15", NEW SoundItemSE("res/Sound/se/timer_01.wav"));
-	global._soundServer->Add("SE_27", NEW SoundItemSE("res/Sound/se/owldeath_01.wav"));
-	global._soundServer->Add("SE_28", NEW SoundItemSE("res/Sound/se/energy_01.wav"));
+	global._soundServer->Add("SE_01", NEW SoundItemSE("res/Sound/se/se_select_01.mp3"));
+	global._soundServer->Add("SE_02", NEW SoundItemSE("res/Sound/se/se_count_01.mp3"));
+	global._soundServer->Add("SE_03", NEW SoundItemSE("res/Sound/se/se_decision_01.mp3"));
+	global._soundServer->Add("SE_04", NEW SoundItemSE("res/Sound/se/se_display_01.mp3"));
+	global._soundServer->Add("SE_05", NEW SoundItemSE("res/Sound/se/se_hidden_01.mp3"));
+	global._soundServer->Add("SE_06", NEW SoundItemSE("res/Sound/se/se_rank_01.mp3"));
+
 
 	// “Ç‚İ‚İŠÔ
 	_loadTimeMs = GetNowCount() - timems;

@@ -83,7 +83,7 @@ private:
 
 public:
 	void SetText(const std::string& text) { _text = text; }
-	void SetDrawType(const StringDrawType type) { _drawType = type; }
+	void SetTextDrawType(const StringDrawType type) { _drawType = type; }
 	void SetColor(unsigned char r, unsigned char g, unsigned char b) { _color = GetColor(r, g, b); }
 	void SetTextSize(float textSize) { _textSize = textSize; }
 

@@ -14,10 +14,10 @@ private:
 	std::array<class StageSelectButton*,5>_selectButtons;
 
 	//ステージ種類の配列番号
-	unsigned int _stageTypeNum;
+	unsigned int _worldID;
 
 	//ステージの配列番号
-	unsigned int _stageNum;
+	unsigned int _stageID;
 
 	//UIのスライドする際のイージングで使用
 	Vector2 _pos;
@@ -38,6 +38,12 @@ private:
 	Empty* _containerParent;
 	Empty* _terminalParent;
 	Empty* _armParent;
+
+	Graph* _tutorialArrow;
+	Graph* _tutorialSelect;
+	Graph* _tutorialMenu;
+
+	Box* _fadeBox;
 
 	char _moveArrowX;
 	bool _isSelect;

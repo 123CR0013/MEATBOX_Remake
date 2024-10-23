@@ -28,6 +28,20 @@ MainScreen::MainScreen(ModeGame* owner)
 	_stepCounter->SetLocation(225.f, 860.f);
 	_stepCounter->SetNumber(_stepCount);
 
+	//‘€ìà–¾UI
+	{
+		_tutorialMove = NEW Graph(this);
+		_tutorialMove->Load("res/UI/ui_tutorial_move_01.png");
+		_tutorialMove->SetLeftLocation(30.f, 15.f);
+
+		_tutorialRetry = NEW Graph(this);
+		_tutorialRetry->Load("res/UI/ui_tutorial_retry_01.png");
+		_tutorialRetry->SetLeftLocation(1558.f, 15.f);
+
+		_tutorialMenu = NEW Graph(this);
+		_tutorialMenu->Load("res/UI/ui_tutorial_menu_01.png");
+		_tutorialMenu->SetLeftLocation(746.f, 997.f);
+	}
 }
 
 MainScreen::~MainScreen(){}

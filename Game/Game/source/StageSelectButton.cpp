@@ -38,7 +38,7 @@ StageSelectButton::StageSelectButton(UIScreen* owner,size_t stageNum)
 		};
 		for (size_t i = 0; i < BUTTON_NUM; ++i)
 		{
-			_buttons[i] = NEW Graph(GetOwner(), 2000);
+			_buttons[i] = NEW Graph(GetOwner(), 501);
 			_buttons[i]->Load("res/UI/Select/Stage/ui_stage_folder_01.png");
 			_buttons[i]->RegistParent(_monitor);
 			_buttons[i]->SetLocation(Vector2(pos[i].x + 1920.f * static_cast<float>(_stageNum), pos[i].y) * monitorInMat);
@@ -57,14 +57,7 @@ StageSelectButton::StageSelectButton(UIScreen* owner,size_t stageNum)
 		{
 			_stageDatas[i] = data["Button"][i].GetBool();
 
-			//if (_stageDatas[i])
-			//{
-			//	_buttons[i]->SetColor(0, 255, 255);
-			//}
-			//else
-			//{
-			//	_buttons[i]->SetColor(255, 255, 0);
-			//}
+			if (!_stageDatas[i])_buttons[i]->Load("res/UI/Select/Stage/ui_stage_folder_02.png");
 		}
 	}
 	else

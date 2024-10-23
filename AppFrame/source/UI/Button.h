@@ -7,6 +7,7 @@ public:
 	Button(class UIScreen* owner,unsigned int order= 100)
 		:UI(owner,order)
 		, _color(GetColor(125, 125, 125))
+		,_exe(nullptr)
 	{
 
 	}
@@ -35,7 +36,7 @@ public:
 	}
 
 	void SetExe(std::function<void()>exe) { _exe = exe; }
-	void Push() { _exe(); }
+	void Push() { if(_exe)_exe(); }
 private:
 	unsigned int _color;
 

@@ -2,17 +2,24 @@
 #include"ModeGame.h"
 #include"ModeSelect.h"
 #include"Number.h"
+#include"ClearScreen.h"
 
 constexpr USHORT NEXT = 0;
 constexpr USHORT RETRY = 1;
 constexpr USHORT BACK = 2;
 
-ResultScreen::ResultScreen(ModeUI* owner)
+ResultScreen::ResultScreen(ModeGame* owner)
 	:UIScreen(owner)
 	,_stepCount(0)
 	,_killCount(0)
 	,_frameCount(0)
 	,_step(Step::kMainFrameAnimation)
+	, _resultData(owner->GetResultData())
+	, _worldID(owner->GetWorldID())
+	, _stageID(owner->GetStageID())
+	,_worldIDNext(-1)
+	,_stageIDNext(-1)
+	,_game(owner)
 {
 
 	_mainFrame = NEW Graph(this);
@@ -73,13 +80,18 @@ ResultScreen::ResultScreen(ModeUI* owner)
 		DrawBox(0, 0, 1920, 1080, GetColor(0, 255, 0), TRUE);
 
 		//切り抜き
-		GraphBlendBlt(screenHandle, _gaugeFrame->GetHandle(), blendHandle, 255,
+		int gaugeFrame = LoadGraph("res/UI/Result/ui_result_resultgauge_01.png");
+
+		//切り抜き
+		GraphBlendBlt(screenHandle, gaugeFrame, blendHandle, 255,
 			DX_GRAPH_BLEND_RGBA_SELECT_MIX,
 			DX_RGBA_SELECT_SRC_R,
 			DX_RGBA_SELECT_SRC_G,
 			DX_RGBA_SELECT_SRC_B,
 			DX_RGBA_SELECT_BLEND_A
 		);
+
+		DeleteGraph(gaugeFrame);
 
 		// 描画先を裏にする
 		SetDrawScreen(DX_SCREEN_BACK);
@@ -106,10 +118,12 @@ ResultScreen::ResultScreen(ModeUI* owner)
 		_gaugeClip->RegistParent(_mainFrame);
 		_gaugeFrame->SetAlpha(0.f);
 
-		Vector2 pos(-100.f, 270.f);
+		Vector2 pos(795.f, 779.f);
 		pos = pos - _gaugeFrame->GetSize() / 2.f;
+		pos = pos * inMatMainFrame;
 		_gaugeFrame->SetLocation(pos);
 		_gaugeClip->SetLocation(pos);
+		auto p = _gaugeFrame->GetWorldLocation();
 	}
 
 	CreateLocationXAnim("MainFrameSlide", -410.f, 20, Easing::OUT_QUART);
@@ -142,11 +156,15 @@ ResultScreen::ResultScreen(ModeUI* owner)
 
 		for (size_t i = 0; i < _buttons.size(); ++i)
 		{
-			_buttons[i] = NEW Graph(this);
-			_buttons[i]->Load(fileName[i]);
+			_buttons[i] = NEW Button(this);
 			_buttons[i]->SetLocation(pos[i] * inMatSubFrame);
 			_buttons[i]->SetAlpha(0.f);
 			_buttons[i]->RegistParent(_subFrame);
+
+			Graph* graph = NEW Graph(this);
+			graph->Load(fileName[i]);
+			graph->SetAlpha(0.f);
+			graph->RegistParent(_buttons[i]);
 		}
 
 		_selectNum = 0;
@@ -155,6 +173,63 @@ ResultScreen::ResultScreen(ModeUI* owner)
 
 		CreateScaleAnim("ButtonScale", 0.1f, 0.1f, 5);
 	}
+
+	{
+		_rank = NEW Graph(this,1000);
+		_rank->Load("res/UI/Result/ui_result_rank_01.png");
+		_rank->SetAlpha(0.f);
+		_rank->SetScale(2.f, 2.f);
+		_rank->SetLocation(Vector2(1287.f, 812.f)* inMatMainFrame);
+		_rank->RegistParent(_mainFrame);
+
+		CreateScaleAnim("Rank", -1.f, -1.f, 60);
+		CreateOpacityAnim("Rank", 1.f, 60);
+	}
+
+	//ボタン処理
+	{
+		ZFile ifs("data/nextstagedata_" + std::to_string(_worldID) + "_" + std::to_string(_stageID) + ".amg");
+		if (ifs.Success())
+		{
+			CSVFile::Cell _cellData;
+			CSVFile::Parse(ifs.DataStr(), CSVFile::Type::LINE, _cellData);
+
+
+			if (_cellData["Command"][0].GetStr() == "Next")
+			{
+				_worldIDNext = _cellData["NextStage"][0].GetInt();
+				_stageIDNext = _cellData["NextStage"][1].GetInt();
+
+				_buttons[NEXT]->SetExe(
+					[=]()mutable {
+						_game->ChangeStage(_worldIDNext, _stageIDNext);
+					}
+				);
+			}
+			else if(_cellData["Command"][0].GetStr() == "End")
+			{
+				_buttons[NEXT]->SetExe(
+					[=]()mutable {
+						NEW ClearScreen(GetOwner());
+					}
+				);
+			}
+		}
+
+		_buttons[RETRY]->SetExe(
+			[=]()mutable {
+				_game->ChangeStage(_worldID, _stageID);
+			}
+		);
+
+		_buttons[BACK]->SetExe(
+			[=]()mutable {
+				ModeServer::GetInstance()->Del(GetOwner());
+				ModeServer::GetInstance()->Add(NEW ModeSelect(), 1, "ModeSelect");
+			}
+		);
+	}
+
 }
 
 ResultScreen::~ResultScreen()
@@ -186,9 +261,10 @@ void ResultScreen::Update()
 
 	case Step::kStepCount:
 		
-		_stepCounter->SetNumber(static_cast<UINT>(Easing::Linear(static_cast<float>(++_frameCount), 0.f, 102.f, 60.f)));
+		_stepCounter->SetNumber(_stepCounter->GetNumber() + 1);
+		if(_frameCount++ % 5 == 0)global._soundServer->Play("SE_02");
 
-		if (_frameCount == 60)
+		if (_stepCounter->GetNumber() == 102)
 		{
 			//20フレームは何もしない
 			_step = Step::kNone;	
@@ -207,9 +283,10 @@ void ResultScreen::Update()
 
 	case Step::kKillCount:
 
-		_killCounter->SetNumber(static_cast<UINT>(Easing::Linear(static_cast<float>(++_frameCount), 0.f, 102.f, 60.f)));
+		_killCounter->SetNumber(_killCounter->GetNumber() + 1);
+		if (_frameCount++ % 5 == 0)global._soundServer->Play("SE_02");
 
-		if (_frameCount == 60)
+		if (_resultData.killCntMax == _killCounter->GetNumber())
 		{
 			//20フレームは何もしない
 			_step = Step::kNone;
@@ -228,9 +305,25 @@ void ResultScreen::Update()
 
 		if(_gaugeClip->IsFinishAnimation())
 			_gaugeClip->SetWidth(_gaugeBar->GetWidth() * Easing::Linear(static_cast<float>(++_frameCount), 0.f, 1.f, 60.f));
-
+			if(_frameCount % 5 == 0)global._soundServer->Play("SE_06");
 
 		if (_frameCount == 60)
+		{
+			_step = Step::kNone;
+
+			_rank->PlayAnimation("Rank");
+
+			std::function<void()>exe = [=]()mutable {_step = Step::kRank; };
+
+			ModeTimeTable::Add(exe, 20);
+
+			_frameCount = 0;
+		}
+
+		break;
+	case Step::kRank:
+	{
+		if (_frameCount++ == 60)
 		{
 			_step = Step::kNone;
 
@@ -239,51 +332,41 @@ void ResultScreen::Update()
 
 			for (size_t i = 0; i < _buttons.size(); ++i)
 			{
-				_buttons[i]->PlayAnimation("ButtonAlpha");
+				if (_buttons[i]->GetChildren().size() > 0)_buttons[i]->GetChildren().front()->PlayAnimation("ButtonAlpha");
 			}
 
-			std::function<void()>exe = [=]()mutable {_step = Step::kChoice; _buttons.front()->PlayAnimation("ButtonScale"); };
+			std::function<void()>exe = [=]()mutable {_step = Step::kChoice; if (_buttons.front()->GetChildren().size() > 0)_buttons.front()->GetChildren().front()->PlayAnimation("ButtonScale"); };
 
 			ModeTimeTable::Add(exe, 20);
 
 			_frameCount = 0;
 		}
 		break;
+	}
 	case Step::kChoice:
 
 		if (global._trg & PAD_INPUT_UP && _selectNum > 0)
 		{
-			_buttons[_selectNum]->ReverseAnimation();
+			if (_buttons[_selectNum]->GetChildren().size() > 0)_buttons[_selectNum]->GetChildren().front()->ReverseAnimation();
 			_selectNum = _selectNum - 1;
-			_buttons[_selectNum]->PlayAnimation("ButtonScale");
+			if (_buttons[_selectNum]->GetChildren().size() > 0)_buttons[_selectNum]->GetChildren().front()->PlayAnimation("ButtonScale");
+
+			global._soundServer->Play("SE_01");
 		}
 
 		if (global._trg & PAD_INPUT_DOWN && _selectNum < _buttons.size() - 1)
 		{
-			_buttons[_selectNum]->ReverseAnimation();
+			if (_buttons[_selectNum]->GetChildren().size() > 0)_buttons[_selectNum]->GetChildren().front()->ReverseAnimation();
 			_selectNum = _selectNum + 1;
-			_buttons[_selectNum]->PlayAnimation("ButtonScale");
+			if (_buttons[_selectNum]->GetChildren().size() > 0)_buttons[_selectNum]->GetChildren().front()->PlayAnimation("ButtonScale");
+			global._soundServer->Play("SE_01");
 		}
 
-		if (global._trg & PAD_INPUT_3)
+		if (global._trg & PAD_INPUT_1)
 		{
-			switch (_selectNum)
-			{
-				case NEXT:
-				{
-					break;
-				}
-				case RETRY:
-				{
-					break;
-				}
-				case BACK:
-				{
-					ModeServer::GetInstance()->Del(GetOwner());
-					ModeServer::GetInstance()->Add(NEW ModeSelect(),1,"ModeSelect");
-					break;
-				}
-			}
+			_buttons[_selectNum]->Push();
+
+			global._soundServer->Play("SE_03");
 		}
 
 		break;
@@ -294,6 +377,6 @@ void ResultScreen::Update()
 
 void ResultScreen::Draw()
 {
-
 	UIScreen::Draw();
+
 }

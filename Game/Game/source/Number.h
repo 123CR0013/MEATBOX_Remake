@@ -21,6 +21,8 @@ public:
 	void SetNumberHeight(float height) { _numberHeight = height; }
 	void SetFormat(Format format) { _format = format; }
 
+	UINT GetNumber()const { return _number; }
+
 	std::array<Vector2, 4>GetLeftAligVertexes();
 	std::array<Vector2, 4>GetRightAligVertexes();
 

@@ -1,6 +1,6 @@
 #include"ModeSelect.h"
 #include"StageSelectScreen.h"
-#include"ResultScreen.h"
+#include"TitleScreen.h"
 
 ModeSelect::ModeSelect() 
 {
@@ -14,8 +14,6 @@ bool ModeSelect::Initialize()
 {
 	ModeUI::Initialize();
 
-	global._soundServer->Play("BGM_01");
-
-	NEW StageSelectScreen(this);
+	NEW TitleScreen(this);
 	return true;
 }

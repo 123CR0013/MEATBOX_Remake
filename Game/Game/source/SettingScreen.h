@@ -24,5 +24,10 @@ private:
 	Matrix3 _inMatCarsolParent;	//カーソルの親オブジェクトの位置の逆行列	
 	const Vector2 _backPos;		//設定画面が終了した際にカーソルが戻る座標
 
+	//操作説明UI
+	Graph* _tutorialArrow;
+	Graph* _tutorialSelect;
+	Graph* _tutorialReturn;
+
 	bool _isFinish;				//設定画面の終了フラグ
 };

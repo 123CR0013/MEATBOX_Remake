@@ -16,5 +16,10 @@ private:
 
 	class MoveUI* _carsol;
 
-	bool _isFinish;
+	//操作説明UI
+	Graph* _tutorialArrow;
+	Graph* _tutorialSelect;
+	Graph* _tutorialReturn;
+
+	bool _isFinish;	//このスクリーンを終了するかのフラグ
 };

@@ -18,6 +18,8 @@ bool ModeUI::Initialize()
 
 bool ModeUI::Terminate() {
 
+	ModeBase::Terminate();
+
 	for (auto&& screen : _UIScreens)
 	{
 		delete screen;

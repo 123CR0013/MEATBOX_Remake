@@ -41,6 +41,8 @@ bool ModeTimeTable::Process()
 		++iter;
 	}
 	++_frameCount;
+
+	return true;
 }
 
 void ModeTimeTable::Add(std::function<void()>func, UINT afterFrame)

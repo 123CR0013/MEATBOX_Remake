@@ -86,6 +86,12 @@
     <ClCompile Include="source\Number.cpp">
       <Filter>Mode\Game</Filter>
     </ClCompile>
+    <ClCompile Include="source\ClearScreen.cpp">
+      <Filter>Mode\Clear</Filter>
+    </ClCompile>
+    <ClCompile Include="source\TitleScreen.cpp">
+      <Filter>Mode\Title</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ApplicationMain.h" />
@@ -183,6 +189,12 @@
     <ClInclude Include="source\Number.h">
       <Filter>Mode\Game</Filter>
     </ClInclude>
+    <ClInclude Include="source\ClearScreen.h">
+      <Filter>Mode\Clear</Filter>
+    </ClInclude>
+    <ClInclude Include="source\TitleScreen.h">
+      <Filter>Mode\Title</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ApplicationMain.h">
@@ -252,6 +264,12 @@
     </Filter>
     <Filter Include="Mode\Result">
       <UniqueIdentifier>{194acdeb-bd7d-4659-91ee-dc4d00da98fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mode\Clear">
+      <UniqueIdentifier>{88107635-e37b-42ba-8161-f88c782cb924}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mode\Title">
+      <UniqueIdentifier>{bc4dc1cd-fe22-4f71-b36d-f8eb12a45e54}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

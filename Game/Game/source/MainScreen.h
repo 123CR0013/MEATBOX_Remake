@@ -19,6 +19,10 @@ private:
 	UINT _stepCount;
 	UCHAR _stageNum;
 
+	//操作説明UI
+	Graph* _tutorialMove;
+	Graph* _tutorialRetry;
+	Graph* _tutorialMenu;
 
 	//デバッグ
 	int frameCount;

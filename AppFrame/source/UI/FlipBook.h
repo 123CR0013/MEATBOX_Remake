@@ -22,7 +22,7 @@ public:
 			_pos[1].x, _pos[1].y,
 			_pos[2].x, _pos[2].y,
 			_pos[3].x, _pos[3].y,
-			_handles[_framCount += _clockWise / _flipSpeed % static_cast<unsigned int>(_handles.size())], TRUE
+			_handles[(_framCount += _clockWise) / _flipSpeed % static_cast<unsigned int>(_handles.size())], TRUE
 		);
 	}
 

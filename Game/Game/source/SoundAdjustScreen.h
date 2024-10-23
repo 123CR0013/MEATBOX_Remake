@@ -18,5 +18,11 @@ private:
 	Matrix3 _inWorldMatParent;
 
 	SoundItemBase::TYPE _type;
+
+
+	//‘€ìà–¾UI
+	Graph* _tutorialArrow;
+	Graph* _tutorialSelect;
+	Graph* _tutorialReturn;
 };
 

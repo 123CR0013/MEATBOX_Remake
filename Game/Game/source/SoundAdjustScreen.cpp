@@ -31,6 +31,21 @@ SoundAdjustScreen::SoundAdjustScreen(ModeUI* owner, MoveUI* carsol, std::array<c
 	CreateScaleAnim("plus", 1.f,0.f, 10);
 	CreateScaleAnim("minus", -1.f, 0.f, 10);
 
+	//操作説明UI
+	{
+		_tutorialArrow = NEW Graph(this);
+		_tutorialArrow->Load("res/UI/ui_tutorial_arrow_02.png");
+		_tutorialArrow->SetLeftLocation(30.f, 997.f);
+
+		_tutorialSelect = NEW Graph(this);
+		_tutorialSelect->Load("res/UI/ui_tutorial_select_01.png");
+		_tutorialSelect->SetLeftLocation(184.f, 997.f);
+
+		_tutorialReturn = NEW Graph(this);
+		_tutorialReturn->Load("res/UI/ui_tutorial_return_01.png");
+		_tutorialReturn->SetLeftLocation(993.f, 997.f);
+	}
+
 	RegistUI(_carsol);
 }
 
@@ -63,6 +78,8 @@ void SoundAdjustScreen::Update()
 			if (_type == SoundItemBase::TYPE::SE) { 
 				global._soundServer->Play("SE_06");
 			}
+
+			global._soundServer->Play("SE_01");
 		}
 	}
 	if (global._trg & PAD_INPUT_RIGHT)
@@ -82,6 +99,8 @@ void SoundAdjustScreen::Update()
 				global._soundServer->Play("SE_06");
 			}
 		}
+
+		global._soundServer->Play("SE_01");
 	}
 
 	//Zボタンで戻る
@@ -91,10 +110,11 @@ void SoundAdjustScreen::Update()
 		_carsol->SetTo(_backPos);
 		_carsol->SetFrameCount(0.f);
 		DeleteUIScreen(this);
+		global._soundServer->Play("SE_04");
 	}
 
 	//XボタンでSEを鳴らす,デバッグ用
-	if (global._trg & PAD_INPUT_2)
+	if (global._trg & PAD_INPUT_3)
 	{
 		global._soundServer->Play("SE_06",255);
 	}

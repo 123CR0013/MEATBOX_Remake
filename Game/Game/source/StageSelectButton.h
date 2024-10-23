@@ -22,4 +22,5 @@ private:
 	std::array<class Graph*, BUTTON_NUM>_buttons;
 	std::array<bool, BUTTON_NUM>_stageDatas;
 
+
 };
