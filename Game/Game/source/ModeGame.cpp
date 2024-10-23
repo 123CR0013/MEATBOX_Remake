@@ -62,7 +62,12 @@ bool ModeGame::Initialize() {
 
 	_bResult = false;
 
-
+	// BGMÄ¶
+	SoundItemBase* bgm = global._soundServer->Get("bgm_maingame_01");
+	// ‚±‚ÌBGM‚ªÄ¶‚³‚ê‚Ä‚¢‚È‚¢ê‡‚ÉÄ¶
+	if (bgm != nullptr && bgm->IsPlay() == false) {
+		global._soundServer->Play("bgm_maingame_01");
+	}
 	return true;
 }
 

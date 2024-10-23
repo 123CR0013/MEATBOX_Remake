@@ -71,6 +71,7 @@ bool ModeSoundLayer::Initialize() {
 	global._soundServer->Add("se_sticky_01", NEW SoundItemSE("res/Sound/se/ModeGame/se_sticky_01.mp3"));
 	global._soundServer->Add("se_damage_01", NEW SoundItemSE("res/Sound/se/ModeGame/se_damage_01.mp3"));
 	global._soundServer->Add("se_enemymove_01", NEW SoundItemSE("res/Sound/se/ModeGame/se_enemymove_01.mp3"));
+	global._soundServer->Add("bgm_maingame_01", NEW SoundItemBGM("res/Sound/bgm/bgm_maingame_01.mp3"));
 
 	// “Ç‚İ‚İŠÔ
 	_loadTimeMs = GetNowCount() - timems;
