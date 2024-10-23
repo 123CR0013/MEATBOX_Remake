@@ -90,8 +90,7 @@ bool ModeGame::Terminate() {
 bool ModeGame::Process() {
 	if (!_bPause) {
 		if (global._trg & PAD_INPUT_1) {
-			Terminate();
-			Initialize();
+			ResetStage();
 		}
 	}
 
@@ -199,6 +198,12 @@ void ModeGame::ChangeStage(int worldID, int stageID)
 	_worldID = worldID;
 	_stageID = stageID;
 
+	Terminate();
+	Initialize();
+}
+
+void ModeGame::ResetStage()
+{
 	Terminate();
 	Initialize();
 }

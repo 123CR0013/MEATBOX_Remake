@@ -21,6 +21,7 @@ public:
 	int GetWorldID() override { return _worldID; }
 	int GetStageID() override { return _stageID; }
 	void ChangeStage(int worldID, int stageID) override;
+	void ResetStage() override;
 
 	ResultData GetResultData() override { return _resultData; }
 
