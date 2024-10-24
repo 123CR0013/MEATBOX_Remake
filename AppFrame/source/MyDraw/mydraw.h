@@ -14,6 +14,9 @@ namespace MyDraw {
 	void MyDrawModiGraph(MATRIX mView, VECTOR position, float zoom, float angle, int width, int height, int cgHandle, int turn);
 	void MyDrawModiGraph(MATRIX mView, Vector3 position, float zoom, float angle, int width, int height, int cgHandle, int turn);
 
+	void MyDrawModiGraphWithScreenSize(MATRIX mView, VECTOR position, float zoom, float angle, int width, int height, int cgHandle, int turn);
+	void MyDrawModiGraphWithScreenSize(MATRIX mView, Vector3 position, float zoom, float angle, int width, int height, int cgHandle, int turn);
+
 
 	// 4“_‚ðŽw’è‚µ‚ÄŽlŠp‚ð•`‚­
 	void MyDraw4PointBox(MATRIX mView, VECTOR pos[4], unsigned int Color, int FillFlag);

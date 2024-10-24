@@ -39,6 +39,8 @@ void EnemyTomato::MoveProcess()
 
 	if(_mode->GetEnemyMoveCnt() == 2)
 	{
+		bool bCanMove = false;
+
 		// 移動先のオブジェクトを取得
 		GameObject* obj = _mapData->GetGameObject(_vNextPos);
 		// 移動先にオブジェクトがある場合は移動できない
@@ -53,10 +55,7 @@ void EnemyTomato::MoveProcess()
 			// ビーム本体に当たった場合
 			else if (obj->GetType() == TYPE::BEAM_BODY)
 			{
-				// 移動する
-				_routeIndex += _moveOrder;
-				_vPos = _vNextPos;
-				_mapData->SetGameObject(this, _vPos);
+				bCanMove = true;
 			}
 			else 
 			{
@@ -66,10 +65,18 @@ void EnemyTomato::MoveProcess()
 		}
 		// 移動先にオブジェクトがない場合
 		else {
+			bCanMove = true;
+		}
+
+		if (bCanMove)
+		{
 			// 移動する
 			_routeIndex += _moveOrder;
 			_vPos = _vNextPos;
 			_mapData->SetGameObject(this, _vPos);
+
+			// SE再生
+			global._soundServer->Play("se_enemymove_01"); // 移動
 		}
 
 		// 次の移動先を設定

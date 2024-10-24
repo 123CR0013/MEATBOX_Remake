@@ -53,6 +53,15 @@ bool ModeSoundLayer::Initialize() {
 	global._soundServer->Add("SE_06", NEW SoundItemSE("res/Sound/se/se_rank_01.mp3"));
 
 
+	// ModeGame
+	global._soundServer->Add("se_move_01", NEW SoundItemSE("res/Sound/se/ModeGame/se_move_01.mp3"));
+	global._soundServer->Add("se_question_01", NEW SoundItemSE("res/Sound/se/ModeGame/se_question_01.mp3"));
+	global._soundServer->Add("se_attack_01", NEW SoundItemSE("res/Sound/se/ModeGame/se_attack_01.mp3"));
+	global._soundServer->Add("se_kill_01", NEW SoundItemSE("res/Sound/se/ModeGame/se_kill_01.mp3"));
+	global._soundServer->Add("se_sticky_01", NEW SoundItemSE("res/Sound/se/ModeGame/se_sticky_01.mp3"));
+	global._soundServer->Add("se_damage_01", NEW SoundItemSE("res/Sound/se/ModeGame/se_damage_01.mp3"));
+	global._soundServer->Add("se_enemymove_01", NEW SoundItemSE("res/Sound/se/ModeGame/se_enemymove_01.mp3"));
+
 	// “Ç‚İ‚İŠÔ
 	_loadTimeMs = GetNowCount() - timems;
 

@@ -5,6 +5,10 @@
 
 #include "Map.h"
 
+Vector3 Animation::_vVibRange = { 0, 0, 0 };
+Vector3 Animation::_vVib = { 0, 0, 0 };
+int Animation::_vibTime = 0;
+
 Animation::Animation(ObjectBase* object)
 {
 	_bUse = true;
@@ -62,13 +66,15 @@ void Animation::Draw()
 {
 	if (_parentObj->GetUse() == false || _bUse == false) return;
 
+	Vector3 vDrawPos = _parentObj->GetPos() + _vDrawOffset + _vVib;
+
 	if (_bDrawWithScreenPos) 
 	{
-		MyDraw::MyDrawModiGraph(MGetIdent(), _parentObj->GetPos() + _vDrawOffset, _zoom, _angle, _width, _height, GetGraphHandle(), 0);
+		MyDraw::MyDrawModiGraphWithScreenSize(MGetIdent(), vDrawPos, _zoom, _angle, _width, _height, GetGraphHandle(), 0);
 	}
 	else 
 	{
-		DrawForMapChip::MyDrawModiGraph(MGetIdent(), _parentObj->GetPos() + _vDrawOffset, _zoom, _angle, _width, _height, GetGraphHandle(), 0);
+		DrawForMapChip::MyDrawModiGraphWithScreenSize(MGetIdent(), vDrawPos, _zoom, _angle, _width, _height, GetGraphHandle(), 0);
 	}
 }
 
@@ -172,4 +178,49 @@ int Animation::GetGraphHandle()
 		return -1;
 	}
 	
+}
+
+void Animation::SetVibration(Vector3 vRange, int time/* = 10*/)
+{
+	_vVibRange = vRange;
+	_vibTime = time;
+	RandVibration();
+}
+
+void Animation::VibrationProcess()
+{
+	if (_vibTime > 0)
+	{
+		_vibTime--;
+		RandVibration();
+	}
+	else
+	{
+		_vVibRange = { 0, 0, 0 };
+		_vVib = { 0, 0, 0 };
+	}
+}
+
+void Animation::RandVibration()
+{
+	float randX = 0;
+	float randY = 0;
+
+	int xRange = static_cast<int>(_vVibRange.x * 100);
+	if (xRange > 0)
+	{
+		randX = (rand() % xRange) / 100.0f;
+		float sign = (rand() % 2 == 0) ? 1 : -1;
+		randX *= sign;
+	}
+
+	int yRange = static_cast<int>(_vVibRange.y * 100);
+	if (yRange > 0)
+	{
+		randY = (rand() % yRange) / 100.0f;
+		float sign = (rand() % 2 == 0) ? 1 : -1;
+		randY *= sign;
+	}
+
+	_vVib = { randX, randY, 0 };
 }

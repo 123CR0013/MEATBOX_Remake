@@ -37,10 +37,13 @@ public:
 
 	void CheckKillCnt(int killCnt) override;
 
+	bool GetGameOver() override { return _bGameOver; }
 	void SetGameOver() override;
 
 protected:
 	int _worldID, _stageID;
+
+	bool _bGameOver;
 
 	Map* _mapData;
 	GameObject* _player;

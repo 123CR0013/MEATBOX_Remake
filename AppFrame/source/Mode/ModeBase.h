@@ -48,6 +48,7 @@ public: // ModeGame—p
 	virtual void RemoveGameObject(class GameObject* object) {};
 	virtual void AddPlayerStepCnt() {}
 	virtual int GetEnemyMoveCnt() { return 0; }
+	virtual bool GetGameOver() { return false; }
 	virtual void SetGameOver() {}
 	virtual void LoadAnimData(class Animation* animationClass, std::string name) {}
 	virtual void CheckKillCnt(int killCnt) {}

@@ -6,6 +6,8 @@
 #include <fstream>
 #include <sstream>
 
+#include "ApplicationMain.h"
+
 std::unordered_map<int, Map::LOADCHIP> Map::_loadChipData;
 
 Map::Map(ModeBase* mode)
@@ -79,6 +81,8 @@ void Map::DrawDebug()
 	//	mapChip->DrawDebug();
 	//}
 
+	float rate = g_oApplicationMain.DispSizeW() / 1920.0f;
+
 	for(auto& object : _objects)
 	{
 		if (object == nullptr) continue;
@@ -93,7 +97,6 @@ void Map::DrawDebug()
 			"STICKY",
 			"STICKYGROUP"
 		};
-
 		//âÊñ ÉTÉCÉYÇ…çáÇÌÇπÇÈ
 		{
 			auto inst = ApplicationBase::GetInstance();
@@ -108,6 +111,8 @@ void Map::DrawDebug()
 
 			DrawFormatString(drawPos.x, drawPos.y, COLOR_RED, typeTbl[static_cast<int>(type)].c_str());
 		}
+
+		DrawFormatString(object->GetPos().x * CHIP_W * rate, object->GetPos().y * CHIP_H * rate, COLOR_RED, typeTbl[static_cast<int>(type)].c_str());
 
 	}
 }

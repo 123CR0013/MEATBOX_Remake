@@ -53,17 +53,30 @@ bool MeatBox::_CheckMove(Vector3 vMove)
 	// 移動先のマップチップを取得
 	MapChip* mapChip = CheckMapChip(vNextPos);
 	if (mapChip != nullptr) {
-		// 移動先が床の場合
-		if (mapChip->GetType() == MapChip::TYPE::FLOOR) {
+
+		switch (mapChip->GetType())
+		{
+		default:
+			break;
+			// 移動先が床の場合
+		case MapChip::TYPE::FLOOR:
+		{
 			GameObject* obj = CheckObject(vNextPos);
 			// 移動先にオブジェクトがある場合
 			if (obj != nullptr) {
-				if (obj->GetType() == GameObject::TYPE::PLAYER){
-					bCanMove = true;
-				}
-				// 移動先のオブジェクトが敵の場合
-				else if (obj->GetType() == GameObject::TYPE::ENEMY) {
+				switch (obj->GetType())
+				{
+				default:
+					break;
 
+					// 移動先のオブジェクトがプレイヤーの場合
+				case GameObject::TYPE::PLAYER:
+					bCanMove = true;
+					break; // End case GameObject::TYPE::PLAYER
+
+					// 移動先のオブジェクトが敵の場合
+				case GameObject::TYPE::ENEMY:
+				{
 					// さらに1マス先のマップチップとオブジェクトを調べる
 					Vector3 vTmpPos = vNextPos + vMove;
 					MapChip* nextMapChip = CheckMapChip(vTmpPos);
@@ -75,8 +88,9 @@ bool MeatBox::_CheckMove(Vector3 vMove)
 
 					// ①の条件判定
 					if (nextMapChip != nullptr) {
-						if (CheckMapChip(vTmpPos)->GetType() == MapChip::TYPE::NONE ||
-							CheckMapChip(vTmpPos)->GetType() == MapChip::TYPE::WALL)
+						MapChip::TYPE type = nextMapChip->GetType();
+						if (type == MapChip::TYPE::NONE ||
+							type == MapChip::TYPE::WALL)
 						{
 							bCanMove = true;
 						}
@@ -91,7 +105,10 @@ bool MeatBox::_CheckMove(Vector3 vMove)
 						GameObject* nextObj = CheckObject(vTmpPos);
 						if (nextObj != nullptr && nextObj->GetUse())
 						{
-							if (CheckObject(vTmpPos)->GetType() == GameObject::TYPE::MEATBOX) {
+							GameObject::TYPE type = nextObj->GetType();
+							if (type == GameObject::TYPE::MEATBOX ||
+								type == GameObject::TYPE::BEAM_STAND)
+							{
 								bCanMove = true;
 							}
 						}
@@ -106,37 +123,53 @@ bool MeatBox::_CheckMove(Vector3 vMove)
 						else {
 							// エフェクトを生成
 							CreateEffect(Effect::TYPE::EXPLOSION, vNextPos, _mode);
+
+							// SE再生
+							global._soundServer->Play("se_kill_01");
+
 							// 敵を削除
 							obj->Destroy();
+
+							// キルカウントをチェック
 							_mode->CheckKillCnt(1);
+
+							// 画面振動
+							Animation::SetVibration(Vector3(0.05f, 0.05f, 0));
 						}
 					}
 				}
+				break; // End case GameObject::TYPE::ENEMY
+
 				// 移動先のオブジェクトがミートボックスの場合
-				else if (obj->GetType() == GameObject::TYPE::MEATBOX) {
+				case GameObject::TYPE::MEATBOX:
 					// 同じStickyGroupに所属している場合は移動できる
 					if (_pStickyGroup != nullptr && _pStickyGroup == static_cast<MeatBox*>(obj)->GetStickyGroup()) {
 						bCanMove = true;
 					}
-				}
-				// 移動先のオブジェクトがビーム台の場合
-				else if (obj->GetType() == GameObject::TYPE::BEAM_STAND) {
+					break; // End case GameObject::TYPE::MEATBOX
+
+					// 移動先のオブジェクトがビーム台の場合
+				case GameObject::TYPE::BEAM_STAND:
 					// 移動できない
 					bCanMove = false;
-				}
-				// 移動先のオブジェクトがビーム本体の場合
-				else if (obj->GetType() == GameObject::TYPE::BEAM_BODY) {
+					break; // End case GameObject::TYPE::BEAM_STAND
+
+					// 移動先のオブジェクトがビーム本体の場合
+				case GameObject::TYPE::BEAM_BODY:
 					// 移動できる
 					bCanMove = true;
-				}
-				// 移動先のオブジェクトがねばねば本体の場合
-				else if (obj->GetType() == GameObject::TYPE::STICKY) {
+					break; // End case GameObject::TYPE::BEAM_BODY
+
+					// 移動先のオブジェクトがねばねば本体の場合
+				case GameObject::TYPE::STICKY:
 					// 移動できる
 					bCanMove = true;
-					
+
 					// Stickyへの追加予約
 					_pSticky = static_cast<Sticky*>(obj);
-				}
+					break; // End case GameObject::TYPE::STICKY
+
+				} // End switch (obj->GetType())
 			}
 			// 移動先にオブジェクトがない場合
 			else {
@@ -150,13 +183,20 @@ bool MeatBox::_CheckMove(Vector3 vMove)
 				SetGoThroughHole(false);
 			}
 		}
-		else if (mapChip->GetType() == MapChip::TYPE::HOLE) {
+			break; // End case MapChip::TYPE::FLOOR
+
+			// 移動先が穴の場合
+		case MapChip::TYPE::HOLE:
 			bCanMove = false;
 			SetExistHole(true);
-		}else if(mapChip->GetType() == MapChip::TYPE::WALL) {
+			break; // End case MapChip::TYPE::HOLE
+
+			// 移動先が壁の場合
+		case MapChip::TYPE::WALL:
 			bCanMove = false;
 			SetGoThroughHole(false);
-		}
+			break; // End case MapChip::TYPE::WALL
+		} // End switch (mapChip->GetType())
 	}
 	// 移動先にマップチップがない場合
 	else {
@@ -229,6 +269,12 @@ void MeatBox::Move(Vector3 vMove)
 	_vPos = _vOldPos;
 
 	_frameCount = 0;
+
+	if (_pStickyGroup == nullptr)
+	{
+		// SE再生
+		global._soundServer->Play("se_attack_01");
+	}
 
 	// _CheckMove()内で予約したStickyへの追加を行う
 	if (_pSticky != nullptr)

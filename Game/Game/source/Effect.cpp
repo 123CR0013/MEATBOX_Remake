@@ -8,6 +8,7 @@ Effect::Effect(ModeBase* mode) : GameObject(mode)
 	_objectType = GameObject::TYPE::EFFECT;
 	_bSetToMap = false;
 	_bLoop = false;
+	_effectType = TYPE::NONE;
 }
 
 Effect::~Effect()
@@ -87,6 +88,7 @@ void CreateEffect(Effect::TYPE type, Vector3 vPos, ModeBase* mode)
 void CreateEffect_Move(Vector3 vPos, ModeBase* mode)
 {
 	Effect* effect = new Effect(mode);
+	effect->SetEffectType(Effect::TYPE::MOVE);
 	effect->SetPos(vPos);
 
 	AnimationInfo* animInfo = new AnimationInfo();
@@ -103,6 +105,7 @@ void CreateEffect_Move(Vector3 vPos, ModeBase* mode)
 void CreateEffect_Impact(Vector3 vPos, ModeBase* mode)
 {
 	Effect* effect = new Effect(mode);
+	effect->SetEffectType(Effect::TYPE::IMPACT);
 	effect->SetPos(vPos);
 
 	Animation* anim = effect->AddAnimationClass();
@@ -122,6 +125,7 @@ void CreateEffect_Impact(Vector3 vPos, ModeBase* mode)
 void CreateEffect_Question(Vector3 vPos, ModeBase* mode)
 {
 	Effect* effect = new Effect(mode);
+	effect->SetEffectType(Effect::TYPE::QUESTION);
 	effect->SetPos(vPos);
 
 	AnimationInfo* animInfo = new AnimationInfo();
@@ -184,6 +188,7 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode, int num)
 	// “÷•Ð
 	{
 		Effect* effect = new Effect(mode);
+		effect->SetEffectType(Effect::TYPE::EX_MEAT);
 		effect->SetPos(vNewPos);
 
 		Animation* anim = effect->AddAnimationClass();
@@ -202,6 +207,7 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode, int num)
 	// ŒŒ
 	{
 		Effect* effect = new Effect(mode);
+		effect->SetEffectType(Effect::TYPE::EX_BLOOD);
 		effect->SetPos(vNewPos);
 
 		Animation* anim = effect->AddAnimationClass();
@@ -219,7 +225,7 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode, int num)
 
 	if (0 <= num && num <= 2) {
 		std::array<Vector3, 3> vScreenPos = {
-			Vector3(g_oApplicationMain.DispSizeW() / 2.0f, g_oApplicationMain.DispSizeH() - (h / 2.0f), 0.0f),
+			Vector3(1920.0f / 2.0f, 1080.0f - (h / 2.0f), 0.0f),
 			Vector3(445, 324, 0),
 			Vector3(1505, 540, 0),
 		};
@@ -227,6 +233,7 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode, int num)
 		// –Ú1
 		{
 			Effect* effect = new Effect(mode);
+			effect->SetEffectType(Effect::TYPE::EX_EYE01);
 			effect->SetPos(vPos);
 
 			Animation* anim = effect->AddAnimationClass();
@@ -244,6 +251,7 @@ void CreateEffect_Explosion(Vector3 vPos, ModeBase* mode, int num)
 		// –Ú2
 		{
 			Effect* effect = new Effect(mode);
+			effect->SetEffectType(Effect::TYPE::EX_EYE02);
 			effect->SetPos(vScreenPos.at(num));
 
 			Animation* anim = effect->AddAnimationClass();

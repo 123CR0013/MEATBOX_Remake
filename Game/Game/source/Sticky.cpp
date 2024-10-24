@@ -61,6 +61,9 @@ bool Sticky::AddMeatBox(MeatBox* pMeatBox, Sticky::POSITION pos)
 
 		_bMBExist[(int)pos] = true;
 
+		// SEÄ¶
+		//global._soundServer->Play("se_sticky_01");
+
 		if(pos == POSITION::ROOT)
 		{
 			GetAnimationClass(0)->SetUse(false);

@@ -162,10 +162,22 @@ void Player::MoveProcess()
 
 			// マップデータの更新
 			_mapData->SetGameObject(this, _vPos);
+
+			// SE再生
+			global._soundServer->Play("se_move_01");
 		}
 		else {
 			_vPos = vOldPos;
 			CreateEffect(Effect::TYPE::QUESTION, _vPos, _mode);
+
+			if (_mode->GetGameOver()) {
+				// SE再生
+				global._soundServer->Play("se_damage_01"); // ゲームオーバー
+			}
+			else {
+				// SE再生
+				global._soundServer->Play("se_question_01"); // 移動失敗
+			}
 		}
 
 	}
